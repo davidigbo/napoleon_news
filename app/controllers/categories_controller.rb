@@ -11,8 +11,8 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @top_articles = @category.articles.where(status: 'published').order(created_at: :desc).limit(7)
-    @other_articles = @category.articles.where(status: 'published').order(created_at: :desc)[7..-1]
+    @top_articles = @category.articles.where(status: 'published').order(created_at: :desc).limit(5)
+    @other_articles = @category.articles.where(status: 'published').order(created_at: :desc)[5..-1]
 
     respond_to do |format|
         format.html
