@@ -1,4 +1,4 @@
-<% articles = Article.published.for_categories(category.subtree_ids).includes(:author).order(created_at: :desc).limit(7) %>
+<% articles = Article.published.for_categories(category.subtree_ids).includes(:author).order(created_at: :desc).limit(5) %>
 <% unless articles.blank? %>
   <section class="container category-section mx-auto mt-5">
     <h3 ><a class="text-dark icon-link icon-link-hover <%= idx.odd? ? "d-flex justify-content-end" : '' %>" href="<%= category_path(category)%>"> <%= category.name %> <i class="fa fa-arrow-right ps-2 py-0 bi" aria-hidden="true"></i></a></h3>
@@ -14,7 +14,7 @@
               <h5 class="card-title fs-5"> <%= articles.first.title %></h5>
             </a>
             <p>By <%= articles.first.author.first_name + ' ' + articles.first.author.last_name %> | 
-              <span><i class="fa-regular fa-calendar-o" aria-hidden="true"></i></span>
+              <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
               <span class="timestamp" data-utc="<%= articles.first.published_at&.iso8601 %>"></span>
             </p>
           </div>
@@ -44,7 +44,7 @@
                     <h6 class="card-title"><%= article.title %></h6>
                   </a>
                   <p>By <%= article.author.first_name + ' ' + article.author.last_name %> | 
-                    <span><i class="fa-regular fa-calendar-o" aria-hidden="true"></i></span>
+                    <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
                     <span class="timestamp" data-utc="<%= article.published_at&.iso8601 %>"></span>
                   </p>
                 </div>
@@ -75,7 +75,7 @@
                         <h6 class="card-title mb-2"><%= article.title %></h6>
                       </a>
                       <p class="mb-0 fs-6">By <strong><%= article.author.first_name + ' ' + article.author.last_name %></strong> </p>
-                      <p><span><i class="fa-regular fa-calendar-o font-light" aria-hidden="true"></i></span>
+                      <p><span><i class="fa fa-calendar font-light" aria-hidden="true"></i></span>
                         <span class="timestamp" data-utc="<%= article.published_at&.iso8601 %>"></span>
                       </p>
                     </div>
