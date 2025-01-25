@@ -5,15 +5,15 @@
     <div class="row d-flex align-items-stretch">
       <!-- Right Column -->
       <div class="col-md-8 right-col <%= idx.odd? ? 'order-md-2' : ''%>">
-        <div class="card border-0 h-100">
+        <div class="card border-0 h-100 hover-scale">
           <a href="<%= article_path(articles.first)%>">
-            <img src="<%= url_for(articles.first.image)%>" class="card-img-top" alt="...">
+            <img src="<%= url_for(articles.first.image)%>" class="card-img-top" alt="<%= articles.first.image.blob.metadata[:caption] || articles.first.title %>">
           </a>
           <div class="card-body text-center">
-            <a href="<%= article_path(articles.first)%>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+            <a href="<%= article_path(articles.first)%>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover hover-scale">
               <h5 class="card-title fs-5"> <%= articles.first.title %></h5>
             </a>
-            <p>By <%= articles.first.author.first_name + ' ' + articles.first.author.last_name %> | 
+            <p>By <strong><%= articles.first.author.first_name + ' ' + articles.first.author.last_name %></strong>|
               <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
               <span class="timestamp" data-utc="<%= articles.first.published_at&.iso8601 %>"></span>
             </p>
@@ -35,15 +35,16 @@
               </div>
             <% else %>
               <!-- Regular article card -->
-              <div class="card border-0 d-md-block mb-3 flex-grow-1">
+              <div class="card border-0 d-md-block mb-3 flex-grow-1 text-center text-md-start">
                 <a href="<%= article_path(article) %>">
-                  <img src="<%= url_for(article.image) %>" class="card-img-top" alt="...">
+                  <img src="<%= url_for(article.image) %>" class="card-img-top" alt="<%= article.image.blob.metadata[:caption] || article.title %>">
                 </a>
                 <div class="card-body py-1 px-0">
                   <a href="<%= article_path(article)%>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
-                    <h6 class="card-title"><%= article.title %></h6>
+                     <h5 class="card-title d-md-none"><%= article.title %></h5>
+                     <h6 class="card-title d-none d-md-block"><%= article.title %></h6>
                   </a>
-                  <p>By <%= article.author.first_name + ' ' + article.author.last_name %> | 
+                  <p>By <strong><%= article.author.first_name + ' ' + article.author.last_name %></strong> | 
                     <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
                     <span class="timestamp" data-utc="<%= article.published_at&.iso8601 %>"></span>
                   </p>
@@ -64,7 +65,7 @@
                   <div class="col-auto">
                     <a href="<%= article_path(article) %>">
                       <div class="ratio ratio-16x9" style="width: 150px;">
-                        <img src="<%= url_for(article.image) %>" class="img-fluid rounded" alt="...">
+                        <img src="<%= url_for(article.image) %>" class="img-fluid rounded" alt="<%= article.image.blob.metadata[:caption] || article.title %>">
                       </div>
                     </a>
                   </div>

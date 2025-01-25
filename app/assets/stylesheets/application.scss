@@ -19,10 +19,18 @@
  @import "font-awesome";
  @import "./actiontext.scss";
 
- .after-nav {
+.after-nav {
    margin-top: 3rem;
  }
 
- .border-top-thick {
+.border-top-thick {
   border-top-width: 4px !important; /* Adjust the thickness as needed */
+}
+
+.hover-scale img {
+  transition: transform 0.3s ease-in-out;
+}
+
+.hover-scale img:hover {
+  transform: scale(1.01); /* Slightly increases the image size */
 }

@@ -11,13 +11,13 @@
         <div class="col-md-8 right-col">
           <div class="card border-0 h-100">
             <a href="<%= article_path(@top_articles.first)%>">
-              <img src="<%= url_for(@top_articles.first.image)%>" class="card-img-top" alt="...">
+              <img src="<%= url_for(@top_articles.first.image)%>" class="card-img-top" alt="<%= @top_articles.first.image.blob.metadata[:caption] || @top_articles.first.title %>">
             </a>
             <div class="card-body text-center">
               <a href="<%= article_path(@top_articles.first)%>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
                 <h5 class="card-title fs-5"> <%= @top_articles.first.title %></h5>
               </a>
-              <p>By <%= @top_articles.first.author.first_name + ' ' + @top_articles.first.author.last_name %> | 
+              <p>By <strong><%= @top_articles.first.author.first_name + ' ' + @top_articles.first.author.last_name %> | </strong>
                 <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
                 <span class="timestamp" data-utc="<%= @top_articles.first.published_at&.iso8601 %>"></span>
               </p>
@@ -41,7 +41,7 @@
                 <!-- Regular article card -->
                 <div class="card border-0 d-md-block mb-3 flex-grow-1">
                   <a href="<%= article_path(article) %>">
-                    <img src="<%= url_for(article.image) %>" class="card-img-top" alt="...">
+                    <img src="<%= url_for(article.image) %>" class="card-img-top" alt="<%= article.image.blob.metadata[:caption] || article.title %>">
                   </a>
                   <div class="card-body py-1 px-0">
                     <a href="<%= article_path(article)%>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
@@ -68,7 +68,7 @@
                   <div class="col-auto">
                     <a href="<%= article_path(article) %>">
                       <div class="ratio ratio-16x9" style="width: 150px;">
-                        <img src="<%= url_for(article.image) %>" class="img-fluid rounded" alt="...">
+                        <img src="<%= url_for(article.image) %>" class="img-fluid rounded" alt="<%= article.image.blob.metadata[:caption] || article.title %>">
                       </div>
                     </a>
                   </div>
