@@ -30,6 +30,7 @@ class Article < ApplicationRecord
   scope :for_categories, ->(category_ids) { joins(:categories).where(categories: { id: category_ids }).distinct }
 
   after_save :assign_tags, :store_image_captions
+
   after_commit :schedule_publish_job, if: :should_schedule_publish_job?
 
   def self.search(search)
