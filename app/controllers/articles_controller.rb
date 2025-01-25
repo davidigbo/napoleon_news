@@ -59,7 +59,7 @@ class ArticlesController < ApplicationController
                   },
                   twitter: {
                     card: 'summary_large_image',
-                    site: '@YourTwitterHandle',
+                    site: '@napoleonnewstv',
                     title: @article.title,
                     description: @article.description,
                     image: @article_image_url

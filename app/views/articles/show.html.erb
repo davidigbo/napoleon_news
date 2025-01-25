@@ -1,12 +1,12 @@
-<div class="container article-container after-nav py-5">
+<div class="container article-container after-nav py-3">
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-8 border rounded-1 p-3 shadow bg-body-tertiary">
       <!-- Article Header -->
       <div class="row">
         <div class="col-12">
           <h2><%= @article.title %></h2>
           <p class="text-muted">
-            By <span class="fw-bold"><%= @article.author.first_name+ ' ' +@article.author.last_name  %></span> • <span class="timestamp" data-utc="<%= @article.published_at&.iso8601 %>"></span>
+            By <span class="fw-bold"><%= @article.author.first_name+ ' ' +@article.author.last_name  %></span> • <span><i class="fa fa-calendar" aria-hidden="true"></i></span> <span class="timestamp" data-utc="<%= @article.published_at&.iso8601 %>"></span>
           </p>
         </div>
       </div>
@@ -20,7 +20,7 @@
             <span class="badge <%= @tag_classes[idx] %>" ><%= tag.name.capitalize  %></span>
           <% end %>
         </div>
-        <div class="col-6 mb-3 text-end pe-5">
+        <div class="col-6 mb-3 text-end pe-3">
           <i class="fas fa-share-alt fa-lg me-3"></i>
           <!-- Social Media Icons -->
           <!-- Facebook Share -->
@@ -40,6 +40,8 @@
         <div class="row">
           <div class="col-12">
             <%= @article_body %>
+            <%#= render_action_text_content(@article_body) %>
+            <%# <%= render_with_alt_text(@article_body) %>
           </div>
         </div>
       </div>

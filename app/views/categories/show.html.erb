@@ -1,101 +1,129 @@
 <% if @top_articles.blank? %>
   <%= render "layouts/nothing_here" %>
 <% else %>
-  <section class="container w-90 category-section after-nav mt-5 py-5">
-    <h3><a class="text-dark icon-link icon-link-hover" href="<%= category_path(@category)%>"> <%= @category.name %></a></h3>
-    <div class="row">
-      <div class="col-md-8">
-        <div class="card border-0">
-          <a href="<%= article_path(@top_articles.first)%>"><img src="<%= url_for(@top_articles.first.image)%>" class="card-img-top" alt="..."></a>
-          <div class="card-body text-center">
-            <a href="<%= article_path(@top_articles.first)%>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
-              <h5 class="card-title fs-5"> <%= @top_articles.first.title %></h5>
+  <% if @top_articles.blank? %>
+    <%= render "layouts/nothing_here" %>
+  <% else %>
+    <section class="container category-section after-nav mx-auto mt-5 py-5">
+      <h3 ><a class="text-dark icon-link icon-link-hover%>" href="<%= category_path(@category)%>"> <%= @category.name %> <i class="fa fa-arrow-right ps-2 py-0 bi" aria-hidden="true"></i></a></h3>
+      <div class="row d-flex align-items-stretch">
+        <!-- Right Column -->
+        <div class="col-md-8 right-col">
+          <div class="card border-0 h-100">
+            <a href="<%= article_path(@top_articles.first)%>">
+              <img src="<%= url_for(@top_articles.first.image)%>" class="card-img-top" alt="<%= @top_articles.first.image.blob.metadata[:caption] || @top_articles.first.title %>">
             </a>
-            <p>By <%= @top_articles.first.author.first_name+ ' ' +@top_articles.first.author.last_name %> | <span><i class="fa fa-clock" aria-hidden="true"></i></span> <span class="timestamp" data-utc="<%= @top_articles.first.published_at&.iso8601 %>"></span></p>
+            <div class="card-body text-center">
+              <a href="<%= article_path(@top_articles.first)%>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                <h5 class="card-title fs-5"> <%= @top_articles.first.title %></h5>
+              </a>
+              <p>By <strong><%= @top_articles.first.author.first_name + ' ' + @top_articles.first.author.last_name %> | </strong>
+                <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                <span class="timestamp" data-utc="<%= @top_articles.first.published_at&.iso8601 %>"></span>
+              </p>
+            </div>
           </div>
         </div>
-        <div class="row row-cols-1 row-cols-md-2 g-4 card-group">
-          <%# Start %>
-          <% if @top_articles[3..6].present? %>
-            <% @top_articles[3..6].each do |article| %>
-              <div class="col">
-                <div class="card border-0">
-                  <div class="row g-3">
-                    <!-- Image Section -->
-                    <div class="col-auto">
-                      <a href=<%= article_path(article) %>>
-                        <img src="<%= url_for(article.image) %>" 
-             class="img-fluid" 
-             alt="..." 
-             style="width: 100px; object-fit: cover;">
-                      </a>
-                    </div>
-                    <!-- Text Section -->
-                    <div class="col">
-                      <div class="card-body p-0">
-                        <a href=<%= article_path(article)%> class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
-                          <h6 class="card-title mb-2"><%= article.title %></h6>
-                        </a>
-                        <p class="mb-0">By <%= article.author.first_name+ ' ' +article.author.last_name %> | <span><i class="fa fa-clock font-light" aria-hidden="true"></i></span> <span class="timestamp" data-utc="<%= article.published_at&.iso8601 %>"></span></p>
+        <!-- Left Column -->
+        <div class="col-md-4 border-left left-col %> d-flex flex-column justify-content-between">
+          <% if [nil, @top_articles[1]].present? %>
+            <% [nil, @top_articles[1]].each_with_index do |article, index| %>
+              <% if index == 0 %>
+                <!-- Placeholder card for advertisement -->
+                <div class="card border-0 d-md-block mb-3 flex-grow-1 text-center bg-light">
+                  <div class="card-body py-4">
+                    <h5 class="card-title">Your Ad Here</h5>
+                    <p class="card-text">Advertise with us and reach your audience effectively!</p>
+                    <a href="/advertise" class="btn btn-primary">Learn More</a>
+                  </div>
+                </div>
+              <% else %>
+                <!-- Regular article card -->
+                <div class="card border-0 d-md-block mb-3 flex-grow-1">
+                  <a href="<%= article_path(article) %>">
+                    <img src="<%= url_for(article.image) %>" class="card-img-top" alt="<%= article.image.blob.metadata[:caption] || article.title %>">
+                  </a>
+                  <div class="card-body py-1 px-0">
+                    <a href="<%= article_path(article)%>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                      <h6 class="card-title"><%= article.title %></h6>
+                    </a>
+                    <p>By <%= article.author.first_name + ' ' + article.author.last_name %> | 
+                      <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                      <span class="timestamp" data-utc="<%= article.published_at&.iso8601 %>"></span>
+                    </p>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <div class="row row-cols-1 row-cols-md-3 g-1 card-group">
+        <% if @top_articles[2..4].present? %>
+          <% @top_articles[2..4].each do |article| %>
+            <div class="col">
+              <div class="card border-0">
+                <div class="row g-3">
+                  <!-- Image Section -->
+                  <div class="col-auto">
+                    <a href="<%= article_path(article) %>">
+                      <div class="ratio ratio-16x9" style="width: 150px;">
+                        <img src="<%= url_for(article.image) %>" class="img-fluid rounded" alt="<%= article.image.blob.metadata[:caption] || article.title %>">
                       </div>
+                    </a>
+                  </div>
+                  <!-- Text Section -->
+                  <div class="col">
+                    <div class="card-body p-0">
+                      <a href="<%= article_path(article) %>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                        <h6 class="card-title mb-2"><%= article.title %></h6>
+                      </a>
+                      <p class="mb-0 fs-6">By <strong><%= article.author.first_name + ' ' + article.author.last_name %></strong> </p>
+                      <p><span><i class="fa fa-calendar font-light" aria-hidden="true"></i></span>
+                        <span class="timestamp" data-utc="<%= article.published_at&.iso8601 %>"></span>
+                      </p>
                     </div>
                   </div>
                 </div>
-              </div>
-            <% end %>
-          <% end %>
-          <%# end %>
-        </div>
-      </div>
-      <div class="col-md-4 border-left left-col">
-        <% if @top_articles[1..2].present? %>
-          <% @top_articles[1..2].each do |article| %>
-            <div class="card border-0">
-              <a href="<%= article_path(article)%>"><img src="<%= url_for(article.image) %>" class="card-img-top" alt="..."></a>
-              <div class="card-body py-1 px-0">
-                <a href="<%= article_path(article)%>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
-                  <h6 class="card-title"><%= article.title %></h6>
-                </a>
-                <p>By <%= article.author.first_name+ ' ' +article.author.last_name %> | <span><i class="fa fa-clock" aria-hidden="true"></i></span> <span class="timestamp" data-utc="<%= article.published_at&.iso8601 %>"></span></p>
               </div>
             </div>
           <% end %>
         <% end %>
       </div>
-    </div>
-  </section>
-  <% unless @other_articles.blank?  %>
-    <section class="container">
-      <h3 class="mt-5">More in <%= @category.name %></h3>
-      <% @other_articles.each do |article| %>
-        <div class="row">
-          <div class="col-md-8">
-            <div class="card border-0 border-top border-bottom py-3">
-              <div class="row g-0">
-                <!-- Text Section -->
-                <div class="col-md-8 d-flex align-items-center">
-                  <div class="card-body px-0">
-                    <p><span><i class="fa fa-clock" aria-hidden="true"></i></span> <span class="timestamp" data-utc="<%= article.published_at&.iso8601 %>"></span></p>
-                    <h5 class="card-title">
-                      <%= link_to article.title, article_path(article), class: "text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" %>
-                    </h5>
-                    <p class="card-text">
-                      <%= article.description %>
-                    </p>
-                    <p>By <%= article.author.first_name+ ' ' +article.author.last_name %></p>
+    </section>
+    <% unless @other_articles.blank?  %>
+      <section class="container">
+        <h3 class="mt-5">More in <%= @category.name %></h3>
+        <% @other_articles.each do |article| %>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="card border-0 border-top border-top-thick border-bottom py-3">
+                <div class="row g-0">
+                  <!-- Text Section -->
+                  <div class="col-md-8 d-flex align-items-center">
+                    <div class="card-body px-0">
+                      <p><span><i class="fa fa-calendar" aria-hidden="true"></i></span> <span class="timestamp" data-utc="<%= article.published_at&.iso8601 %>"></span></p>
+                      <h5 class="card-title">
+                        <%= link_to article.title, article_path(article), class: "text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" %>
+                      </h5>
+                      <p class="card-text">
+                        <%= article.description %>
+                      </p>
+                      <p>By <%= article.author.first_name+ ' ' +article.author.last_name %></p>
+                    </div>
                   </div>
-                </div>
-                <!-- Image Section -->
-                <div class="col-md-4 m-0 p-0">
-                  <img src="<%= url_for(article.image)%>" class="img-fluid h-100 rounded-end object-fit-cover" alt="Card image">
+                  <!-- Image Section -->
+                  <div class="col-md-4 m-0 p-0">
+                    <img src="<%= url_for(article.image)%>" class="img-fluid h-100 rounded-end object-fit-cover" alt="Card image">
+                  </div>
                 </div>
               </div>
             </div>
+            <div class="col-md-4 border-left">
+            </div>
           </div>
-          <div class="col-md-4 border-left">
-          </div>
-        </div>
-      <%end %>
-    </section>
+        <%end %>
+      </section>
+    <% end %>
   <% end %>
 <% end %>

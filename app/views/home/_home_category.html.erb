@@ -1,63 +1,91 @@
-<% articles = Article.published.for_categories(category.subtree_ids).includes(:author).order(created_at: :desc).limit(7) %>
+<% articles = Article.published.for_categories(category.subtree_ids).includes(:author).order(created_at: :desc).limit(5) %>
 <% unless articles.blank? %>
-  <section class="container w-90 category-section mt-5">
+  <section class="container category-section mx-auto mt-5">
     <h3 ><a class="text-dark icon-link icon-link-hover <%= idx.odd? ? "d-flex justify-content-end" : '' %>" href="<%= category_path(category)%>"> <%= category.name %> <i class="fa fa-arrow-right ps-2 py-0 bi" aria-hidden="true"></i></a></h3>
-    <div class="row">
-      <div class="col-md-8 right-col <%= idx.odd? ? 'order-first order-md-last' : '' %>">
-        <div class="card border-0">
-          <a href="<%= article_path(articles.first)%>"><img src="<%= url_for(articles.first.image)%>" class="card-img-top" alt="..."></a>
+    <div class="row d-flex align-items-stretch">
+      <!-- Right Column -->
+      <div class="col-md-8 right-col <%= idx.odd? ? 'order-md-2' : ''%>">
+        <div class="card border-0 h-100 hover-scale">
+          <a href="<%= article_path(articles.first)%>">
+            <img src="<%= url_for(articles.first.image)%>" class="card-img-top" alt="<%= articles.first.image.blob.metadata[:caption] || articles.first.title %>">
+          </a>
           <div class="card-body text-center">
-            <a href="<%= article_path(articles.first)%>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+            <a href="<%= article_path(articles.first)%>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover hover-scale">
               <h5 class="card-title fs-5"> <%= articles.first.title %></h5>
             </a>
-            <p>By <%= articles.first.author.first_name+ ' ' +articles.first.author.last_name %> | <span><i class="fa fa-clock" aria-hidden="true"></i></span> <span class="timestamp" data-utc="<%= articles.first.published_at&.iso8601 %>"></span></p>
+            <p>By <strong><%= articles.first.author.first_name + ' ' + articles.first.author.last_name %></strong>|
+              <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
+              <span class="timestamp" data-utc="<%= articles.first.published_at&.iso8601 %>"></span>
+            </p>
           </div>
         </div>
-        <div class="row row-cols-1 row-cols-md-2 g-4 card-group">
-          <%# Start %>
-          <% if articles[3..6].present? %>
-            <% articles[3..6].each do |article| %>
-              <div class="col">
-                <div class="card border-0">
-                  <div class="row g-3">
-                    <!-- Image Section -->
-                    <div class="col-auto">
-                      <a href="<%= article_path(article) %>">
-                        <img src="<%= url_for(article.image) %>" class="img-fluid" alt="..." style="width: 100px; object-fit: cover;"></a>
-                    </div>
-                    <!-- Text Section -->
-                    <div class="col">
-                      <div class="card-body p-0">
-                        <a href="<%= article_path(article)%>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
-                          <h6 class="card-title mb-2"><%= article.title %></h6>
-                        </a>
-                        <p class="mb-0">By <%= article.author.first_name+ ' ' +article.author.last_name %> | <span><i class="fa fa-clock font-light" aria-hidden="true"></i></span> <span class="timestamp" data-utc="<%= article.published_at&.iso8601 %>"></span></p>
-                      </div>
-                    </div>
-                  </div>
+      </div>
+      <!-- Left Column -->
+      <div class="col-md-4 border-left left-col <%= idx.odd? ? 'order-md-1' : '' %> d-flex flex-column justify-content-between">
+        <% if [nil, articles[1]].present? %>
+          <% [nil, articles[1]].each_with_index do |article, index| %>
+            <% if index == 0 %>
+              <!-- Placeholder card for advertisement -->
+              <div class="card border-0 d-md-block mb-3 flex-grow-1 text-center bg-light">
+                <div class="card-body py-4">
+                  <h5 class="card-title">Your Ad Here</h5>
+                  <p class="card-text">Advertise with us and reach your audience effectively!</p>
+                  <a href="/advertise" class="btn btn-primary">Learn More</a>
+                </div>
+              </div>
+            <% else %>
+              <!-- Regular article card -->
+              <div class="card border-0 d-md-block mb-3 flex-grow-1 text-center text-md-start">
+                <a href="<%= article_path(article) %>">
+                  <img src="<%= url_for(article.image) %>" class="card-img-top" alt="<%= article.image.blob.metadata[:caption] || article.title %>">
+                </a>
+                <div class="card-body py-1 px-0">
+                  <a href="<%= article_path(article)%>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                     <h5 class="card-title d-md-none"><%= article.title %></h5>
+                     <h6 class="card-title d-none d-md-block"><%= article.title %></h6>
+                  </a>
+                  <p>By <strong><%= article.author.first_name + ' ' + article.author.last_name %></strong> | 
+                    <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                    <span class="timestamp" data-utc="<%= article.published_at&.iso8601 %>"></span>
+                  </p>
                 </div>
               </div>
             <% end %>
           <% end %>
-          <%# end %>
-        </div>
+        <% end %>
       </div>
-      <div class="col-md-4 border-left left-col">
-        <% if articles[1..2].present? %>
-          <% articles[1..2].each do |article| %>
-            <div class="card border-0 d-none d-md-block">
-              <a href="<%= article_path(article) %>"><img src="<%= url_for(article.image) %>" class="card-img-top" alt="..."></a>
-              <div class="card-body py-1 px-0">
-                <a href="<%= article_path(article)%>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
-                  <h6 class="card-title"><%= article.title %></h6>
-                </a>
-                <p>By <%= article.author.first_name+ ' ' +article.author.last_name %> | <span><i class="fa fa-clock" aria-hidden="true"></i></span> <span class="timestamp" data-utc="<%= article.published_at&.iso8601 %>"></span></p>
+    </div>
+     <div class="row row-cols-1 row-cols-md-3 g-1 card-group">
+        <% if articles[2..4].present? %>
+          <% articles[2..4].each do |article| %>
+            <div class="col">
+              <div class="card border-0">
+                <div class="row g-3">
+                  <!-- Image Section -->
+                  <div class="col-auto">
+                    <a href="<%= article_path(article) %>">
+                      <div class="ratio ratio-16x9" style="width: 150px;">
+                        <img src="<%= url_for(article.image) %>" class="img-fluid rounded" alt="<%= article.image.blob.metadata[:caption] || article.title %>">
+                      </div>
+                    </a>
+                  </div>
+                  <!-- Text Section -->
+                  <div class="col">
+                    <div class="card-body p-0">
+                      <a href="<%= article_path(article) %>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                        <h6 class="card-title mb-2"><%= article.title %></h6>
+                      </a>
+                      <p class="mb-0 fs-6">By <strong><%= article.author.first_name + ' ' + article.author.last_name %></strong> </p>
+                      <p><span><i class="fa fa-calendar font-light" aria-hidden="true"></i></span>
+                        <span class="timestamp" data-utc="<%= article.published_at&.iso8601 %>"></span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           <% end %>
         <% end %>
       </div>
-    </div>
   </section>
 <% end %>
-<%# <div class="col-md-8 right-col order-first order-md-last">  %>
