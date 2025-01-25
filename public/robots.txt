@@ -1,1 +1,13 @@
 # See https://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+
+# Allow all crawlers to access everything
+User-agent: *
+
+# Block all crawlers from the review_article path
+Disallow: /articles/review_article/
+
+# Block all crawlers from the /users/ path
+Disallow: /users/
+
+# Block all crawlers from the update_status patch route
+Disallow: /articles/*/update_status
