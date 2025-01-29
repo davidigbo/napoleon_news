@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_29_074216) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_29_092248) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -106,6 +106,26 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_29_074216) do
     t.index ["author_id"], name: "index_comments_on_author_id"
   end
 
+  create_table "contestants", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "contest_id", null: false
+    t.text "description"
+    t.integer "approved"
+    t.integer "approved_by"
+    t.datetime "approved_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contest_id"], name: "index_contestants_on_contest_id"
+    t.index ["user_id"], name: "index_contestants_on_user_id"
+  end
+
+  create_table "contests", force: :cascade do |t|
+    t.string "name"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -166,6 +186,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_29_074216) do
   add_foreign_key "articles", "users"
   add_foreign_key "comments", "articles"
   add_foreign_key "comments", "users", column: "author_id"
+  add_foreign_key "contestants", "contests"
+  add_foreign_key "contestants", "users"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
 end
