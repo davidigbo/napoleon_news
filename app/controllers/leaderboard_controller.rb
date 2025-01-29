@@ -3,15 +3,17 @@ class LeaderboardController < ApplicationController
     def index
         @contestants = Contestant.left_joins(:votes)
                                   .group(:id)
-                                    .order("COUNT(votes.id) DESC")
+                                  .select("contestants.*, COUNT(votes.id) as votes_count")
+                                  .order("COUNT(votes.id) DESC")
 
-        @votes = Vote.all
 
-        @contestants.each do |contestant|
-            contestant.votes_count = contestant.votes.count
+        # @votes = Vote.all
 
-            contestant.save
-        end
+        # @contestants.each do |contestant|
+        #     contestant.votes_count = contestant.votes.count
+
+        #     contestant.save
+        # end
 
         respond_to do |format|
             format.html
