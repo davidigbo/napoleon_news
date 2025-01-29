@@ -8,4 +8,7 @@ class Contestant < ApplicationRecord
   validates :image, content_type: [:png, :jpg, :jpeg]
 
   enum approved: { pending: 0, approved: 1, rejected: 2 }
+
+  extend FriendlyId
+  friendly_id :name, use: :slugged
 end
