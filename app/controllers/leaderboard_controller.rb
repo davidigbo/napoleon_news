@@ -14,7 +14,6 @@ class LeaderboardController < ApplicationController
 
 
     def index
-        @contest = Contest.find(params[:contest_id]) 
         @contestants = Contestant.left_joins(:votes)
                                  .select('contestants.*, COUNT(votes.id) AS votes_count')
                                  .group(:id)
