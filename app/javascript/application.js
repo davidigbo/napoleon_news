@@ -7,3 +7,4 @@ import "@rails/actiontext";
 import Rails from "@rails/ujs";
 Rails.start();
 import "timestamp_formatter";
+import "./channels"
