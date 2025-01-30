@@ -17,7 +17,7 @@
       <div class="row">
         <div class="col-6 mb-3">
           <% @article.tags.each_with_index do |tag, idx|%>
-            <span class="badge <%= @tag_classes[idx] %>" ><%= tag.name.capitalize  %></span>
+            <span class="badge <%= tag_classes[idx] %>" ><%= tag.name.capitalize  %></span>
           <% end %>
         </div>
         <div class="col-6 mb-3 text-end pe-3">

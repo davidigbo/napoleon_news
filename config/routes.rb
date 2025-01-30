@@ -29,6 +29,7 @@ Rails.application.routes.draw do
             get :draft
             get :under_review
             get :published
+            get :approved
           end
         end
       end

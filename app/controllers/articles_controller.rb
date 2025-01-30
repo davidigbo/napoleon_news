@@ -45,7 +45,7 @@ class ArticlesController < ApplicationController
     @article_image_url = article_image.present? ? url_for(article_image) : nil
     # @article_body = @article_image_url.present? ? @article.body_without_images : @article.body
     @article_body = @article.body
-    @tag_classes = %w[bg-primary bg-secondary bg-success]
+    
 
     set_meta_tags title: @article.title,
                   description: @article.description,
@@ -92,14 +92,16 @@ class ArticlesController < ApplicationController
   def update
     head :unauthorized unless @article.author == current_user || current_user&.admin? || current_user&.editor?
 
-    modified_params = if article_params[:status] == 'published' && article_params[:published_at] == 'now'
-                        article_params.merge(published_at: Time.current)
-                      elsif article_params[:published_at].present?
+    modified_params = if article_params[:status] == 'published' && article_params[:published_at] == 'now' # Direct publishing from under_review
+                        article_params.merge(published_at: Time.current, approved_at: Time.current, approved_by: current_user)
+                      elsif article_params[:status] == 'approved' && article_params[:published_at].present? # Approve and schedule
                         published_at_local = article_params[:published_at]
                         time_zone = article_params[:time_zone]
                         time_zone_obj = ActiveSupport::TimeZone[time_zone]
                         published_at_with_zone = time_zone_obj.parse(published_at_local)
                         article_params.merge(published_at: published_at_with_zone)
+                      elsif article_params[:status] == 'approved' && article_params[:published_at].blank? # Approve and keep in bucket
+                        article_params.merge(approved_at: Time.current, approved_by: current_user)
                       end
 
     modified_params = modified_params&.except(:time_zone) || article_params.except(:time_zone)

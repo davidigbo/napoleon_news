@@ -1,6 +1,6 @@
 <div class="container after-nav">
 </div>
-<div class="mt-5 alert alert-info text-center d-flex justify-content-center align-items-center" role="alert" style="height: 60px;">
+<div class="bg-warning mt-5 alert-info text-center d-flex justify-content-center align-items-center" role="alert" style="height: 60px;">
   <strong class='fs-1'> Review Mode </strong>
 </div>
 <div class="container article-container">
@@ -19,7 +19,7 @@
       <div class="row">
         <div class="col-6 mb-3">
           <% @article.tags.each_with_index do |tag, idx|%>
-            <span class="badge <%= @tag_classes[idx] %>" ><%= tag.name.capitalize  %></span>
+            <span class="badge <%= tag_classes[idx] %>" ><%= tag.name.capitalize  %></span>
           <% end %>
         </div>
         <div class="col-6 mb-3 text-end pe-5">
@@ -84,7 +84,13 @@
   <% end %>
 </div>
 <div class="container">
-  <!-- Approve now button -->
+  <!-- Approve & save -->
+  <%= button_to "Approve & Save", 
+                 article_path(@article), 
+                 method: :patch, 
+                 params: { article: { status: 'approved' } },
+                 class: "btn btn-success" %>
+  <!-- Approve & publish now button -->
   <%= button_to "Approve and Publish Now", 
                  article_path(@article), 
                  method: :patch, 
@@ -125,7 +131,6 @@
     </div>
   </div>
 </div>
-
 <script>
   document.addEventListener('shown.bs.modal', function (event) {
     const modal = event.target;
@@ -135,7 +140,7 @@
     if (input && submitButton) {
       submitButton.disabled = true;
       const now = new Date();
-  
+
       input.addEventListener('input', function () {
         const enteredDate = new Date(input.value);
         const isFutureDate = enteredDate > now;
