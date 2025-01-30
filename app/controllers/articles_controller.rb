@@ -74,7 +74,7 @@ class ArticlesController < ApplicationController
   def create
     # head :unauthorized unless @article.author == current_user || current_user&.admin? || current_user&.editor?
 
-    @article = current_user.authored_articles.build(article_params)
+    @article = Article.build(article_params)
 
     if @article.save
       respond_to do |format|
@@ -162,6 +162,6 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:title, :body, :description, :status, :published_at, :approved_at, :tag_list, :time_zone, category_ids: [])
+    params.require(:article).permit(:title, :body, :description, :status, :published_at, :approved_at, :tag_list, :time_zone, :author_id, :anonymize, category_ids: [])
   end
 end
