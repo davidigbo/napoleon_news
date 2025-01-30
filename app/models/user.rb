@@ -15,4 +15,12 @@ class User < ApplicationRecord
 
 
   enum :role, [:visitor, :author, :editor, :admin]
+
+  def active_for_authentication?
+    super && active?
+  end
+
+  def active?
+    self.active
+  end
 end
