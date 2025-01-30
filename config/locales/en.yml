@@ -29,3 +29,6 @@
 
 en:
   hello: "Hello world"
+  devise:
+    failure:
+      inactive: "Your account is inactive. Please contact support."

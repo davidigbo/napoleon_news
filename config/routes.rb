@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   
   root to: "home#index"
 
-  resources :users, only: [:index] do
+  resources :users, only: [:index, :update] do
     resources :authored_articles, only: :index
     resources :admin, only: :index do
       collection do
@@ -29,6 +29,7 @@ Rails.application.routes.draw do
             get :draft
             get :under_review
             get :published
+            get :approved
           end
         end
       end
