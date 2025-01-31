@@ -1,6 +1,6 @@
 <div class="container after-nav">
 </div>
-<div class="mt-5 alert alert-info text-center d-flex justify-content-center align-items-center" role="alert" style="height: 60px;">
+<div class="bg-warning mt-5 alert-info text-center d-flex justify-content-center align-items-center" role="alert" style="height: 60px;">
   <strong class='fs-1'> Review Mode </strong>
 </div>
 <div class="container article-container">
@@ -11,7 +11,10 @@
         <div class="col-12">
           <h2><%= @article.title %></h2>
           <p class="text-muted">
-            By <span class="fw-bold"><%= @article.author.first_name+ ' ' +@article.author.last_name  %></span> • Last Updated: <span class="timestamp" data-utc="<%= @article.updated_at.iso8601 %>"></span>
+            <p>
+              <%= @article.anonymize ? '' : raw("By <span class='fw-bold'>#{@article.author.first_name} #{@article.author.last_name}</span> • ") %>
+              Last Updated: <span class="timestamp" data-utc="<%= @article.updated_at.iso8601 %>"></span>
+            </p>
           </p>
         </div>
       </div>
@@ -19,7 +22,7 @@
       <div class="row">
         <div class="col-6 mb-3">
           <% @article.tags.each_with_index do |tag, idx|%>
-            <span class="badge <%= @tag_classes[idx] %>" ><%= tag.name.capitalize  %></span>
+            <span class="badge <%= tag_classes[idx] %>" ><%= tag.name.capitalize  %></span>
           <% end %>
         </div>
         <div class="col-6 mb-3 text-end pe-5">
@@ -84,17 +87,34 @@
   <% end %>
 </div>
 <div class="container">
-  <!-- Approve now button -->
-  <%= button_to "Approve and Publish Now", 
-                 article_path(@article), 
-                 method: :patch, 
-                 params: { article: { published_at: 'now', status: 'published' } },
-                 class: "btn btn-success" %>
-  <!-- Schedule Trigger Button -->
-  <%= button_tag "Approve and Schedule for Later", 
-               type: "button", 
-               class: "btn btn-warning mt-4", 
-               data: { bs_toggle: "modal", bs_target: "#publishModal" } %>
+  <!-- Approve & save -->
+ <div class="row">
+    <!-- Approve & Save button -->
+    <div class="col-12 col-md-4 mb-3">
+      <%= button_to "Approve & Save", 
+                    article_path(@article), 
+                    method: :patch, 
+                    params: { article: { status: 'approved' } },
+                    class: "btn btn-success w-100" %>
+    </div>
+
+    <!-- Approve and Publish Now button -->
+    <div class="col-12 col-md-4 mb-3">
+      <%= button_to "Approve & Publish Now", 
+                    article_path(@article), 
+                    method: :patch, 
+                    params: { article: { published_at: 'now', status: 'published' } },
+                    class: "btn btn-success w-100" %>
+    </div>
+
+    <!-- Approve and Schedule for Later button (opens modal) -->
+    <div class="col-12 col-md-4 mb-3">
+      <%= button_tag "Approve & Schedule for Later", 
+                    type: "button", 
+                    class: "btn btn-warning w-100", 
+                    data: { bs_toggle: "modal", bs_target: "#publishModal" } %>
+    </div>
+  </div>
   <!-- Publish Modal -->
   <div class="modal fade" id="publishModal" tabindex="-1" aria-labelledby="publishModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -125,7 +145,6 @@
     </div>
   </div>
 </div>
-
 <script>
   document.addEventListener('shown.bs.modal', function (event) {
     const modal = event.target;
@@ -135,7 +154,7 @@
     if (input && submitButton) {
       submitButton.disabled = true;
       const now = new Date();
-  
+
       input.addEventListener('input', function () {
         const enteredDate = new Date(input.value);
         const isFutureDate = enteredDate > now;
