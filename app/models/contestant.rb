@@ -1,4 +1,7 @@
 class Contestant < ApplicationRecord
+  extend FriendlyId
+  include Discard::Model
+
   belongs_to :user
   belongs_to :contest
   belongs_to :approved_by, class_name: 'User', optional: true
@@ -12,8 +15,8 @@ class Contestant < ApplicationRecord
 
   enum approved: { pending: 0, approved: 1, rejected: 2 }
 
-  extend FriendlyId
   friendly_id :name, use: :slugged
+  default_scope -> { kept }
 
   before_update :set_approved_at, if: :approved_changed?
 
