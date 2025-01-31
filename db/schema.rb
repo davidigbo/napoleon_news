@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_30_184449) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_31_133529) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -105,8 +105,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_30_184449) do
     t.integer "comment_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "commentable_type", null: false
-    t.bigint "commentable_id", null: false
+    t.string "commentable_type"
+    t.bigint "commentable_id"
     t.text "content"
     t.index ["article_id"], name: "index_comments_on_article_id"
     t.index ["author_id"], name: "index_comments_on_author_id"
@@ -116,13 +116,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_30_184449) do
   create_table "contestants", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "contest_id", null: false
+    t.bigint "approved_by_id"
     t.text "description"
     t.integer "approved"
-    t.integer "approved_by"
     t.datetime "approved_at"
+    t.string "stage_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["approved_by_id"], name: "index_contestants_on_approved_by_id"
     t.index ["contest_id"], name: "index_contestants_on_contest_id"
+    t.index ["slug"], name: "index_contestants_on_slug", unique: true
     t.index ["user_id"], name: "index_contestants_on_user_id"
   end
 
@@ -176,10 +180,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_30_184449) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role", default: 0
+    t.boolean "active", default: true
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.boolean "active", default: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -206,6 +210,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_30_184449) do
   add_foreign_key "comments", "users", column: "author_id"
   add_foreign_key "contestants", "contests"
   add_foreign_key "contestants", "users"
+  add_foreign_key "contestants", "users", column: "approved_by_id"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
   add_foreign_key "votes", "contestants"
