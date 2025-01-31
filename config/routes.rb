@@ -17,6 +17,11 @@ Rails.application.routes.draw do
       resources :review_article, only: :show, param: :slug
     end
   end
+
+  resources :contestants, only: [:index, :show, :edit, :update, :destroy], param: :slug do
+  end
+
+  resources :leaderboards, only: [:index]
   
   root to: "home#index"
 
