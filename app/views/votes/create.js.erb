@@ -1,0 +1,4 @@
+document.getElementById('vote-message-<%= @contestant.id %>').innerHTML = '<%= @message %>';
+document.querySelector('button[data-turbo-frame="vote-button-<%= @contestant.id %>"]').disabled = true;
+document.querySelector('button[data-turbo-frame="vote-button-<%= @contestant.id %>"]').classList.add('btn-secondary');
+document.querySelector('button[data-turbo-frame="vote-button-<%= @contestant.id %>"]').classList.remove('btn-success');

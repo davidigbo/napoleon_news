@@ -7,6 +7,7 @@ class Contestant < ApplicationRecord
   belongs_to :contest
   belongs_to :approved_by, class_name: 'User', optional: true
   has_one_attached :image
+  has_many :votes
 
   validates :description, presence: true
   # validates :image, content_type: [:png, :jpg, :jpeg]

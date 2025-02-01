@@ -1,5 +1,5 @@
 class ContestantsController < ApplicationController
-  before_action :set_contest, only: %i[new edit update create]
+  before_action :set_contest, only: %i[new edit show update create]
   before_action :set_contestant, only: %i[edit show update destroy]
   before_action :authenticate_user!, only: %i[new edit update destroy]
   before_action :authorize_admin, only: %i[edit update destroy]
@@ -21,10 +21,9 @@ class ContestantsController < ApplicationController
   def create
     @contestant = @contest.contestants.build(contestant_params.merge(user: current_user))
 
-    # debugger
     if @contestant.save
       respond_to do |format|
-        format.html { redirect_to @contestant, notice: "Welcome to the #{@contest.name} contest!" }
+        format.html { redirect_to contest_contestant_path(@contest, @contestant), notice: "Welcome to the #{@contest.name} contest!" }
         format.json { render json: @contestant, status: :created }
       end
     else

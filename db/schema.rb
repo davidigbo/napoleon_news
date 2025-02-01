@@ -180,10 +180,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_133529) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role", default: 0
-    t.boolean "active", default: true
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.boolean "active", default: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -191,11 +191,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_133529) do
 
   create_table "votes", force: :cascade do |t|
     t.bigint "contestant_id", null: false
-    t.bigint "user_id", null: false
+    t.bigint "voter_id", null: false
+    t.bigint "contest_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["contest_id"], name: "index_votes_on_contest_id"
     t.index ["contestant_id"], name: "index_votes_on_contestant_id"
-    t.index ["user_id"], name: "index_votes_on_user_id"
+    t.index ["voter_id"], name: "index_votes_on_voter_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -214,5 +216,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_133529) do
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
   add_foreign_key "votes", "contestants"
-  add_foreign_key "votes", "users"
+  add_foreign_key "votes", "contests"
+  add_foreign_key "votes", "users", column: "voter_id"
 end
