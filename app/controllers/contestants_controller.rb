@@ -1,11 +1,11 @@
 class ContestantsController < ApplicationController
-  before_action :set_contest, only: %i[new edit show update create]
+  before_action :set_contest, only: %i[index new edit show update create]
   before_action :set_contestant, only: %i[edit show update destroy]
   before_action :authenticate_user!, only: %i[new edit update destroy]
   before_action :authorize_admin, only: %i[edit update destroy]
 
   def index
-    @contestants = Contestant.includes(:user).all
+    @contestants = @contest.contestants.includes(:user).all
   end
 
   def show
@@ -35,8 +35,12 @@ class ContestantsController < ApplicationController
   end
 
   def update
-    if @contestant.update(contestant_params)
-      redirect_to contest_contestant_path(@contest, @contestant), notice: "Contestant was successfully updated."
+    modified_params = if params[:approved].present?
+                        contestant_params.merge(approved_by: current_user, approved_at: Time.current)
+                      end
+
+    if @contestant.update!(modified_params || contestant_params)
+      redirect_to request.referer, notice: "Contestant was successfully updated."
     else
       render :edit
     end

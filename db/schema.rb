@@ -118,7 +118,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_133529) do
     t.bigint "contest_id", null: false
     t.bigint "approved_by_id"
     t.text "description"
-    t.integer "approved"
+    t.integer "approved", default: 0
     t.datetime "approved_at"
     t.string "stage_name"
     t.datetime "created_at", null: false

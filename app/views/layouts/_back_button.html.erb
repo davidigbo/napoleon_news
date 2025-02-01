@@ -1,5 +1,5 @@
 <div class="mb-4 d-none d-md-block">
-  <%= link_to request.referrer || user_admin_index_path, class: 'btn btn-outline-secondary' do %>
+  <%= link_to request.referrer || user_admin_index_path(current_user), class: 'btn btn-outline-secondary' do %>
     <i class="fas fa-arrow-left"></i> Back
   <% end %>
 </div>

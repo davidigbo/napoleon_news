@@ -1,6 +1,10 @@
 <div class="container after-nav py-3">
-  <h2>Enter the Contest</h2>
-  <%= form_with(model: @contestant, url: contest_contestant_path(@contest, @contestant), local: true) do |f| %>
+  <%= render 'layouts/contest_header' %>
+  <div class="mt-4 text-center">
+    <%= link_to "View the Leaderboard", contest_leaderboards_path(@contest), class: "btn btn-outline-warning" %>
+  </div>
+  <h2 class="text-white">Edit Contestant</h2>
+  <%= form_with(model: @contestant, url: contest_contestant_path(@contest, @contestant), local: true, class: 'text-white') do |f| %>
     <% if @contestant.errors.any? %>
       <div id="error_explanation" class="alert alert-danger">
         <h4><%= pluralize(@contestant.errors.count, "error") %> prohibited this contestant from being saved:</h4>
@@ -18,12 +22,12 @@
     <div class="mb-3">
       <%= f.label :description, "About Me", class: "form-label" %>
       <%= f.text_area :description,  maxlength: 250, class: "form-control", rows: 3, required: true %>
-      <small class="form-text text-muted">Maximum 250 characters</small>
+      <small class="form-text text-white">Maximum 250 characters</small>
     </div>
     <div class="mb-3">
       <%= f.label :image, "Upload Picture", class: "form-label" %>
       <%= f.file_field :image, class: "form-control", required: true %>
     </div>
-    <%= f.submit "Submit", class: "btn btn-primary" %>
+    <%= f.submit "Submit", class: "btn btn-warning" %>
   <% end %>
 </div>
