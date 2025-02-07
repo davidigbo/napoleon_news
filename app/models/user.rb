@@ -8,6 +8,8 @@ class User < ApplicationRecord
   # has_many :role, through: :user_roles
   has_many :authored_articles, foreign_key: "author_id", class_name: "Article", dependent: :destroy
   has_many :approved_articles, foreign_key: "approved_by_id", class_name: "Article"
+  has_many :quizzes, dependent: :destroy
+  has_many :responses, dependent: :destroy
 
 
   validates :email, presence: true
