@@ -16,10 +16,16 @@ class UsersController < ApplicationController
     end
   end
 
-  # def authored_articles
-  #   head :unauthorized unless current_user&.admin? || current_user.id == params[author
+  def update
+    user = User.find(params[:id])
+    if user.update(user_params)
+      redirect_to users_path, notice: "#{user.first_name} is now #{user.active ? 'active' : 'inactive'}."
+    else
+      redirect_to users_path, alert: "Failed to update user status."
+    end
+  end
 
-  #   @author = User.find(params[:author_id])
-  #   @articles = @author.authored_articles.order(created_at: :desc).page(params[:page]).per(50)
-  # end
+  def user_params
+    params.require(:user).permit(:id, :active)
+  end
 end

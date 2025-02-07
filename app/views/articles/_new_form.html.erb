@@ -1,7 +1,7 @@
 <%= form_with(model: article, local: true, authenticity_token: true) do |f| %>
   <% if article.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(article.errors.count, "error") %> prohibited this article from being saved:</h2>
+    <div id="error_explanation" class="alert alert-danger">
+      <h4><%= pluralize(article.errors.count, "error") %> prohibited this article from being saved:</h4>
       <ul>
         <% article.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -10,48 +10,73 @@
     </div>
   <% end %>
 
-  <div class="mb-3">
-    <%= f.label :title, "Title", class: "form-label" %>
-    <%= f.text_field :title, class: "form-control" %>
-  </div>
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5 class="card-title">Article Details</h5>
+    </div>
+    <div class="card-body">
+      
+      <!-- Title Field -->
+      <div class="mb-3">
+        <%= f.label :title, "Title", class: "form-label" %>
+        <%= f.text_field :title, class: "form-control", placeholder: "Enter the article title" %>
+      </div>
 
-  <div class="mb-3">
-    <%= f.label :description, "Description", class: "form-label" %>
-    <%= f.text_field :description, maxlength: 160, class: "form-control" %>
-    <small>Maximum 160 characters</small>
-  </div>
+      <!-- Description Field -->
+      <div class="mb-3">
+        <%= f.label :description, "Description", class: "form-label" %>
+        <%= f.text_field :description, maxlength: 160, class: "form-control", placeholder: "Provide a short description (max 160 characters)" %>
+        <small class="form-text text-muted">Maximum 160 characters</small>
+      </div>
 
-  <div class="mb-3">
-    <%= f.label :body, "Content", class: "form-label" %>
-    <%= f.rich_text_area :body, class: "form-control" %>
-  </div>
+      <!-- Body (Content) Field -->
+      <div class="mb-3">
+        <%= f.label :body, "Content", class: "form-label" %>
+        <%= f.rich_text_area :body, class: "form-control", placeholder: "Write the article content here" %>
+      </div>
 
-  <div class="mb-3">
-    <%= f.label :status, "Status", class: "form-label" %>
-    <%# <%= f.select :status, Article.statuses.keys.map { |status| [status.humanize, status] }, {}, class: "form-select" %>
-    <%= f.select :status, [['Draft', 'draft'], ['Under Review', 'under_review']], {}, class: "form-select" %>
-  </div>
+      <!-- Status Field -->
+      <div class="mb-3">
+        <%= f.label :status, "Status", class: "form-label" %>
+        <%= f.select :status, [['Draft', 'draft'], ['Under Review', 'under_review']], {}, class: "form-select" %>
+      </div>
 
-  <div class="mb-3">
-    <%= f.label :category_ids, "Categories", class: "form-label" %>
-    <div>
-      <% Category.all.each do |category| %>
-        <div class="form-check form-check-inline">
-          <%= check_box_tag "article[category_ids][]", category.id, article.category_ids.include?(category.id), class: "form-check-input", id: "category_#{category.id}" %>
-          <%= label_tag "category_#{category.id}", category.name, class: "form-check-label" %>
+      <!-- Author Field -->
+      <div class="mb-3">
+        <%= f.label :author_id, "Author", class: "form-label" %>
+        <%= f.collection_select :author_id, User.authors, :id, lambda { |user| "#{user.first_name} #{user.last_name}" }, { prompt: "Select an Author" }, class: "form-select" %>
+      </div>
+
+      <!-- Anonymize Checkbox -->
+      <div class="mb-3 form-check">
+        <%= f.check_box :anonymize, class: "form-check-input" %>
+        <%= f.label :anonymize, "Anonymize this article", class: "form-check-label" %>
+      </div>
+
+
+      <!-- Categories Field -->
+      <div class="mb-3">
+        <%= f.label :category_ids, "Categories", class: "form-label" %>
+        <div class="form-check">
+          <% Category.all.each do |category| %>
+            <div class="form-check form-check-inline">
+              <%= check_box_tag "article[category_ids][]", category.id, article.category_ids.include?(category.id), class: "form-check-input", id: "category_#{category.id}" %>
+              <%= label_tag "category_#{category.id}", category.name, class: "form-check-label" %>
+            </div>
+          <% end %>
         </div>
-      <% end %>
+      </div>
+
+      <!-- Tags Field -->
+      <div class="mb-3">
+        <%= f.label :tag_list, "Tags (comma-separated)", class: "form-label" %>
+        <%= f.text_field :tag_list, value: article.tag_list, class: "form-control", placeholder: "Enter tags, separated by commas" %>
+      </div>
+
     </div>
   </div>
 
-  <div class="mb-3">
-    <%= f.label :tag_list, "Tags (comma-separated)", class: "form-label" %>
-    <%= f.text_field :tag_list, value: article.tag_list, class: "form-control" %>
-  </div>
-
-  <div class="actions">
+  <div class="text-end">
     <%= f.submit class: "btn btn-primary" %>
   </div>
 <% end %>
-
-

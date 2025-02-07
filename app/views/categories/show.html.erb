@@ -17,7 +17,8 @@
               <a href="<%= article_path(@top_articles.first)%>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
                 <h5 class="card-title fs-5"> <%= @top_articles.first.title %></h5>
               </a>
-              <p>By <strong><%= @top_articles.first.author.first_name + ' ' + @top_articles.first.author.last_name %> | </strong>
+              <p>
+                <%= @top_articles.first.anonymize ? '' : raw("By <strong>#{@top_articles.first.author.first_name} #{@top_articles.first.author.last_name}</strong> | ") %>
                 <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
                 <span class="timestamp" data-utc="<%= @top_articles.first.published_at&.iso8601 %>"></span>
               </p>
@@ -26,7 +27,7 @@
         </div>
         <!-- Left Column -->
         <div class="col-md-4 border-left left-col %> d-flex flex-column justify-content-between">
-          <% if [nil, @top_articles[1]].present? %>
+          <% if [nil, @top_articles[1]].flatten.compact.present? %>
             <% [nil, @top_articles[1]].each_with_index do |article, index| %>
               <% if index == 0 %>
                 <!-- Placeholder card for advertisement -->
@@ -47,7 +48,8 @@
                     <a href="<%= article_path(article)%>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
                       <h6 class="card-title"><%= article.title %></h6>
                     </a>
-                    <p>By <%= article.author.first_name + ' ' + article.author.last_name %> | 
+                    <p>
+                      <%= article.anonymize ? '' : raw("By <strong>#{article.author.first_name} #{article.author.last_name}</strong> | ") %>
                       <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
                       <span class="timestamp" data-utc="<%= article.published_at&.iso8601 %>"></span>
                     </p>
@@ -78,7 +80,9 @@
                       <a href="<%= article_path(article) %>" class="text-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
                         <h6 class="card-title mb-2"><%= article.title %></h6>
                       </a>
-                      <p class="mb-0 fs-6">By <strong><%= article.author.first_name + ' ' + article.author.last_name %></strong> </p>
+                      <p class="mb-0 fs-6">
+                        <%= article.anonymize ? '' : raw("By <strong>#{article.author.first_name} #{article.author.last_name}</strong>") %>
+                      </p>
                       <p><span><i class="fa fa-calendar font-light" aria-hidden="true"></i></span>
                         <span class="timestamp" data-utc="<%= article.published_at&.iso8601 %>"></span>
                       </p>
@@ -109,7 +113,9 @@
                       <p class="card-text">
                         <%= article.description %>
                       </p>
-                      <p>By <%= article.author.first_name+ ' ' +article.author.last_name %></p>
+                      <p>
+                        <%= article.anonymize ? '' : raw("By <strong>#{article.author.first_name} #{article.author.last_name}</strong>") %>
+                      </p>
                     </div>
                   </div>
                   <!-- Image Section -->

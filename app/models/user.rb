@@ -11,6 +11,16 @@ class User < ApplicationRecord
 
 
   validates :email, presence: true
+  scope :authors, -> { where(role: ['author', 'admin', 'editor']) }
+
 
   enum :role, [:visitor, :author, :editor, :admin]
+
+  def active_for_authentication?
+    super && active?
+  end
+
+  def active?
+    self.active
+  end
 end

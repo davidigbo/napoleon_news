@@ -26,6 +26,12 @@
               <% else %>
                 <%= button_to 'Make Author', update_role_user_path(user, role: 'author'), method: :patch, class: 'btn btn-success btn-sm' %>
               <% end %>
+               <!-- Add Active/Inactive Toggle Button -->
+              <% if user.active? %>
+                <%= button_to 'Deactivate', user_path(user, user: { active: false }), method: :patch, class: 'btn btn-warning btn-sm' %>
+              <% else %>
+                <%= button_to 'Activate', user_path(user, user: { active: true }), method: :patch, class: 'btn btn-success btn-sm' %>
+              <% end %>
             </div>
           </div>
         </div>
