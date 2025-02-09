@@ -1,11 +1,14 @@
 <div class="container after-nav py-4 contest-container">
   <!-- Particles will be generated using CSS -->
   <%= render 'layouts/contest_header' %>
+    <div class="my-4 text-center">
+    <%= link_to "Enter the Contest", new_contest_contestant_path(@contest), class: "btn btn-outline-warning" %>
+  </div>
   <!-- Leaderboard Stats -->
   <div class="row mb-4">
     <div class="col-md-6">
       <div class="card shadow-lg border-0 p-2 text-center">
-        <div class="display-5 fw-bold"><%= @contest.contestants.count %></div>
+        <div class="display-5 fw-bold"><%= @contest.contestants.approved.count %></div>
         <p class="text-uppercase text-muted">Total Contestants</p>
       </div>
     </div>

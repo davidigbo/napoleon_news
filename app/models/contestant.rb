@@ -10,6 +10,7 @@ class Contestant < ApplicationRecord
   has_many :votes
 
   validates :description, presence: true
+  validates :user, uniqueness: { scope: :contest }
   # validates :image, content_type: [:png, :jpg, :jpeg]
   # validates :image, content_type: ['image/png', 'image/jpg', 'image/jpeg']
 

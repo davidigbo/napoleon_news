@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :contests, only: [] do
+  resources :contests, only: [:index] do
     resources :contestants, only: [:index, :show, :new, :create, :edit, :update, :destroy], param: :slug do
       resources :votes, only: [:create]
     end
