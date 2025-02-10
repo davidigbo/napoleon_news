@@ -12,11 +12,11 @@ export default class extends Controller {
       setTimeout(() => {
         message.classList.remove('show');
         message.classList.add('fade'); // Ensure fade class is added after removing show
-      }, 1000); // 1 second for auto-dismissal, adjust as needed
+      }, 4000); // 1 second for auto-dismissal, adjust as needed
 
       setTimeout(() => {
         message.remove(); // Completely remove the element after fade out
-      }, 2000); // Wait for the fade transition before removing the element
+      }, 4000); // Wait for the fade transition before removing the element
     });
   }
 }

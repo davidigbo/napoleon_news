@@ -42,7 +42,7 @@ class ContestantsController < ApplicationController
     if @contestant.update!(modified_params || contestant_params)
       redirect_to request.referer, notice: "Contestant was successfully updated."
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

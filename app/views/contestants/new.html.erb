@@ -6,6 +6,16 @@
   </div>
   <h2 class="text-warning">Enter the Contest</h2>
   <%= form_with model: @contestant, url: contest_contestants_path, html: { class: "needs-validation text-white", enctype: "multipart/form-data", novalidate: true } do |f| %>
+    <% if @contestant.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger">
+        <h4><%= pluralize(@contestant.errors.count, "error") %> prohibited this contestant from being saved:</h4>
+        <ul>
+          <% @contestant.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
     <div class="mb-3">
       <%= f.label :stage_name, "Stage Name", class: "form-label" %>
       <%= f.text_field :stage_name, class: "form-control", required: true %>
