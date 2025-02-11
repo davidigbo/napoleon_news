@@ -137,7 +137,7 @@ GEM
       logger
     faraday-net_http (3.4.0)
       net-http (>= 0.5.0)
-    ffi (1.17.0-x86_64-linux-gnu)
+    ffi (1.17.1-x86_64-linux-gnu)
     font-awesome-sass (6.5.2)
       sassc (~> 2.0)
     friendly_id (5.5.1)
@@ -146,8 +146,8 @@ GEM
       activesupport (>= 6.1)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
-    image_processing (1.13.0)
-      mini_magick (>= 4.9.5, < 5)
+    image_processing (1.14.0)
+      mini_magick (>= 4.9.5, < 6)
       ruby-vips (>= 2.0.17, < 3)
     importmap-rails (2.0.3)
       actionpack (>= 6.0.0)
@@ -180,7 +180,7 @@ GEM
       childprocess (~> 5.0)
     letter_opener (1.10.0)
       launchy (>= 2.2, < 4)
-    logger (1.6.1)
+    logger (1.6.5)
     loofah (2.23.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -200,7 +200,9 @@ GEM
       logger
       mime-types-data (~> 3.2015)
     mime-types-data (3.2025.0204)
-    mini_magick (4.13.2)
+    mini_magick (5.1.2)
+      benchmark
+      logger
     mini_mime (1.1.5)
     minitest (5.25.2)
     msgpack (1.7.5)
@@ -311,7 +313,7 @@ GEM
       rubocop-performance
       rubocop-rails
     ruby-progressbar (1.13.0)
-    ruby-vips (2.2.2)
+    ruby-vips (2.2.3)
       ffi (~> 1.12)
       logger
     rubyzip (2.3.2)
@@ -382,7 +384,7 @@ DEPENDENCIES
   discard (~> 1.4)
   font-awesome-sass
   friendly_id (~> 5.4)
-  image_processing (~> 1.2)
+  image_processing (~> 1.14)
   importmap-rails
   jbuilder
   kaminari
