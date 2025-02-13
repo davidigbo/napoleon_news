@@ -15,7 +15,8 @@ class Contestant < ApplicationRecord
   # validates :image, content_type: ['image/png', 'image/jpg', 'image/jpeg']
 
 
-  enum approved: { pending: 0, approved: 1, rejected: 2 }
+  # enum approved: { pending: 0, approved: 1, rejected: 2 }
+  enum approved: [:pending, :approved, :rejected]
 
   friendly_id :stage_name, use: :slugged
 
