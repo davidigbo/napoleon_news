@@ -13,6 +13,7 @@
     <link rel="manifest" href="/manifest.json">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/@hotwired/turbo@7/dist/turbo.es2017-umd.js", defer: true %>
   </head>
   <body class="d-flex flex-column min-vh-100 pt-4" data-controller="flash-notifications">
     <div class="container-fluid p-0 flex-grow-1 mb-5 contest-container">
