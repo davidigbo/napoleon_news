@@ -23,7 +23,7 @@ class ContestantsController < ApplicationController
 
     if @contestant.save
       respond_to do |format|
-        format.html { redirect_to contest_contestant_path(@contest, @contestant), notice: "Welcome to the #{@contest.name} contest!" }
+        format.html { redirect_to contest_contestant_path(@contest, @contestant), notice: "Welcome to the #{@contest.name} contest! Your submission has been submitted for review" }
         format.json { render json: @contestant, status: :created }
       end
     else
