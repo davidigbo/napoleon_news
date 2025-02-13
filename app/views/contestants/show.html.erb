@@ -31,7 +31,7 @@
               <div class="card shadow-lg border-0 p-4 bg-light text-center">
                 <%= turbo_frame_tag "vote-button-#{@contestant.id}" do %>
                   <% if !user_signed_in? %>
-                    <%= link_to new_user_session_path, class: "btn btn-info border px-4 py-2 mt-2 w-100" do %>
+                    <%= link_to new_user_session_path, class: "btn btn-info border px-4 py-2 mt-2 w-100", data: { turbo: false } do %>
                       <i class="fas fa-thumbs-up"></i> Login to Vote
                     <% end %>
                   <% elsif current_user.voted?(@contest) && current_user.id != @contestant.user.id %>
