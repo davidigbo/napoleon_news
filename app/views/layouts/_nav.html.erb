@@ -20,6 +20,8 @@
             <li><%= link_to 'Interviews', category_path(@all_categories.find_by(name: 'Interview')), class: 'dropdown-item' %></li>
             <li><%= link_to 'Stories', category_path(@all_categories.find_by(name: 'Stories')), class: 'dropdown-item' %></li>
             <li><%= link_to 'CSR', category_path(@all_categories.find_by(name: 'CSR')), class: 'dropdown-item' %></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><%= link_to 'Contact Us', '#', class: 'dropdown-item' %></li>
           </ul>
         </li>
         <!-- Leadership Dropdown -->
@@ -53,9 +55,6 @@
           <ul class="dropdown-menu">
             <li><%= link_to 'Men', category_path(@all_categories.find_by(name: 'Men')), class: 'dropdown-item' %></li>
             <li><%= link_to 'Youth', category_path(@all_categories.find_by(name: 'Youth')), class: 'dropdown-item' %></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><%= link_to 'MBGN Contest', '#', class: 'dropdown-item' %></li>
-            <li><%= link_to 'Instant Quiz', '#', class: 'dropdown-item' %></li>
           </ul>
         </li>
         <!-- News Dropdown -->
@@ -71,11 +70,28 @@
             <li><%= link_to 'Culture', category_path(@all_categories.find_by(name: 'Culture')), class: 'dropdown-item' %></li>
           </ul>
         </li>
+
+        <!-- Opportunities Dropdown -->
+        <li class="nav-item dropdown mx-0" data-turbo-permanent>
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Opportunities
+          </a>
+          <ul class="dropdown-menu">
+            <% if @active_contest %>
+              <li><%= link_to 'MBGN Contest', contest_leaderboards_path(@active_contest), class: 'dropdown-item'%></li>
+            <% end %>
+            <li><%= link_to 'Instant Quiz', '#', class: 'dropdown-item'%></li>
+            <li><hr class="dropdown-divider"></li>
+            <% if @others_category %>
+              <li><%= link_to 'Others', category_path(@others_category), class: 'dropdown-item' %></li>
+            <% end %>
+          </ul>
+        </li>
         <!-- Static Links -->
-        <%# <li class="nav-item mx-0 mx-lg-1">
-          <a class="nav-link active" aria-current="page" href="#">MBGN Contest</a>
-        </li> %>
-        <li><%= link_to 'MBGN Contest', contest_leaderboards_path(@active_contest), class: 'nav-link active'%></li>
+        <li class="nav-item mx-0 mx-lg-1">
+          <a class="nav-link active" aria-current="page" href="#">Events</a>
+        </li>
+        
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Contact Us</a>
         </li>

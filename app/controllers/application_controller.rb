@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   # allow_browser versions: :modern
   before_action :configure_permitted_parameters, :force_html_format, if: :devise_controller?
-  before_action :set_nav_link_variables,:set_active_contest
+  before_action :set_nav_link_variables,:set_active_contest, :set_others_category
 
   around_action :set_time_zone
 
@@ -19,6 +19,10 @@ class ApplicationController < ActionController::Base
 
   def set_active_contest
     @active_contest = Contest.first
+  end
+
+  def set_others_category
+    @others_category = Category.find_by(name: 'Others')
   end
 
 
