@@ -1,13 +1,57 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <title><%= @subject || 'Napoleon News' %></title>
     <style>
-      /* Email styles need to be inline */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 20px auto;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        text-align: center;
+        padding: 20px 0;
+      }
+      .header img {
+        max-width: 150px;
+      }
+      .content {
+        font-size: 16px;
+        color: #333;
+        line-height: 1.5;
+        padding: 20px;
+      }
+      .footer {
+        text-align: center;
+        font-size: 14px;
+        color: #777;
+        padding: 20px;
+        border-top: 1px solid #ddd;
+      }
     </style>
   </head>
-
   <body>
-    <%= yield %>
+    <div class="container">
+      <div class="header">
+        <img src="cid:icon.png" alt="Napoleon News Logo">
+      </div>
+      <div class="content">
+        <%= yield %>
+      </div>
+      <div class="footer">
+        <p>Need help? Contact us at <a href="mailto:info@napoleonnews.com">info@napoleonnews.com</a></p>
+        <p>&copy; <%= Time.current.year %> Napoleon News. All rights reserved.</p>
+      </div>
+    </div>
   </body>
 </html>
