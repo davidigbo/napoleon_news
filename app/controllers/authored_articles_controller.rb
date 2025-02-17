@@ -4,6 +4,6 @@ class AuthoredArticlesController < ApplicationController
     head :unprocessable_entity if params[:author_id].blank?
 
     @author = User.find(params[:author_id])
-    @articles = @author.authored_articles.order(created_at: :desc).page(params[:page]).per(3)
+    @articles = @author.authored_articles.order(created_at: :desc).page(params[:page]).per(20)
   end
 end
