@@ -42,3 +42,21 @@
   display: block;
   margin: 0 auto;
 }
+.carousel-item {
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.carousel-item:hover {
+  transform: scale(1.05); 
+  opacity: 0.9; 
+}
+
+.carousel-caption {
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.carousel-item:hover .carousel-caption {
+  transform: translateY(-10px);
+  opacity: 1;
+}
+
