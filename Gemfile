@@ -71,6 +71,7 @@ gem "discard", "~> 1.4"
 gem "meta-tags"
 
 gem "rake", "~> 13.0"
+gem 'mailgun-ruby', '~>1.3.2'
 
 group :production do
   gem "rails_12factor"

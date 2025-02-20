@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :quizzes, dependent: :destroy
   has_many :responses, dependent: :destroy
 
+  has_many :votes, foreign_key: 'voter_id'
 
   validates :email, presence: true
   scope :authors, -> { where(role: ['author', 'admin', 'editor']) }
@@ -24,5 +25,9 @@ class User < ApplicationRecord
 
   def active?
     self.active
+  end
+
+  def voted?(contest)
+    votes.exists?(contest: contest)
   end
 end

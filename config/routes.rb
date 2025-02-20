@@ -18,10 +18,14 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :contestants, only: [:index, :show, :edit, :update, :destroy], param: :slug do
+  resources :contests, only: [:index] do
+    resources :contestants, only: [:index, :show, :new, :create, :edit, :update, :destroy], param: :slug do
+      resources :votes, only: [:create]
+    end
+    resources :leaderboards, only: [:index]
   end
 
-  resources :leaderboards, only: [:index]
+  
   
   root to: "home#index"
 

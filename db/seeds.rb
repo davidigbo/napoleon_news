@@ -15,7 +15,8 @@ categories = [
   { title: 'Business', children: %w[Finance SMEs Innovation Listings] },
   { title: 'Society', children: %w[Men Youth]},
   { title: 'News', children: %w[Trending Entertainment Tech Sports Culture]},
-  { title: 'Carousel', children: []}
+  { title: 'Carousel', children: []},
+  { title: 'Others', children: []}
 ]
 
 categories.each do |category_data|

@@ -1,0 +1,86 @@
+<div class="container after-nav py-4 contest-container">
+  <!-- Particles will be generated using CSS -->
+  <%= render 'layouts/contest_header' %>
+    <div class="my-4 text-center">
+    <%= link_to "Enter the Contest", new_contest_contestant_path(@contest), class: "btn btn-outline-warning" %>
+  </div>
+  <!-- Leaderboard Stats -->
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card shadow-lg border-0 p-2 text-center">
+        <div class="display-5 fw-bold"><%= @contest.contestants.approved.count %></div>
+        <p class="text-uppercase text-muted">Total Contestants</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card shadow-lg border-0 p-2 text-center">
+        <div class="display-5 fw-bold"><%= @total_votes %></div>
+        <p class="text-uppercase text-muted">Total Votes</p>
+      </div>
+    </div>
+  </div>
+  <!-- Leaderboard -->
+  <div class="card shadow-lg border-0 p-4 bg-light">
+    <h2 class="text-center mb-4">Leaderboard</h2>
+    <!-- Header Row -->
+    <div class="list-group-item d-flex align-items-center justify-content-between p-3 shadow-sm bg-white rounded fw-bold text-uppercase text-muted">
+      <div class="text-center" style="width: 10%;">Rank</div>
+      <div class="text-center" style="width: 35%;">Contestant</div>
+      <div class="text-center" style="width: 15%;">Votes</div>
+      <div class="text-center" style="width: 15%;">% of Votes</div>
+    </div>
+    <!-- Contestant Rows -->
+    <div class="list-group">
+      <% @contestants.each_with_index do |contestant, index| %>
+        <div class="list-group-item d-flex align-items-center justify-content-between p-3 shadow-sm mb-2 bg-white rounded">
+          <!-- Ranking -->
+          <div class="fw-bold text-primary text-center fs-4" style="width: 10%;">#<%= index + 1 %></div>
+          <!-- Contestant: Image + Name -->
+          <div class="d-flex align-items-center contestant-link" style="width: 35%;">
+            <!-- Image -->
+            <div class="me-3 contestant-image-wrapper" style="width: 50px; height: 50px;">
+              <%= link_to contest_contestant_path(@contest, contestant) do %>
+                <% if contestant.image.attached? %>
+                  <%= image_tag contestant.image.variant(resize_to_limit: [50, 50]), 
+                        class: "img-fluid rounded-circle border shadow-sm", 
+                        alt: contestant.stage_name %>
+                <% else %>
+                  <div class="rounded-circle border shadow-sm d-flex align-items-center justify-content-center bg-light" style="width: 50px; height: 50px;">
+                    <i class="fas fa-user text-muted"></i>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+            <!-- Name -->
+            <div>
+              <%= link_to contestant.stage_name, contest_contestant_path(@contest, contestant), class: "contestant-link fw-bold text-dark text-decoration-none" %>
+            </div>
+          </div>
+          <!-- Votes -->
+          <div class="fw-bold text-center text-success" style="width: 15%;">
+            <%= contestant.votes.count %>
+          </div>
+          <!-- Percentage -->
+          <div class="fw-bold text-center text-muted" style="width: 15%;">
+            <%= number_to_percentage((contestant.votes.count.to_f / @total_votes) * 100, precision: 1) %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<style>
+  /* Hover effect for contestant link */
+  .contestant-link:hover {
+    /* color: #ffc107 !important; Bootstrap warning color */
+    text-decoration: underline !important;
+  }
+
+  .contestant-image-wrapper img {
+    transition: transform 0.3s ease-in-out; /* Smooth scaling */
+  }
+
+  .contestant-image-wrapper:hover img {
+    transform: scale(1.2); /* Increase image size on hover */
+  }
+</style>

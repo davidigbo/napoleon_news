@@ -1,0 +1,114 @@
+<div class="container after-nav py-3">
+  <%= render 'layouts/contest_header' %>
+  <div class="my-4 text-center">
+    <%= link_to "View the Leaderboard", contest_leaderboards_path(@contest), class: "btn btn-outline-warning" %>
+  </div>
+  <div class="row">
+    <!-- Left Empty Column -->
+    <div class="col-md-0"></div>
+    <!-- Main Contestant Column -->
+    <div class="col-md-12">
+      <div class="card shadow-lg border-0 p-4 bg-light text-center">
+        <h2 class="mb-3"><%= @contestant.stage_name %></h2>
+        <div class="container mt-4">
+          <div class="row">
+            <!-- Left Column (9) - Contestant Image & About Me -->
+            <div class="col-lg-9">
+              <div class="card shadow-lg border-0 p-4">
+                <%# <h2 class="text-center mb-3"><%= @contestant.stage_name %>
+                <% if @contestant.image.attached? %>
+                  <%= image_tag @contestant.image.variant(resize_to_limit: [800, 900]), 
+                        class: "img-fluid rounded shadow contest-image", 
+                        alt: "Contestant Image" %>
+                <% else %>
+                  <p class="text-center text-muted">No image available</p>
+                <% end %>
+                <p class="mt-3 text-center"><%= @contestant.description %></p>
+              </div>
+            </div>
+            <!-- Right Column (3) - Voting & Share Buttons -->
+            <div class="col-lg-3">
+              <div class="card shadow-lg border-0 p-4 bg-light text-center">
+                <%= turbo_frame_tag "vote-button-#{@contestant.id}" do %>
+                  <% if !user_signed_in? %>
+                    <%= link_to new_user_session_path, class: "btn btn-info border px-4 py-2 mt-2 w-100", data: { turbo: false } do %>
+                      <i class="fas fa-thumbs-up"></i> Login to Vote
+                    <% end %>
+                  <% elsif current_user.voted?(@contest) && current_user.id != @contestant.user.id %>
+                    <%= button_tag class: "btn btn-success disabled px-4 py-2 mt-2 w-100" do %>
+                      <div><i class="fas fa-thumbs-up"></i></div>
+                      <div>You have voted</div>
+                    <% end %>
+                  <% elsif current_user.id != @contestant.user.id %>
+                    <%= button_to contest_contestant_votes_path(@contest, @contestant), 
+                method: :post, 
+                remote: true, 
+                class: "btn btn-success px-4 py-2 mt-2 w-100", 
+                data: { turbo_method: :post, turbo_frame: "vote-button-#{@contestant.id}" } do %>
+                      <i class="fas fa-thumbs-up"></i> Vote
+                    <% end %>
+                  <% end %>
+                  <!-- Vote Count -->
+                  <div class="mt-4">
+                    <div class="card shadow-sm border-0 p-3 bg-white">
+                      <h5 class="text-uppercase text-muted mb-1">Total Votes</h5>
+                      <div class="display-6 fw-bold text-primary">
+                        <%= @contestant.votes.count %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+                <!-- Share Buttons -->
+                <div class="mt-4">
+                  <div class="row g-2">
+                    <div class="col-12">
+                      <div class="display-6 me-3 mb-3"><i class="fas fa-share-alt fa-lg"></i></div>
+                      <%= link_to "https://www.facebook.com/sharer/sharer.php?u=#{CGI.escape(contest_contestant_url(@contest, @contestant))}", 
+                class: "btn w-100", 
+                style: "background-color: #3b5998; color: white;", 
+                target: "_blank" do %>
+                        <i class="fab fa-facebook-f me-2"></i> Share on Facebook
+                      <% end %>
+                    </div>
+                    <div class="col-12">
+                      <%= link_to "https://twitter.com/intent/tweet?url=#{contest_contestant_url(@contest, @contestant)}&text=Check out #{@contestant.stage_name} in this contest!", 
+                class: "btn w-100", 
+                style: "background-color: #000000; color: white;", 
+                target: "_blank" do %>
+                        <i class="fab fa-x-twitter me-2"></i> Share on X
+                      <% end %>
+                    </div>
+                    <div class="col-12">
+                      <%= link_to "https://wa.me/?text=#{URI.encode_www_form_component("Check out #{@contestant.stage_name} in this contest! #{contest_contestant_url(@contest, @contestant)}")}", 
+                class: "btn btn-success text-white w-100", 
+                target: "_blank" do %>
+                        <i class="fab fa-whatsapp me-2"></i> Share on WhatsApp
+                      <% end %>
+                    </div>
+                    <div class="col-12">
+                      <button class="btn btn-secondary w-100" onclick="copyContestantLink()">
+                        <i class="fas fa-copy me-2"></i> Copy Link
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Right Empty Column -->
+    <div class="col-md-0"></div>
+  </div>
+</div>
+<script>
+  function copyContestantLink() {
+    const link = "<%= contest_contestant_url(@contest, @contestant) %>";
+    navigator.clipboard.writeText(link).then(() => {
+      alert("Contestant link copied to clipboard!");
+    }).catch(err => {
+      console.error("Failed to copy link: ", err);
+    });
+  }
+</script>

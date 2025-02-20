@@ -34,3 +34,11 @@
 .hover-scale img:hover {
   transform: scale(1.01); /* Slightly increases the image size */
 }
+
+.contest-image {
+  max-height: 60vh; /* Ensures image doesn't exceed 80% of viewport height */
+  width: auto; /* Maintains aspect ratio */
+  object-fit: contain; /* Ensures the full image is visible */
+  display: block;
+  margin: 0 auto;
+}

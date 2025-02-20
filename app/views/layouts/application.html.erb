@@ -11,13 +11,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" alt="napoleon-news-logo">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" alt="napoleon-news-logo">
     <link rel="manifest" href="/manifest.json">
-    
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-
+    <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/@hotwired/turbo@7/dist/turbo.es2017-umd.js", defer: true %>
   </head>
   <body class="d-flex flex-column min-vh-100 pt-4" data-controller="flash-notifications">
-    <div class="container-fluid p-0 flex-grow-1 mb-5">
+    <div class="container-fluid p-0 flex-grow-1 mb-5 contest-container">
       <%= render 'layouts/nav' %>
       <% flash.each do |type, message| %>
         <div class="alert alert-<%= type == 'alert' ? 'danger' : type == 'notice' ? 'success' : type %> alert-dismissible fade show after-nav" role="alert">
