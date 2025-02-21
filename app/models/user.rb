@@ -11,6 +11,8 @@ class User < ApplicationRecord
   has_many :quizzes, dependent: :destroy
   has_many :responses, dependent: :destroy
 
+  has_one_attached :profile_picture
+  
   has_many :votes, foreign_key: 'voter_id'
 
   validates :email, presence: true
@@ -21,6 +23,10 @@ class User < ApplicationRecord
 
   def active_for_authentication?
     super && active?
+  end
+
+  def name
+    "#{first_name} #{last_name}"
   end
 
   def active?

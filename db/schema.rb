@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema[7.2].define(version: 2025_02_07_063450) do
-=======
-ActiveRecord::Schema[7.2].define(version: 2025_01_31_133529) do
->>>>>>> dev
+ActiveRecord::Schema[7.2].define(version: 2025_02_21_220029) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -231,11 +227,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_133529) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role", default: 0
-    t.boolean "active", default: true
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.boolean "active", default: true
+    t.text "bio"
+    t.string "profile_picture"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -265,7 +263,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_133529) do
   add_foreign_key "comments", "users", column: "author_id"
   add_foreign_key "contestants", "contests"
   add_foreign_key "contestants", "users"
-<<<<<<< HEAD
+  add_foreign_key "contestants", "users", column: "approved_by_id"
   add_foreign_key "options", "questions"
   add_foreign_key "quiz_questions", "questions"
   add_foreign_key "quiz_questions", "quizzes"
@@ -273,9 +271,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_133529) do
   add_foreign_key "responses", "questions"
   add_foreign_key "responses", "quizzes"
   add_foreign_key "responses", "users"
-=======
-  add_foreign_key "contestants", "users", column: "approved_by_id"
->>>>>>> dev
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
   add_foreign_key "votes", "contestants"

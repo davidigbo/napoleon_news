@@ -1,0 +1,4 @@
+<div class="field">
+<%= form.label :user_id, "writer" %>
+<%= form.collection_select :user_id, User.all, :id, :full_name, { prompt: "Select a writer" }, { class: 'form-select' } %>
+</div>

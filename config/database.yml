@@ -11,10 +11,8 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: <%= ENV['PG_USERNAME'] %>
   password: <%= ENV['PG_PASSWORD'] %>
-  username: moses
-  password: mowdmowd
-
-
+  username: david
+  password: david
 
 development:
   <<: *default
