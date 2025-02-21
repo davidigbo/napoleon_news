@@ -41,6 +41,7 @@ Rails.application.routes.draw do
             get :approved
           end
         end
+        resources :analytics, only: :index
       end
     end
     member do
