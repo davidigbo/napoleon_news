@@ -45,7 +45,7 @@ class ArticlesController < ApplicationController
     @article_image_url = article_image.present? ? url_for(article_image) : nil
     # @article_body = @article_image_url.present? ? @article.body_without_images : @article.body
     @article_body = @article.body
-    
+    @comments = @article.comments.reader_comment.order(created_at: :desc)
 
     set_meta_tags title: @article.title,
                   description: @article.description,

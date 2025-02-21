@@ -1,5 +1,4 @@
 <div class="container after-nav py-5 mt-5">
-  <%= render "layouts/back_button" %>
   <h1 class="text-center mb-4">Draft Articles</h1>
   <div class="row g-3">
     <% @draft_articles.each_with_index do |article, index| %>
@@ -25,5 +24,6 @@
       </div>
     <% end %>
   </div>
+  <%= render "article_categories_links" %>
   <%= paginate @draft_articles, param_name: :draft_page, anchor: 'draft' %>
 </div>
