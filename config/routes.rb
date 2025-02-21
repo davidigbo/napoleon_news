@@ -47,4 +47,6 @@ Rails.application.routes.draw do
       patch :update_role
     end
   end
+
+  post "/contact_us", to: "contacts#create"
 end

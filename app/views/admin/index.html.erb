@@ -3,7 +3,7 @@
   <div class="row justify-content-center">
 
     <!-- Manage Articles Card -->
-    <div class="col-md-3 mb-md-0 mb-4">
+    <div class="col-md-3 mb-4">
       <div class="card text-center shadow-sm">
         <div class="card-body">
           <i class="fas fa-pencil-square fa-3x text-primary mb-3"></i>
@@ -15,7 +15,7 @@
     </div>
 
     <!-- Manage Articles Card -->
-    <div class="col-md-3 mb-md-0 mb-4">
+    <div class="col-md-3 mb-4">
       <div class="card text-center shadow-sm">
         <div class="card-body">
           <i class="fas fa-newspaper fa-3x text-info mb-3"></i>
@@ -32,7 +32,7 @@
 
     <!-- Manage Users Card -->
     <% if current_user.admin? %>
-      <div class="col-md-3 mb-md-0 mb-4">
+      <div class="col-md-3 mb-4">
         <div class="card text-center shadow-sm">
           <div class="card-body">
             <i class="fas fa-users fa-3x text-success mb-3"></i>
@@ -46,13 +46,26 @@
 
     <!-- Manage Contests Card -->
     <% if current_user.admin? %>
-      <div class="col-md-3 mb-md-0 mb-4">
+      <div class="col-md-3 mb-4">
         <div class="card text-center shadow-sm">
           <div class="card-body">
             <i class="fas fa-trophy fa-3x text-warning mb-3"></i>
             <h5 class="card-title">Manage Contests</h5>
             <p class="card-text">Manage contests.</p>
             <%= link_to 'Go to Contests', contests_path, class: 'btn btn-warning' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <% if current_user.admin? %>
+      <div class="col-md-3 mb-4">
+        <div class="card text-center shadow-sm">
+          <div class="card-body">
+            <i class="fas fa-chart-line fa-3x text-secondary mb-3"></i>
+            <h5 class="card-title">Analytics</h5>
+            <p class="card-text">View website analytics.</p>
+            <%= link_to 'View Analytics', '#', class: 'btn btn-secondary' %>
           </div>
         </div>
       </div>
