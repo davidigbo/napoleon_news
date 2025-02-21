@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  # get "responses/create"
+  # get "questions/index"
+  # get "questions/show"
+  # get "quizzes/index"
+  # get "quizzes/show"
   devise_for :users
 
   resources :categories, only: [:index, :show] do
@@ -47,4 +52,13 @@ Rails.application.routes.draw do
       patch :update_role
     end
   end
+
+  resources :quizzes, only: [:index, :show] do
+    member do
+      get "start"
+    end
+  end
+
+  resources :questions, only: [:index, :show]
+  resources :responses, only: [:create]
 end

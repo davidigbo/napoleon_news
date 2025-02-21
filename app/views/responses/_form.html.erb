@@ -1,0 +1,16 @@
+<%= form_with model: @response, url: responses_path, method: :post do |f| %>
+  <%= f.hidden_field :quiz_id, value: @quiz.id %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  
+  <% @quiz.questions.each do |question| %>
+    <p><%= question.question_text %></p>
+    <% question.options.each do |option| %>
+      <label>
+        <%= radio_button_tag "response[question_id][#{question.id}]", option.id %>
+        <%= option.content %>
+      </label>
+    <% end %>
+  <% end %>
+
+  <%= f.submit "Submit Response" %>
+<% end %>

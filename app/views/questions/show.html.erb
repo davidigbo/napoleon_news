@@ -1,0 +1,7 @@
+<h1><%= @question.question_text %></h1>
+<ul>
+  <% @question.options.each do |option| %>
+    <li><%= option.content %></li>
+  <% end %>
+</ul>
+<%= link_to "Back to Questions", questions_path %>

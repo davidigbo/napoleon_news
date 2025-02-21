@@ -1,0 +1,16 @@
+<h1><%= @quiz.title %></h1>
+
+<% @quiz.questions.each do |question| %>
+  <div>
+    <p><%= question.question_text %></p>
+    <% question.options.each do |option| %>
+      <label>
+        <input type="radio" name="question_<%= question.id %>" value="<%= option.id %>">
+        <%= option.content %>
+      </label>
+    <% end %>
+  </div>
+<% end %>
+
+<button>Submit</button>
+
