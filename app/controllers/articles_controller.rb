@@ -68,6 +68,8 @@ class ArticlesController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @article }
+
+      @related_articles = Article.where.not(id: @article.id).limit(5)
     end
   end
 

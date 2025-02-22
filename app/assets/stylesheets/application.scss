@@ -49,3 +49,33 @@
   border-radius: 50%;
   object-fit: cover;
 }
+
+.related-articles {
+  margin-top: 40px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.related-articles h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.related-articles ul {
+  list-style: none;
+  padding: 0;
+}
+
+.related-articles li {
+  margin-bottom: 8px;
+}
+
+.related-articles a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.related-articles a:hover {
+  text-decoration: underline;
+}

@@ -26,7 +26,17 @@
          <p><%= @article.author.bio.presence || "Bio not available." %></p>
   </div>
 
-
+<!-- Read more -->
+<div class="related-articles">
+  <h3>Read More</h3>
+  <ul>
+    <% @related_articles.each do |related_article| %>
+      <li>
+        <%= link_to related_article.title, article_path(related_article) %>
+      </li>
+    <% end %>
+  </ul>
+</div>
 
       <!-- Tags -->
       <div class="row">
