@@ -95,14 +95,21 @@ class AnalyticsController < ApplicationController
 
     # Cummulative User Count
     weekly_user_counts = User
-      .select(Arel.sql("DATE_TRUNC('week', created_at) AS week_start, COUNT(*) OVER (ORDER BY DATE_TRUNC('week', created_at) ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_count"))
-      .where("created_at >= ?", 6.months.ago)
-      .group("week_start")
-      .order("week_start")
-
+      .select(Arel.sql("
+        week_start, 
+        SUM(user_count) OVER (ORDER BY week_start ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_count
+      "))
+      .from(Arel.sql("
+        (SELECT DATE_TRUNC('week', created_at) AS week_start, COUNT(*) AS user_count
+        FROM users
+        WHERE created_at >= NOW() - INTERVAL '6 months'
+        GROUP BY week_start
+        ORDER BY week_start) AS subquery
+      "))
+  
     cumm_weekly_user_labels = weekly_user_counts.map { |row| (row.week_start + 6.days).strftime("%b %d, %Y") }
     cumm_weekly_user_data = weekly_user_counts.map(&:cumulative_count)
-
+    
     @weekly_cumulative_user_chart_data = {
       labels: cumm_weekly_user_labels,
       datasets: [{
@@ -114,10 +121,17 @@ class AnalyticsController < ApplicationController
     }.to_json
 
     monthly_user_counts = User
-      .select(Arel.sql("DATE_TRUNC('month', created_at) AS month_start, COUNT(*) OVER (ORDER BY DATE_TRUNC('month', created_at) ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_count"))
-      .where("created_at >= ?", 6.months.ago)
-      .group("month_start")
-      .order("month_start")
+    .select(Arel.sql("
+      month_start, 
+      SUM(user_count) OVER (ORDER BY month_start ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_count
+    "))
+    .from(Arel.sql("
+      (SELECT DATE_TRUNC('month', created_at) AS month_start, COUNT(*) AS user_count
+      FROM users
+      WHERE created_at >= NOW() - INTERVAL '6 months'
+      GROUP BY month_start
+      ORDER BY month_start) AS subquery
+    "))
 
     cumm_monthly_user_labels = monthly_user_counts.map { |row| row.month_start.strftime("%b %Y") }
     cumm_monthly_user_data = monthly_user_counts.map(&:cumulative_count)
