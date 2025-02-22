@@ -28,9 +28,6 @@ class ApplicationController < ActionController::Base
   end
 
   def track_page_view(page_type:, page_id: nil, metadata: {})
-    home_url = request.base_url + "/"
-
-    return if request.referer == home_url
     hashed_ip = Digest::SHA256.hexdigest(request.remote_ip)
     PageView.create!(
       page_type: page_type,
