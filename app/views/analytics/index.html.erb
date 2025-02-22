@@ -1,34 +1,8 @@
 <%# <div class="container-fluid"> %>
-<div class="container after-nav py-3 flex-grow-1">
+<div class="container after-nav py-5 mt-5 flex-grow-1">
   <h1 class="text-center mb-4"> Analytics </h1>
   <div class="row">
-    <!-- Sidebar -->
-    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-      <div class="position-sticky">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link active" href="#">
-              <i class="fas fa-chart-line"></i> Dashboard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fas fa-newspaper"></i> Articles
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fas fa-users"></i> Users
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fas fa-chart-bar"></i> Analytics
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <%= render 'admin/dashboard_sidebar' %>
     <!-- Main Content -->
     <main class="col-md-10 ms-sm-auto px-md-4">
       <div class="row mt-4">
@@ -75,7 +49,7 @@
         </div>
         <div class="col-md-3">
           <div class="card text-white bg-secondary mb-3">
-            <div class="card-header">New Subscribers</div>
+            <div class="card-header">New Users (7 days)</div>
             <div class="card-body">
               <h3 class="card-title"><%= @user_metrics[:new] %></h3>
             </div>
@@ -96,7 +70,9 @@
           <div class="card">
             <div class="card-header">User Growth</div>
             <div class="card-body">
-              <canvas id="userGrowthChart"></canvas>
+              <%# <canvas id="userGrowthChart"></canvas> %>
+              <canvas id="userGrowthChart" width="400" height="200"></canvas>
+
             </div>
           </div>
         </div>
@@ -104,7 +80,8 @@
           <div class="card">
             <div class="card-header">Article Engagement</div>
             <div class="card-body">
-              <canvas id="engagementChart"></canvas>
+              <%# <canvas id="engagementChart"></canvas> %>
+              <canvas id="engagementChart" width="400" height="200"></canvas>
             </div>
           </div>
         </div>
@@ -113,10 +90,11 @@
   </div>
 </div>
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const ctx1 = document.getElementById("userGrowthChart").getContext("2d");
-    const ctx2 = document.getElementById("engagementChart").getContext("2d");
+  document.addEventListener("turbo:load", function () {
+  const ctx1 = document.getElementById("userGrowthChart")?.getContext("2d");
+  const ctx2 = document.getElementById("engagementChart")?.getContext("2d");
 
+  if (ctx1) {
     new Chart(ctx1, {
       type: "line",
       data: {
@@ -129,7 +107,9 @@
         }]
       }
     });
+  }
 
+  if (ctx2) {
     new Chart(ctx2, {
       type: "bar",
       data: {
@@ -141,5 +121,6 @@
         }]
       }
     });
-  });
+  }
+});
 </script>

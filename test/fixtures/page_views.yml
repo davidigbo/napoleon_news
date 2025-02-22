@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  page_type: MyString
+  page_id: 1
+  metadata: 
+  user: one
+  visited_at: 2025-02-22 00:05:04
+
+two:
+  page_type: MyString
+  page_id: 1
+  metadata: 
+  user: two
+  visited_at: 2025-02-22 00:05:04

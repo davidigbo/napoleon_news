@@ -1,34 +1,37 @@
 <div class="container after-nav py-5 mt-5">
   <h1 class="text-center mb-4">Approved Articles</h1>
   <div class="row g-3">
-    <% @approved_articles.each_with_index do |article, index| %>
-      <div class="col-12 col-md-6 col-lg-4 d-flex">
-        <div class="card shadow-sm w-100 d-flex flex-column">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">
-              <%= link_to article_path(article), class: 'text-dark link-offset-2 link-offset-3-hover' do %>
-                <%= index + 1 %>. <%= article.title %>
-              <% end %>
-            </h5>
-            <p class="card-text mb-4">
-              <strong>Author:</strong> <%= article.author.first_name %> <%= article.author.last_name %><br>
-              <!-- <span class="timestamp" data-utc="<%= article.updated_at&.iso8601 %>"></span> <br>-->
-              <strong>To be published at:</strong>
-              <%= article.published_at.present? ? content_tag(:span, article.published_at, class: 'full-timestamp', data: { utc: article.published_at.iso8601 }) : 'Not scheduled yet' %>
-            </p>
-            <div class="mt-auto">
-              <div class="d-flex flex-column flex-sm-row gap-2">
-                <%= button_to 'Move to Review', update_status_article_path(article, status: 'under_review'), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-warning' %>
-                <%= button_to 'Move to Draft', update_status_article_path(article, status: 'draft'), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-warning' %>
-                <%= button_to edit_article_path(article), method: :get, class: 'btn btn-sm btn-warning' do %>Edit<% end %>
-                <%= button_to 'Delete', article_path(article), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+    <%= render 'admin/dashboard_sidebar' %>
+    <!-- Main Content -->
+    <main class="col-md-10 ms-sm-auto px-md-4 row">
+      <% @approved_articles.each_with_index do |article, index| %>
+        <div class="col-12 col-md-6 col-lg-4 d-flex">
+          <div class="card shadow-sm w-100 d-flex flex-column">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">
+                <%= link_to article_path(article), class: 'text-dark link-offset-2 link-offset-3-hover' do %>
+                  <%= index + 1 %>. <%= article.title %>
+                <% end %>
+              </h5>
+              <p class="card-text mb-4">
+                <strong>Author:</strong> <%= article.author.first_name %> <%= article.author.last_name %><br>
+                <!-- <span class="timestamp" data-utc="<%= article.updated_at&.iso8601 %>"></span> <br>-->
+                <strong>To be published at:</strong>
+                <%= article.published_at.present? ? content_tag(:span, article.published_at, class: 'full-timestamp', data: { utc: article.published_at.iso8601 }) : 'Not scheduled yet' %>
+              </p>
+              <div class="mt-auto">
+                <div class="d-flex flex-column flex-sm-row gap-2">
+                  <%= button_to 'Move to Review', update_status_article_path(article, status: 'under_review'), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-warning' %>
+                  <%= button_to 'Move to Draft', update_status_article_path(article, status: 'draft'), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-warning' %>
+                  <%= button_to edit_article_path(article), method: :get, class: 'btn btn-sm btn-warning' do %>Edit<% end %>
+                  <%= button_to 'Delete', article_path(article), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </main>
   </div>
-  <%= render "article_categories_links" %>
   <%= paginate @approved_articles, param_name: :published_page, anchor: 'published' %>
 </div>

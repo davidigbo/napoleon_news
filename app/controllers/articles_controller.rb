@@ -64,6 +64,11 @@ class ArticlesController < ApplicationController
                     description: @article.description,
                     image: @article_image_url
                   }
+                  
+    track_page_view(
+      page_type: "article",
+      page_id: @article.id,
+    )
 
     respond_to do |format|
       format.html

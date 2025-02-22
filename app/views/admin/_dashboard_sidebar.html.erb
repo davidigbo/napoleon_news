@@ -1,0 +1,32 @@
+<!-- Sidebar -->
+<nav class="col-md-2 d-md-block bg-light sidebar">
+  <div class="position-sticky">
+    <ul class="nav flex-column">
+      <li class="nav-item d-none">
+        <%= link_to user_admin_index_path(current_user), class: "nav-link #{'bg-primary text-white' if current_page?(user_admin_index_path(current_user))}" do %>
+          <i class="fas fa-chart-line"></i> Dashboard
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <%= link_to user_manage_articles_path(current_user), class: "nav-link #{'bg-primary text-white' if current_page?(user_manage_articles_path(current_user))}" do %>
+          <i class="fas fa-newspaper"></i> Articles
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <%= link_to users_path, class: "nav-link #{'bg-primary text-white' if current_page?(users_path)}" do %>
+          <i class="fas fa-users"></i> Users
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <%= link_to user_analytics_path(current_user), class: "nav-link #{'bg-primary text-white' if current_page?(user_analytics_path(current_user))}" do %>
+          <i class="fas fa-chart-bar"></i> Analytics
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <%= link_to contests_path, class: "nav-link #{'bg-primary text-white' if current_page?(contests_path)}" do %>
+          <i class="fas fa-trophy"></i> Contests
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</nav>

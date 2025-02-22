@@ -1,3 +1,5 @@
+require "digest"
+
 class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   # allow_browser versions: :modern
@@ -25,6 +27,18 @@ class ApplicationController < ActionController::Base
     @others_category = Category.find_by(name: 'Others')
   end
 
+  def track_page_view(page_type:, page_id: nil, metadata: {})
+    return if request.format.js? || request.format.json? || request.xhr?
+    hashed_ip = Digest::SHA256.hexdigest(request.remote_ip)
+    PageView.create!(
+      page_type: page_type,
+      page_id: page_id,
+      metadata: metadata,
+      visited_at: Time.current,
+      user: current_user,
+      ip_address: hashed_ip
+    )
+  end
 
   private
 
