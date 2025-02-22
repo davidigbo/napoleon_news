@@ -68,20 +68,53 @@
       <div class="row">
         <div class="col-md-6">
           <div class="card">
-            <div class="card-header">User Growth</div>
+            <div class="card-header">New Users (Weekly)</div>
             <div class="card-body">
               <%# <canvas id="userGrowthChart"></canvas> %>
-              <canvas id="userGrowthChart" width="400" height="200"></canvas>
-
+              <canvas id="usersWeeklyChart" width="400" height="200"></canvas>
             </div>
           </div>
         </div>
         <div class="col-md-6">
           <div class="card">
-            <div class="card-header">Article Engagement</div>
+            <div class="card-header">New Users (Monthly)</div>
             <div class="card-body">
-              <%# <canvas id="engagementChart"></canvas> %>
-              <canvas id="engagementChart" width="400" height="200"></canvas>
+              <%# <canvas id="userGrowthChart"></canvas> %>
+              <canvas id="usersMonthlyChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+                <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Total Users (Weekly)</div>
+            <div class="card-body">
+              <%# <canvas id="userGrowthChart"></canvas> %>
+              <canvas id="cummUsersWeeklyChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Total Users (Monthly)</div>
+            <div class="card-body">
+              <%# <canvas id="userGrowthChart"></canvas> %>
+              <canvas id="cummUsersMonthlyChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Weekly Article Engagement</div>
+            <div class="card-body">
+              <canvas id="weeklyEngagementChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Monthly Article Engagement</div>
+            <div class="card-body">
+              <canvas id="monthlyEngagementChart" width="400" height="200"></canvas>
             </div>
           </div>
         </div>
@@ -91,36 +124,59 @@
 </div>
 <script>
   document.addEventListener("turbo:load", function () {
-  const ctx1 = document.getElementById("userGrowthChart")?.getContext("2d");
-  const ctx2 = document.getElementById("engagementChart")?.getContext("2d");
+  const ctx1 = document.getElementById("usersWeeklyChart")?.getContext("2d");
+  const ctx2 = document.getElementById("usersMonthlyChart")?.getContext("2d");
+  const ctx3 = document.getElementById("weeklyEngagementChart")?.getContext("2d");
+  const ctx4 = document.getElementById("monthlyEngagementChart")?.getContext("2d");
+  const ctx5 = document.getElementById("cummUsersWeeklyChart")?.getContext("2d");
+  const ctx6 = document.getElementById("cummUsersMonthlyChart")?.getContext("2d");
+  const usersWeeklyChartData = <%= raw @weekly_user_chart_data %>;
+  const usersMonthlyChartData = <%= raw @monthly_user_chart_data %>;
+  const weeklyEngagementChartData = <%= raw @weekly_engagement_chart_data %>;
+  const monthlyEngagementChartData = <%= raw @monthly_engagement_chart_data %>;
+  const cummUsersWeeklyChartData = <%= raw @weekly_cumulative_user_chart_data %>;
+  const cummUsersMonthlyChartData = <%= raw @monthly_cumulative_user_chart_data %>;
 
   if (ctx1) {
     new Chart(ctx1, {
       type: "line",
-      data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-        datasets: [{
-          label: "Users",
-          data: [100, 250, 400, 600, 750, 900],
-          borderColor: "#007bff",
-          fill: false
-        }]
-      }
+      data: usersWeeklyChartData
     });
   }
 
   if (ctx2) {
     new Chart(ctx2, {
-      type: "bar",
-      data: {
-        labels: ["Article 1", "Article 2", "Article 3", "Article 4"],
-        datasets: [{
-          label: "Engagement",
-          data: [120, 150, 300, 220],
-          backgroundColor: "#28a745"
-        }]
-      }
+      type: "line",
+      data: usersMonthlyChartData
     });
   }
-});
+
+  if (ctx3) {
+    new Chart(ctx3, {
+      type: "bar",
+      data: weeklyEngagementChartData
+    });
+  }
+
+  if (ctx4) {
+    new Chart(ctx4, {
+      type: "bar",
+      data: monthlyEngagementChartData
+    });
+  }
+
+    if (ctx5) {
+    new Chart(ctx5, {
+      type: "line",
+      data: cummUsersWeeklyChartData
+    });
+  }
+
+  if (ctx6) {
+    new Chart(ctx6, {
+      type: "line",
+      data: cummUsersMonthlyChartData
+    });
+  }
+  });
 </script>
