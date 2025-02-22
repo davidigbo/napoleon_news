@@ -47,14 +47,30 @@
       </div>
       <div class="col-md-2 mb-3 d-flex flex-column align-items-center justify-content-center border-md-start">
         <h5 class="mb-3">Quick Links</h5>
-        <ul class="list-unstyled">
-          <li><%= link_to "Features", '#', class: "text-dark text-decoration-underline" %></li>
-          <li><%= link_to "Leadership", '#', class: "text-dark text-decoration-underline" %></li>
-          <li><%= link_to "Business", '#', class: "text-dark text-decoration-underline" %></li>
-          <li><%= link_to "Society", '#', class: "text-dark text-decoration-underline" %></li>
-          <li><%= link_to "News", '#', class: "text-dark text-decoration-underline" %></li>
-          <li><%= link_to "MBGN Contest", '#', class: "text-dark text-decoration-underline" %></li>
-          <li><%= link_to "Events", '#', class: "text-dark text-decoration-underline" %></li>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <%= link_to "Features", category_path(@all_categories.find_by(name: 'Interview')), class: "text-dark text-decoration-underline" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Leadership", category_path(@all_categories.find_by(name: 'Transformational')), class: "text-dark text-decoration-underline" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Business", category_path(@all_categories.find_by(name: 'Finance')), class: "text-dark text-decoration-underline" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Society", category_path(@all_categories.find_by(name: 'Men')), class: "text-dark text-decoration-underline" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "News", category_path(@all_categories.find_by(name: 'Trending')), class: "text-dark text-decoration-underline" %>
+          </li>
+          <% if @active_contest %>
+            <li class="nav-item">
+              <%= link_to "MBGN Contest", contest_leaderboards_path(@active_contest), class: "text-dark text-decoration-underline" %>
+            </li>
+          <% end %>
+          <li class="nav-item">
+            <%= link_to "Events", "#", class: "text-dark text-decoration-underline" %>
+          </li>
         </ul>
       </div>
     </div>
