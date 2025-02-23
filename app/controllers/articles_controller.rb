@@ -65,10 +65,12 @@ class ArticlesController < ApplicationController
                     image: @article_image_url
                   }
                   
-    track_page_view(
-      page_type: "article",
-      page_id: @article.id,
-    )
+    if @article.published?      
+      track_page_view(
+        page_type: "article",
+        page_id: @article.id,
+      )
+    end
 
     respond_to do |format|
       format.html
