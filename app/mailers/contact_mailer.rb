@@ -6,6 +6,6 @@ class ContactMailer < ApplicationMailer
     @email = email
     @message = message
 
-    mail(from: 'postmaster@napoleonnews.com', to: 'mosesogwo@gmail.com', subject: "New Contact Form Submission from #{@name}")
+    mail(from: 'postmaster@napoleonnews.com', to: 'nnagencyinfo@gmail.com', subject: "New Contact Form Submission from #{@name}")
   end
 end
