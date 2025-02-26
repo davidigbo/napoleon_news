@@ -10,6 +10,9 @@ class User < ApplicationRecord
   has_many :approved_articles, foreign_key: "approved_by_id", class_name: "Article"
   has_many :votes, foreign_key: 'voter_id'
 
+  has_one_attached :profile_picture
+  
+  validates :bio, length: { maximum: 500 }, allow_blank: true
   validates :email, presence: true
   scope :authors, -> { where(role: ['author', 'admin', 'editor']) }
 
@@ -26,5 +29,9 @@ class User < ApplicationRecord
 
   def voted?(contest)
     votes.exists?(contest: contest)
+  end
+
+  def name 
+    "#{first_name} #{last_name}"
   end
 end

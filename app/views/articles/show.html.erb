@@ -15,6 +15,20 @@
       <div class="row border-bottom mb-2">
         <p class="fst-italic fw-semibold"><%= @article.description %></p>
       </div>
+
+      <!--About writer -->
+    <div class="writer-info">
+      <h3>About the Writer</h3>
+         <% if @article.author.profile_picture.attached? %>
+            <%= image_tag @article.author.profile_picture, class: "profile-pic", alt: @article.author.name %>
+        <% else %>
+           <%= image_tag "default_profile.png", class: "profile-pic", alt: "Default Profile Picture" %>
+        <% end %>
+          <p><strong><%= @article.author.name %></strong></p>
+          <p><%= @article.author.bio.presence || "Bio not available." %></p>
+    </div>
+
+
       <!-- Tags -->
       <div class="row">
         <div class="col-6 mb-3">
