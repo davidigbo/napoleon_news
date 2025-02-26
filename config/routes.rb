@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   end
 
   resources :articles, only: [:new, :edit, :index, :show, :create, :update, :destroy], param: :slug do
-    resources :comments
+    resources :comments, only: [:create, :destroy]
     member do
       patch :update_status
     end
@@ -41,10 +41,13 @@ Rails.application.routes.draw do
             get :approved
           end
         end
+        resources :analytics, only: :index
       end
     end
     member do
       patch :update_role
     end
   end
+
+  post "/contact_us", to: "contacts#create"
 end

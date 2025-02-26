@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_31_133529) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_21_230504) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -101,16 +101,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_133529) do
   create_table "comments", force: :cascade do |t|
     t.text "body"
     t.bigint "author_id", null: false
-    t.bigint "article_id", null: false
     t.integer "comment_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "commentable_type"
     t.bigint "commentable_id"
-    t.text "content"
-    t.index ["article_id"], name: "index_comments_on_article_id"
+    t.datetime "discarded_at"
     t.index ["author_id"], name: "index_comments_on_author_id"
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
+    t.index ["discarded_at"], name: "index_comments_on_discarded_at"
   end
 
   create_table "contestants", force: :cascade do |t|
@@ -146,6 +145,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_133529) do
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
+  create_table "page_views", force: :cascade do |t|
+    t.string "page_type"
+    t.integer "page_id"
+    t.json "metadata"
+    t.bigint "user_id"
+    t.datetime "visited_at"
+    t.string "ip_address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_page_views_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -209,11 +220,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_133529) do
   add_foreign_key "article_tags", "tags"
   add_foreign_key "articles", "users", column: "approved_by_id"
   add_foreign_key "articles", "users", column: "author_id"
-  add_foreign_key "comments", "articles"
   add_foreign_key "comments", "users", column: "author_id"
   add_foreign_key "contestants", "contests"
   add_foreign_key "contestants", "users"
   add_foreign_key "contestants", "users", column: "approved_by_id"
+  add_foreign_key "page_views", "users"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
   add_foreign_key "votes", "contestants"

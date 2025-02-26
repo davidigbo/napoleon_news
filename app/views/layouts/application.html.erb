@@ -4,6 +4,7 @@
     <%= display_meta_tags site: 'Napoleon News' %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="turbo-prefetch" content="false">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= yield :head %>
@@ -14,6 +15,7 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/@hotwired/turbo@7/dist/turbo.es2017-umd.js", defer: true %>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body class="d-flex flex-column min-vh-100 pt-4" data-controller="flash-notifications">
     <div class="container-fluid p-0 flex-grow-1 mb-5 contest-container">
