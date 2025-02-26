@@ -28,14 +28,17 @@
           <%= link_to "https://web.facebook.com/napoleonnewsblog/", target: "_blank", class: "btn btn-outline-primary btn-sm me-2" do %>
             <i class="fab fa-facebook-f"></i>
           <% end %>
-          <%= link_to "https://x.com/napoleonnewstv/", target: "_blank", class: "btn btn-outline-light btn-sm me-2" do %>
+          <%= link_to "https://x.com/napoleonnews_tv", target: "_blank", class: "btn btn-outline-dark btn-sm me-2" do %>
             <i class="fab fa-x-twitter"></i>
           <% end %>
           <%= link_to "https://www.instagram.com/napoleonnewstv/", target: "_blank", class: "btn btn-outline-danger btn-sm me-2" do %>
             <i class="fab fa-instagram"></i>
           <% end %>
-          <%= link_to "https://www.youtube.com/@napoleonnews", target: "_blank", class: "btn btn-outline-secondary btn-sm" do %>
+          <%= link_to "https://www.youtube.com/@Napoleonnewstv", target: "_blank", class: "btn btn-outline-secondary btn-sm" do %>
             <i class="fab fa-youtube"></i>
+          <% end %>
+          <%= link_to "https://www.linkedin.com/company/napoleon-news-agency", target: "_blank", class: "btn btn-outline-dark btn-sm" do %>
+            <i class="fab fa-linkedin"></i>
           <% end %>
         </div>
         <!-- Right Section: Copyright -->
@@ -49,19 +52,19 @@
         <h5 class="mb-3">Quick Links</h5>
         <ul class="nav flex-column">
           <li class="nav-item">
-            <%= link_to "Features", category_path(@all_categories.find_by(name: 'Interview')), class: "text-dark text-decoration-underline" %>
+            <%= link_to "Features", category_path(@all_categories.find_by(name: 'Features')), class: "text-dark text-decoration-underline" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Leadership", category_path(@all_categories.find_by(name: 'Transformational')), class: "text-dark text-decoration-underline" %>
+            <%= link_to "Leadership", category_path(@all_categories.find_by(name: 'Leadership')), class: "text-dark text-decoration-underline" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Business", category_path(@all_categories.find_by(name: 'Finance')), class: "text-dark text-decoration-underline" %>
+            <%= link_to "Business", category_path(@all_categories.find_by(name: 'Business')), class: "text-dark text-decoration-underline" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Society", category_path(@all_categories.find_by(name: 'Men')), class: "text-dark text-decoration-underline" %>
+            <%= link_to "Society", category_path(@all_categories.find_by(name: 'Society')), class: "text-dark text-decoration-underline" %>
           </li>
           <li class="nav-item">
-            <%= link_to "News", category_path(@all_categories.find_by(name: 'Trending')), class: "text-dark text-decoration-underline" %>
+            <%= link_to "News", category_path(@all_categories.find_by(name: 'News')), class: "text-dark text-decoration-underline" %>
           </li>
           <% if @active_contest %>
             <li class="nav-item">
