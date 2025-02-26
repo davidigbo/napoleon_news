@@ -47,6 +47,11 @@ class ArticlesController < ApplicationController
     @article_body = @article.body
     @comments = @article.comments.reader_comment.order(created_at: :desc)
 
+    @related_articles = Article.joins(:categories).where(categories: {id: @article.category_ids}, status: 'published')
+      .where.not(id: @article.id)
+      .order(published_at: :desc)
+      .limit(3)
+
     set_meta_tags title: @article.title,
                   description: @article.description,
                   keywords: @article.tags.map(&:name).join(', '),
