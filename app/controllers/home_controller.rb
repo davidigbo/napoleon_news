@@ -10,6 +10,9 @@ class HomeController < ApplicationController
     @categories = Category.roots.where.not(name: ['Carousel', 'Others'])
     @carousel_articles = Category.find_by(name: 'Carousel').articles.where(status: 'published').includes(:author).order(published_at: :desc).limit(7)
     
+    track_page_view(
+      page_type: "home",
+    )
 
     respond_to do |format|
       format.html

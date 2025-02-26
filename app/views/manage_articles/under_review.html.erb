@@ -1,28 +1,31 @@
 <div class="container after-nav py-5 mt-5">
-  <%= render "layouts/back_button" %>
   <h1 class="text-center mb-4">Articles For Review</h1>
   <div class="row g-3">
-    <% @articles_for_review.each_with_index do |article, index| %>
-      <div class="col-12 col-md-6 col-lg-4 d-flex">
-        <div class="card shadow-sm w-100 d-flex flex-column">
-          <div class="card-body d-flex flex-column">
-            <%= link_to article_path(article), class: 'text-dark link-offset-2 link-offset-3-hover' do %>
-              <h6 class="card-title"><%= index + 1 %>. <%= article.title %></h6>
-            <% end %>
-            <p class="card-text mb-4">
-              <strong>Author:</strong> <%= article.author.first_name %> <%= article.author.last_name %><br>
-              <strong>Last Updated:</strong> <span class="timestamp" data-utc="<%= article.updated_at.iso8601 %>"></span>
-            </p>
-            <div class="mt-auto">
-              <div class="d-flex gap-2">
-                <%= link_to 'Review', review_article_path(article), class: 'btn btn-sm btn-success' %>
-                <%= link_to 'Edit', edit_article_path(article), class: 'btn btn-sm btn-warning' %>
+    <%= render 'admin/dashboard_sidebar' %>
+    <!-- Main Content -->
+    <main class="col-md-10 ms-sm-auto px-md-4 row">
+      <% @articles_for_review.each_with_index do |article, index| %>
+        <div class="col-12 col-md-6 col-lg-4 d-flex">
+          <div class="card shadow-sm w-100 d-flex flex-column">
+            <div class="card-body d-flex flex-column">
+              <%= link_to article_path(article), class: 'text-dark link-offset-2 link-offset-3-hover' do %>
+                <h6 class="card-title"><%= index + 1 %>. <%= article.title %></h6>
+              <% end %>
+              <p class="card-text mb-4">
+                <strong>Author:</strong> <%= article.author.first_name %> <%= article.author.last_name %><br>
+                <strong>Last Updated:</strong> <span class="timestamp" data-utc="<%= article.updated_at.iso8601 %>"></span>
+              </p>
+              <div class="mt-auto">
+                <div class="d-flex gap-2">
+                  <%= link_to 'Review', review_article_path(article), class: 'btn btn-sm btn-success' %>
+                  <%= link_to 'Edit', edit_article_path(article), class: 'btn btn-sm btn-warning' %>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </main>
   </div>
   <%= paginate @articles_for_review, param_name: :under_review_page, anchor: 'under_review' %>
 </div>

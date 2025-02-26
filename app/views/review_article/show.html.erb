@@ -51,26 +51,8 @@
           <%= @article_body %>
         </div>
       </div>
-    </div>
-    <div class="col-md-4 my-5 my-md-0">
-      <!-- Comments Section -->
-      <div class="mb-4">
-        <h5>Editor Review Comments</h5>
-        <h6> <%= @article.comments.blank? ? 'No' : '' %> Comments</h6>
-        <% @article.comments.each do |comment| %>
-          <div class="card mb-2">
-            <div class="card-body">
-              <p><strong><%= comment.author.first_name %> <%= comment.author.last_name %>:</strong></p>
-              <p><%= comment.body %></p>
-              <span class="badge bg-info text-dark"><%= comment.comment_type&.humanize %></span>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="container my-4">
+
+      <div class="container my-4">
   <h3>Editor Review</h3>
   <!-- Comment Form -->
   <%= form_with(model: [@article, Comment.new], url: article_comments_path(@article), local: true) do |f| %>
@@ -115,35 +97,52 @@
                     data: { bs_toggle: "modal", bs_target: "#publishModal" } %>
     </div>
   </div>
-  <!-- Publish Modal -->
-  <div class="modal fade" id="publishModal" tabindex="-1" aria-labelledby="publishModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="publishModalLabel">Publish Article</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <%= form_with(model: @article, url: article_path(@article), method: :patch, local: true) do |f| %>
-            <div class="d-flex gap-3">
-              <div class="flex-grow-1">
-                <%= f.label :published_at, "Publish At", class: "form-label" %>
-                <%= f.datetime_local_field :published_at, class: "form-control" %>
-              </div>
-              <div class="flex-grow-1">
-                <%= f.label :time_zone, "Time Zone", class: "form-label" %>
-                <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.all, { default: "West Central Africa" }, class: "form-control" %>
-              </div>
-            </div>
-            <%= f.hidden_field :status, value: 'approved' %>
-            <div class="d-flex gap-2 mt-2">
-              <%= f.submit "Schedule", class: "btn btn-success" %>
-            </div>
-          <% end %>
-        </div>
+  </div>
+    </div>
+    <div class="col-md-4 my-5 my-md-0">
+      <h5>Review Comments</h5>
+      <!-- Display Comments -->
+      <div id="comments">
+        <% @comments.each do |comment| %>
+          <div class="border rounded-1 p-3 mb-2 bg-light">
+            <p class="mb-1 fw-bold"><%= comment.author.first_name %> <%= comment.author.last_name %></p>
+            <p class="mb-1"><%= comment.body %></p>
+            <p class="text-muted small"><i class="fa fa-clock"></i> <%= time_ago_in_words(comment.created_at) %> ago</p>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
+</div>
+<!-- Publish Modal -->
+<div class="modal fade" id="publishModal" tabindex="-1" aria-labelledby="publishModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="publishModalLabel">Publish Article</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with(model: @article, url: article_path(@article), method: :patch, local: true) do |f| %>
+          <div class="d-flex gap-3">
+            <div class="flex-grow-1">
+              <%= f.label :published_at, "Publish At", class: "form-label" %>
+              <%= f.datetime_local_field :published_at, class: "form-control" %>
+            </div>
+            <div class="flex-grow-1">
+              <%= f.label :time_zone, "Time Zone", class: "form-label" %>
+              <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.all, { default: "West Central Africa" }, class: "form-control" %>
+            </div>
+          </div>
+          <%= f.hidden_field :status, value: 'approved' %>
+          <div class="d-flex gap-2 mt-2">
+            <%= f.submit "Schedule", class: "btn btn-success" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 <script>
   document.addEventListener('shown.bs.modal', function (event) {

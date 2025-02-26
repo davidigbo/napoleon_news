@@ -15,7 +15,7 @@ class Article < ApplicationRecord
   has_many :tags, through: :article_tags
   has_many :article_categories, dependent: :destroy
   has_many :categories, through: :article_categories
-  has_many :comments
+  has_many :comments, as: :commentable
 
   validates :title, presence: true
   # validates :body, presence: true

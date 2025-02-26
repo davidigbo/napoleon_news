@@ -1,28 +1,80 @@
-<div class="container-fluid text-black opacity-75 text-center py-1 mt-auto footer bottom-0 w-100">
-  <div class="mt-5 p-3">
-    <a href=""><img src="/icon.png" width="120" height="50" /></a>
+<div class="container-fluid text-black opacity-75 text-center py-4 px-md-5 mt-auto footer bottom-0 w-100" id="footer">
+  <div class="row">
+    <!-- Middle Section: Contact Form -->
+    <div class="col-md-6 mb-3">
+      <h5>Contact Us</h5>
+      <%# <%= form_with url: contact_us_path, method: :post, local: true, class: "text-start" do |f| %>
+        <%= form_with url: contact_us_path, method: :post, local: true, class: "text-start" do |f| %>
+          <div class="mb-2">
+            <%= f.text_field :name, class: "form-control form-control-sm", placeholder: "Your Name", required: true %>
+          </div>
+          <div class="mb-2">
+            <%= f.email_field :email, class: "form-control form-control-sm", placeholder: "Your Email", required: true %>
+          </div>
+          <div class="mb-2">
+            <%= f.text_area :message, class: "form-control form-control-sm", placeholder: "Your Message", rows: 3, required: true %>
+          </div>
+          <div>
+            <%= f.submit "Send Message", class: "btn btn-sm btn-primary w-100" %>
+          </div>
+        <% end %>
+      </div>
+      <!-- Left Section: Logo & Social Media -->
+      <div class="col-md-4 mb-3 d-flex flex-column align-items-center justify-content-center">
+        <a href="/">
+          <img src="/icon.png" width="120" height="50" alt="Napoleon News Logo" />
+        </a>
+        <div class="mt-3">
+          <%= link_to "https://web.facebook.com/napoleonnewsblog/", target: "_blank", class: "btn btn-outline-primary btn-sm me-2" do %>
+            <i class="fab fa-facebook-f"></i>
+          <% end %>
+          <%= link_to "https://x.com/napoleonnews_tv", target: "_blank", class: "btn btn-outline-dark btn-sm me-2" do %>
+            <i class="fab fa-x-twitter"></i>
+          <% end %>
+          <%= link_to "https://www.instagram.com/napoleonnewstv/", target: "_blank", class: "btn btn-outline-danger btn-sm me-2" do %>
+            <i class="fab fa-instagram"></i>
+          <% end %>
+          <%= link_to "https://www.youtube.com/@Napoleonnewstv", target: "_blank", class: "btn btn-outline-secondary btn-sm" do %>
+            <i class="fab fa-youtube"></i>
+          <% end %>
+          <%= link_to "https://www.linkedin.com/company/napoleon-news-agency", target: "_blank", class: "btn btn-outline-dark btn-sm" do %>
+            <i class="fab fa-linkedin"></i>
+          <% end %>
+        </div>
+        <!-- Right Section: Copyright -->
+        <div class="mt-md-5 mt-3">
+          <%# <h5>About</h5> %>
+          <p class="small">Napoleon News delivers the latest updates worldwide.</p>
+          <p class="small">&copy; Napoleon News, 2025. All rights reserved.</p>
+        </div>
+      </div>
+      <div class="col-md-2 mb-3 d-flex flex-column align-items-center justify-content-center border-md-start">
+        <h5 class="mb-3">Quick Links</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <%= link_to "Features", category_path(@all_categories.find_by(name: 'Features')), class: "text-dark text-decoration-underline" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Leadership", category_path(@all_categories.find_by(name: 'Leadership')), class: "text-dark text-decoration-underline" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Business", category_path(@all_categories.find_by(name: 'Business')), class: "text-dark text-decoration-underline" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Society", category_path(@all_categories.find_by(name: 'Society')), class: "text-dark text-decoration-underline" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "News", category_path(@all_categories.find_by(name: 'News')), class: "text-dark text-decoration-underline" %>
+          </li>
+          <% if @active_contest %>
+            <li class="nav-item">
+              <%= link_to "MBGN Contest", contest_leaderboards_path(@active_contest), class: "text-dark text-decoration-underline" %>
+            </li>
+          <% end %>
+          <li class="nav-item">
+            <%= link_to "Events", "#", class: "text-dark text-decoration-underline" %>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <div class="d-flex justify-content-center">
-  </a>
-
-<%= link_to "https://web.facebook.com/napoleonnewsblog/", target: "_blank", class: "btn btn-outline-primary text-decoration-none text-primary btn-sm me-4" do %>
-  <i class="fab fa-facebook-f"></i>
-<% end %>
-
-<%= link_to "https://x.com/napoleonnewstv/", target: "_blank", class: "btn btn-outline-dark text-decoration-none text-dark btn-sm me-4" do %>
-  <i class="fab fa-x-twitter"></i>
-<% end %>
-
-<%= link_to "https://www.instagram.com/napoleonnewstv/", target: "_blank", class: "btn btn-outline-danger text-decoration-none text-danger btn-sm me-4" do %>
-  <i class="fab fa-instagram"></i>
-<% end %>
-
-<%= link_to "https://www.youtube.com/@napoleonnews", target: "_blank", class: "btn btn-outline-secondary text-decoration-none text-secondary btn-sm" do %>
-  <i class="fab fa-youtube"></i>
-<% end %>
-
-</div>
-<div class="p-3 mb-4">
-  &copy; Napoleon News, 2025. All rights reserved.
-</div>
-</div>

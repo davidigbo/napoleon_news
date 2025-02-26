@@ -1,0 +1,182 @@
+<%# <div class="container-fluid"> %>
+<div class="container after-nav py-5 mt-5 flex-grow-1">
+  <h1 class="text-center mb-4"> Analytics </h1>
+  <div class="row">
+    <%= render 'admin/dashboard_sidebar' %>
+    <!-- Main Content -->
+    <main class="col-md-10 ms-sm-auto px-md-4">
+      <div class="row mt-4">
+        <!-- Metrics Cards -->
+        <div class="col-md-3">
+          <div class="card text-white bg-primary mb-3">
+            <div class="card-header">Published Articles</div>
+            <div class="card-body">
+              <h3 class="card-title"><%= @article_metrics[:published] %></h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card text-white bg-success mb-3">
+            <div class="card-header">Draft Articles</div>
+            <div class="card-body">
+              <h3 class="card-title"><%= @article_metrics[:draft] %></h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card text-white bg-secondary mb-3">
+            <div class="card-header">Articles Under Review</div>
+            <div class="card-body">
+              <h3 class="card-title"><%= @article_metrics[:under_review] %></h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card text-white bg-success mb-3">
+            <div class="card-header">Approved Articles</div>
+            <div class="card-body">
+              <h3 class="card-title"><%= @article_metrics[:approved] %></h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card text-white bg-info mb-3">
+            <div class="card-header">Active Users</div>
+            <div class="card-body">
+              <h3 class="card-title"><%= @user_metrics[:active] %></h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card text-white bg-secondary mb-3">
+            <div class="card-header">New Users (7 days)</div>
+            <div class="card-body">
+              <h3 class="card-title"><%= @user_metrics[:new] %></h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card text-white bg-danger mb-3">
+            <div class="card-header">Deactivated Users</div>
+            <div class="card-body">
+              <h3 class="card-title"><%= @user_metrics[:deactivated] %></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Charts Section -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">New Users (Weekly)</div>
+            <div class="card-body">
+              <%# <canvas id="userGrowthChart"></canvas> %>
+              <canvas id="usersWeeklyChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">New Users (Monthly)</div>
+            <div class="card-body">
+              <%# <canvas id="userGrowthChart"></canvas> %>
+              <canvas id="usersMonthlyChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+                <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Total Users (Weekly)</div>
+            <div class="card-body">
+              <%# <canvas id="userGrowthChart"></canvas> %>
+              <canvas id="cummUsersWeeklyChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Total Users (Monthly)</div>
+            <div class="card-body">
+              <%# <canvas id="userGrowthChart"></canvas> %>
+              <canvas id="cummUsersMonthlyChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Weekly Article Engagement</div>
+            <div class="card-body">
+              <canvas id="weeklyEngagementChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Monthly Article Engagement</div>
+            <div class="card-body">
+              <canvas id="monthlyEngagementChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script>
+  document.addEventListener("turbo:load", function () {
+  const ctx1 = document.getElementById("usersWeeklyChart")?.getContext("2d");
+  const ctx2 = document.getElementById("usersMonthlyChart")?.getContext("2d");
+  const ctx3 = document.getElementById("weeklyEngagementChart")?.getContext("2d");
+  const ctx4 = document.getElementById("monthlyEngagementChart")?.getContext("2d");
+  const ctx5 = document.getElementById("cummUsersWeeklyChart")?.getContext("2d");
+  const ctx6 = document.getElementById("cummUsersMonthlyChart")?.getContext("2d");
+  const usersWeeklyChartData = <%= raw @weekly_user_chart_data %>;
+  const usersMonthlyChartData = <%= raw @monthly_user_chart_data %>;
+  const weeklyEngagementChartData = <%= raw @weekly_engagement_chart_data %>;
+  const monthlyEngagementChartData = <%= raw @monthly_engagement_chart_data %>;
+  const cummUsersWeeklyChartData = <%= raw @weekly_cumulative_user_chart_data %>;
+  const cummUsersMonthlyChartData = <%= raw @monthly_cumulative_user_chart_data %>;
+
+  if (ctx1) {
+    new Chart(ctx1, {
+      type: "line",
+      data: usersWeeklyChartData
+    });
+  }
+
+  if (ctx2) {
+    new Chart(ctx2, {
+      type: "line",
+      data: usersMonthlyChartData
+    });
+  }
+
+  if (ctx3) {
+    new Chart(ctx3, {
+      type: "bar",
+      data: weeklyEngagementChartData
+    });
+  }
+
+  if (ctx4) {
+    new Chart(ctx4, {
+      type: "bar",
+      data: monthlyEngagementChartData
+    });
+  }
+
+    if (ctx5) {
+    new Chart(ctx5, {
+      type: "line",
+      data: cummUsersWeeklyChartData
+    });
+  }
+
+  if (ctx6) {
+    new Chart(ctx6, {
+      type: "line",
+      data: cummUsersMonthlyChartData
+    });
+  }
+  });
+</script>

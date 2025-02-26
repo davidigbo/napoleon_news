@@ -36,13 +36,7 @@
           <% [nil, articles[1]].each_with_index do |article, index| %>
             <% if index == 0 %>
               <!-- Placeholder card for advertisement -->
-              <div class="card border-0 d-md-block mb-3 flex-grow-1 text-center bg-light">
-                <div class="card-body py-4">
-                  <h5 class="card-title">Your Ad Here</h5>
-                  <p class="card-text">Advertise with us and reach your audience effectively!</p>
-                  <a href="/advertise" class="btn btn-primary">Learn More</a>
-                </div>
-              </div>
+              <%= render 'layouts/advert_cube' %>
             <% else %>
               <!-- Regular article card -->
               <div class="card border-0 d-md-block mb-3 flex-grow-1 text-center text-md-start">
