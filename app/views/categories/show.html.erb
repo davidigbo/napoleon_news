@@ -4,7 +4,7 @@
   <% if @top_articles.blank? %>
     <%= render "layouts/nothing_here" %>
   <% else %>
-    <section class="container category-section after-nav mx-auto mt-5 py-5">
+    <section class="container category-section after-nav mx-auto py-5">
       <h3 ><a class="text-dark icon-link icon-link-hover%>" href="<%= category_path(@category)%>"> <%= @category.name %> <i class="fa fa-arrow-right ps-2 py-0 bi" aria-hidden="true"></i></a></h3>
       <div class="row d-flex align-items-stretch">
         <!-- Right Column -->

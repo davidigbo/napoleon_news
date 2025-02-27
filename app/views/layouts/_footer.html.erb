@@ -19,6 +19,36 @@
           </div>
         <% end %>
       </div>
+
+      <div class="col-md-2 mb-3 d-flex flex-column align-items-center justify-content-center border-md-start">
+        <h5 class="mb-3">Quick Links</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <%= link_to "Features", category_path(@all_categories.find_by(name: 'Features')), class: "text-dark text-decoration-underline" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Leadership", category_path(@all_categories.find_by(name: 'Leadership')), class: "text-dark text-decoration-underline" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Business", category_path(@all_categories.find_by(name: 'Business')), class: "text-dark text-decoration-underline" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Society", category_path(@all_categories.find_by(name: 'Society')), class: "text-dark text-decoration-underline" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "News", category_path(@all_categories.find_by(name: 'News')), class: "text-dark text-decoration-underline" %>
+          </li>
+          <% if @active_contest %>
+            <li class="nav-item">
+              <%= link_to "MBGN Contest", contest_leaderboards_path(@active_contest), class: "text-dark text-decoration-underline" %>
+            </li>
+          <% end %>
+          <li class="nav-item">
+            <%= link_to "Events", "#", class: "text-dark text-decoration-underline" %>
+          </li>
+        </ul>
+      </div>
+      
       <!-- Left Section: Logo & Social Media -->
       <div class="col-md-4 mb-3 d-flex flex-column align-items-center justify-content-center">
         <a href="/">
@@ -47,34 +77,6 @@
           <p class="small">Napoleon News delivers the latest updates worldwide.</p>
           <p class="small">&copy; Napoleon News, 2025. All rights reserved.</p>
         </div>
-      </div>
-      <div class="col-md-2 mb-3 d-flex flex-column align-items-center justify-content-center border-md-start">
-        <h5 class="mb-3">Quick Links</h5>
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <%= link_to "Features", category_path(@all_categories.find_by(name: 'Features')), class: "text-dark text-decoration-underline" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Leadership", category_path(@all_categories.find_by(name: 'Leadership')), class: "text-dark text-decoration-underline" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Business", category_path(@all_categories.find_by(name: 'Business')), class: "text-dark text-decoration-underline" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Society", category_path(@all_categories.find_by(name: 'Society')), class: "text-dark text-decoration-underline" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "News", category_path(@all_categories.find_by(name: 'News')), class: "text-dark text-decoration-underline" %>
-          </li>
-          <% if @active_contest %>
-            <li class="nav-item">
-              <%= link_to "MBGN Contest", contest_leaderboards_path(@active_contest), class: "text-dark text-decoration-underline" %>
-            </li>
-          <% end %>
-          <li class="nav-item">
-            <%= link_to "Events", "#", class: "text-dark text-decoration-underline" %>
-          </li>
-        </ul>
       </div>
     </div>
   </div>
