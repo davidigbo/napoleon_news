@@ -2,7 +2,6 @@ class SearchController < ApplicationController
   def index
     @query = params[:query]
     @results = if @query.present?
-                 # Replace with your actual search model and conditions
                  Article.published.where("title ILIKE ?", "%#{@query}%").order(published_at: :desc).limit(6)
                else
                  []
