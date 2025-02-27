@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
     collection do
       resources :review_article, only: :show, param: :slug
+      # get 'search'
     end
   end
 
@@ -24,6 +25,8 @@ Rails.application.routes.draw do
     end
     resources :leaderboards, only: [:index]
   end
+
+  resources :search, only: [:index]
 
   
   

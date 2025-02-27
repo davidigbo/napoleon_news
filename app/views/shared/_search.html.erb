@@ -1,0 +1,25 @@
+<div class="search-container">
+  <%= form_with url: search_index_path, method: :get, data: { controller: "search", turbo_frame: "search-results" }, class: "position-relative" do |f| %>
+    <div class="input-group input-group-sm"">
+     <span class="input-group-text bg-light border-0">
+      <i class="fas fa-search text-muted"></i>
+    </span>
+      <%= f.text_field :query, 
+                       value: params[:query], 
+                       class: "form-control border-0 shadow-none bg-light",
+                       placeholder: "Search...",
+                       aria_label: "Search",
+                       data: { 
+                         action: "input->search#submit",
+                         search_target: "input" 
+                       } %>
+      <%# <%= f.submit "Search", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+  
+  <div class="position-absolute w-100 mt-1" style="z-index: 1050;">
+    <%= turbo_frame_tag "search-results" do %>
+      <!-- Initial empty state -->
+    <% end %>
+  </div>
+</div>

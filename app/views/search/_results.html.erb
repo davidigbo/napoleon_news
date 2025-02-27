@@ -1,0 +1,22 @@
+<%= turbo_frame_tag "search-results" do %>
+  <div class="card shadow w-75">
+    <div class="card-body p-0">
+      <% if results.any? %>
+        <ul class="list-group list-group-flush">
+          <% results.each do |result| %>
+            <li class="list-group-item">
+              <%= link_to result.title, result, class: "text-decoration-none" %>
+              <p class="text-muted small mb-0"><%= truncate(result.description, length: 150) if result.respond_to?(:description) %></p>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <div class="p-3">
+          <% if @query.present? %>
+            <p class="text-muted mb-0">No results found for "<%= @query %>"</p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
