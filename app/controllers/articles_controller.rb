@@ -50,7 +50,7 @@ class ArticlesController < ApplicationController
     @related_articles = Article.joins(:categories).where(categories: {id: @article.category_ids}, status: 'published')
       .where.not(id: @article.id)
       .order(published_at: :desc)
-      .limit(3)
+      .distinct.limit(3)
 
     set_meta_tags title: @article.title,
                   description: @article.description,
