@@ -8,6 +8,7 @@ class Contestant < ApplicationRecord
   belongs_to :approved_by, class_name: 'User', optional: true
   has_one_attached :image
   has_many :votes
+  has_many :comments, as: :commentable
 
   validates :description, presence: true
   validates :user, uniqueness: { scope: :contest }

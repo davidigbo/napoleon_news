@@ -1,7 +1,7 @@
 <div class="container-fluid text-black opacity-75 text-center py-4 px-md-5 mt-auto footer bottom-0 w-100" id="footer">
   <div class="row">
     <!-- Middle Section: Contact Form -->
-    <div class="col-md-6 mb-3">
+    <div class="col-md-6 mb-3 mt-4">
       <h5>Contact Us</h5>
       <%# <%= form_with url: contact_us_path, method: :post, local: true, class: "text-start" do |f| %>
         <%= form_with url: contact_us_path, method: :post, local: true, class: "text-start" do |f| %>
@@ -20,7 +20,7 @@
         <% end %>
       </div>
 
-      <div class="col-md-2 mb-3 d-flex flex-column align-items-center justify-content-center border-md-start">
+      <div class="col-md-2 mb-3 d-flex flex-column align-items-center justify-content-center border-md-start mt-4">
         <h5 class="mb-3">Quick Links</h5>
         <ul class="nav flex-column">
           <li class="nav-item">
@@ -40,7 +40,7 @@
           </li>
           <% if @active_contest %>
             <li class="nav-item">
-              <%= link_to "MBGN Contest", contest_leaderboards_path(@active_contest), class: "text-dark text-decoration-underline" %>
+              <%= link_to "MBGN Contest", new_contest_contestant_path(@active_contest), class: "text-dark text-decoration-underline" %>
             </li>
           <% end %>
           <li class="nav-item">
@@ -50,7 +50,7 @@
       </div>
       
       <!-- Left Section: Logo & Social Media -->
-      <div class="col-md-4 mb-3 d-flex flex-column align-items-center justify-content-center">
+      <div class="col-md-4 mb-3 d-flex flex-column align-items-center justify-content-center mt-4">
         <a href="/">
           <img src="/icon.png" width="120" height="50" alt="Napoleon News Logo" />
         </a>

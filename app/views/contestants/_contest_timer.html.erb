@@ -1,0 +1,50 @@
+<!-- Countdown Section -->
+<div class="container my-5">
+  <div class="countdown-timer p-1 text-white text-center rounded-3 shadow-lg" style="background: linear-gradient(135deg, #ff416c, #ff4b2b);">
+    <h2 class="display-7 fw-bold"> Grand Finale</h2>
+    <div class="d-flex justify-content-center gap-4 mt-3">
+      <div class="time-box">
+        <span id="days" class="display-5 fw-bold">00</span>
+        <p class="fs-5">Days</p>
+      </div>
+      <div class="time-box">
+        <span id="hours" class="display-5 fw-bold">00</span>
+        <p class="fs-5">Hours</p>
+      </div>
+      <div class="time-box">
+        <span id="minutes" class="display-5 fw-bold">00</span>
+        <p class="fs-5">Minutes</p>
+      </div>
+      <div class="time-box">
+        <span id="seconds" class="display-5 fw-bold">00</span>
+        <p class="fs-5">Seconds</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function updateCountdown() {
+    const contestEndDate = new Date("April 19, 2025 23:59:59").getTime();
+    const now = new Date().getTime();
+    const timeLeft = contestEndDate - now;
+
+    if (timeLeft <= 0) {
+      document.querySelector(".countdown-timer").innerHTML = "<h2 class='display-5 fw-bold'>The Contest Has Ended!</h2>";
+      return;
+    }
+
+    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+    document.getElementById("days").innerText = days;
+    document.getElementById("hours").innerText = hours;
+    document.getElementById("minutes").innerText = minutes;
+    document.getElementById("seconds").innerText = seconds;
+  }
+
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+</script>

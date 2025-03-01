@@ -9,6 +9,7 @@ class ContestantsController < ApplicationController
   end
 
   def show
+    @comments = @contestant.comments
   end
 
   def edit
@@ -28,7 +29,7 @@ class ContestantsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { redirect_to new_contest_contestant_path(@contest), alert: @contestant.errors.full_messages.to_sentence }
         format.json { render json: @contestant.errors, status: :unprocessable_entity }
       end
     end

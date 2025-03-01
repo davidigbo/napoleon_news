@@ -1,34 +1,125 @@
-<div class="container after-nav mt-5 py-3">
-  <%= render 'layouts/contest_header' %>
-  <!-- Link to the leaderboard -->
-  <div class="mt-4 text-center">
-    <%= link_to "View the Leaderboard", contest_leaderboards_path(@contest), class: "btn btn-outline-warning" %>
-  </div>
-  <h2 class="text-warning">Enter the Contest</h2>
-  <%= form_with model: @contestant, url: contest_contestants_path, html: { class: "needs-validation text-white", enctype: "multipart/form-data", novalidate: true } do |f| %>
-    <% if @contestant.errors.any? %>
-      <div id="error_explanation" class="alert alert-danger">
-        <h4><%= pluralize(@contestant.errors.count, "error") %> prohibited this contestant from being saved:</h4>
-        <ul>
-          <% @contestant.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
+<div class="container-fluid after-nav p-0">
+<div class="card text-white" style="background: linear-gradient(135deg, #001f3f, #003366);">
+  <div class="row g-0 d-flex flex-column-reverse flex-md-row">
+    <div class="col-md-8 d-flex align-items-center">
+      <div class="card-body text-center text-md-start">
+        <h2 class="card-title display-4 fw-bold">Step into the spotlight with Napoleon News!</h2>
+        <p class="card-text fs-3">Unleash Your Inner Beauty, Showcase Your Talent, and Win Big!</p>
+        <div class="d-grid gap-3 d-md-flex">
+          <%= link_to "See More Info", "#info", class: "btn btn-light btn-lg" %>
+          <%= link_to "Rules & Guidelines", "#rules", class: "btn btn-light btn-lg" %>
+          <%= link_to "Sign Up Now", "#signup", class: "btn btn-light btn-lg" %>
+        </div>
       </div>
-    <% end %>
-    <div class="mb-3">
-      <%= f.label :stage_name, "Stage Name", class: "form-label" %>
-      <%= f.text_field :stage_name, class: "form-control", required: true %>
     </div>
-    <div class="mb-3">
-      <%= f.label :description, "About Me", class: "form-label" %>
-      <%= f.text_area :description,  maxlength: 250, class: "form-control", rows: 3, required: true %>
-      <small class="form-text text-white">Maximum 250 characters</small>
+    <div class="col-md-4 d-flex align-items-center justify-content-center order-md-first">
+      <%= image_tag "mbgn.jpeg", class: "img-fluid rounded-circle border border-3 border-light", alt: "Beauty Contest" %>
     </div>
-    <div class="mb-3">
-      <%= f.label :image, "Upload Picture", class: "form-label" %>
-      <%= f.file_field :image, class: "form-control", required: true %>
+  </div>
+</div>
+
+<%= render 'contest_timer' %>
+  <div id="info" class="card text-dark bg-light w-100">
+    <div class="row g-0 d-flex align-items-stretch">
+      <!-- Image (Visible on Desktop, Hidden on Mobile) -->
+      <div class="col-md-4 d-none d-md-flex align-items-center justify-content-center">
+        <%= image_tag "mbgn.jpeg", class: "img-fluid rounded-3 border border-3 border-secondary w-100 h-auto", alt: "Beauty Contest" %>
+      </div>
+      <!-- Text Content -->
+      <div class="col-md-8 d-flex align-items-center">
+        <div class="card-body text-center">
+          <h2 class="display-6 fw-bold">What's This Contest All About?</h2>
+          <p class="fs-5">
+            Join us at Napoleon News for an unforgettable journey where beauty meets confidence. 
+            This contest celebrates individuality, creativity, and charisma. Whether you're a seasoned 
+            model or taking your first step into the limelight, this is your chance to shine.
+          </p>
+          <!-- Timeline Section -->
+          <div class="container py-4">
+            <div class="row g-4 justify-content-center">
+              <!-- Submission Phase -->
+              <div class="col-12 col-md-6 d-flex justify-content-center">
+                <div class="p-4 shadow bg-white rounded d-flex flex-column align-items-center text-center h-100 w-100">
+                  <i class="fas fa-medal fa-3x text-primary"></i>
+                  <h5 class="mt-3 fw-bold">Submission and Promotion Phase</h5>
+                  <p class="fs-6">Ends January 31, 2025</p>
+                </div>
+              </div>
+              <!-- Competition Kickoff -->
+              <div class="col-12 col-md-6 d-flex justify-content-center">
+                <div class="p-4 shadow bg-white rounded d-flex flex-column align-items-center text-center h-100 w-100">
+                  <i class="fas fa-running fa-3x text-success"></i>
+                  <h5 class="mt-3 fw-bold">Competition Kickoff</h5>
+                  <p class="fs-6">Starts February 1, 2025</p>
+                </div>
+              </div>
+              <!-- Grand Finale -->
+              <div class="col-12 d-flex justify-content-center">
+                <div class="p-4 shadow bg-white rounded d-flex flex-column align-items-center text-center h-100 w-100">
+                  <i class="fas fa-calendar-alt fa-3x text-danger"></i>
+                  <h5 class="mt-3 fw-bold">End Date and Grand Finale</h5>
+                  <p class="fs-6">Takes place on April 19, 2025</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <%= f.submit "Submit", class: "btn btn-warning" %>
-  <% end %>
+  </div>
+  <!-- Rules and Guidelines Section -->
+  <div id="rules" class="py-5 text-white w-100" style="background: linear-gradient(135deg, #001f3f, #003366);">
+    <div class="container text-center">
+      <h2 class="display-5 fw-bold">Rules and Guidelines</h2>
+      <h4 class="mb-4">Eligibility Requirements</h4>
+      <!-- Rules List -->
+      <div class="row g-4 justify-content-center">
+        <% [
+        ["1", "Be a Current Female Student", "Contestants must be female students at any Nigerian tertiary institution."],
+        ["2", "Register on Napoleon News", "All participants must register on the Napoleon News website to upload their contest picture."],
+        ["3", "Share and Promote Your Entry", "Contestants must share their contest picture link available on napoleonnews website on their social media handles to gather likes and comments."],
+        ["4", "Winning Criteria", "The first contestant to reach <strong>100,000 likes and comments</strong> on their contest picture at <strong>napoleonnews</strong> will be declared the winner."],
+        ["5", "Important Note", "Only likes and comments from real humans will be counted. Any malpractice, such as the use of bots or fake engagements, will lead to immediate disqualification."]
+      ].each do |num, title, description| %>
+          <div class="col-12 col-md-4 d-flex justify-content-center">
+            <div class="p-4 shadow bg-white text-dark rounded d-flex flex-column align-items-center text-center h-100 w-100">
+              <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; font-size: 1.5rem;">
+                <%= num %>
+              </div>
+              <h5 class="mt-3 fw-bold"><%= title %></h5>
+              <p class="fs-6"><%= description.html_safe %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <!-- Sign Up Button -->
+      <div class="mt-4">
+        <a href="#signup" class="btn btn-light btn-lg">Sign Up Now</a>
+      </div>
+    </div>
+  </div>
+  <div id="signup" class="py-5 text-dark bg-light w-100">
+    <div class="container text-center">
+      <h2 class="display-5 fw-bold">Enter the Contest</h2>
+      <div class="mt-4 mx-auto" style="max-width: 600px;">
+        <%= form_with(model: @contestant, url: contest_contestants_path, html: { class: "needs-validation", enctype: "multipart/form-data" }) do |f| %>
+          <div class="mb-3 text-start">
+            <%= f.label :stage_name, "Stage Name", class: "form-label fw-bold" %>
+            <%= f.text_field :stage_name, class: "form-control form-control-lg", required: true %>
+          </div>
+          <div class="mb-3 text-start">
+            <%= f.label :description, "About Me", class: "form-label fw-bold" %>
+            <%= f.text_area :description, maxlength: 250, class: "form-control form-control-lg", rows: 3, required: true %>
+          </div>
+          <div class="mb-3 text-start">
+            <%= f.label :image, "Upload Picture", class: "form-label fw-bold" %>
+            <%= f.file_field :image, class: "form-control form-control-lg", required: true, accept: "image/*"%>
+          </div>
+          <div class="text-center">
+            <%= f.submit "Submit", class: "btn btn-primary btn-lg fw-bold px-4" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,21 +1,16 @@
-<div class="container after-nav py-3">
-  <%= render 'layouts/contest_header' %>
-  <div class="my-4 text-center">
-    <%= link_to "View the Leaderboard", contest_leaderboards_path(@contest), class: "btn btn-outline-warning" %>
-  </div>
+<div class="container-fluid after-nav py-3" style="background: linear-gradient(135deg, #001f3f, #003366);">
+  <%= render 'contest_timer' %>
   <div class="row">
-    <!-- Left Empty Column -->
-    <div class="col-md-0"></div>
-    <!-- Main Contestant Column -->
     <div class="col-md-12">
-      <div class="card shadow-lg border-0 p-4 bg-light text-center">
-        <h2 class="mb-3"><%= @contestant.stage_name %></h2>
+      <div class="card shadow-lg border-0 p-4 text-center text-light" style="background: linear-gradient(135deg, #001f3f, #003366);">
+        <h2 class="mb-3 fw-bold"><%= @contestant.stage_name %></h2>
         <div class="container mt-4">
           <div class="row">
-            <!-- Left Column (9) - Contestant Image & About Me -->
-            <div class="col-lg-9">
-              <div class="card shadow-lg border-0 p-4">
-                <%# <h2 class="text-center mb-3"><%= @contestant.stage_name %>
+            <div class="col-lg-3">
+  <%= image_tag "mbgn.jpeg", class: "img-fluid rounded-circle border border-3 border-light w-100", alt: "Beauty Contest" %>
+</div>
+            <div class="col-lg-6">
+              <div class="card shadow-lg border-0 p-4 text-dark">
                 <% if @contestant.image.attached? %>
                   <%= image_tag @contestant.image.variant(resize_to_limit: [800, 900]), 
                         class: "img-fluid rounded shadow contest-image", 
@@ -23,66 +18,98 @@
                 <% else %>
                   <p class="text-center text-muted">No image available</p>
                 <% end %>
-                <p class="mt-3 text-center"><%= @contestant.description %></p>
+                <p class="mt-3 text-center fs-5"><%= @contestant.description %></p>
+              </div>
+              <!-- Comments Section -->
+              <div class="row mt-4 text-start">
+                <div class="col-12">
+                  <h4 class="border-bottom pb-2">Comments</h4>
+                  <!-- Display Comments -->
+                  <div class="text-dark" id="comments">
+                    <% @comments.each do |comment| %>
+                      <div class="border rounded-1 p-3 mb-2 bg-light">
+                        <p class="mb-1 fw-bold"><%= comment.author.first_name %> <%= comment.author.last_name %></p>
+                        <p class="mb-1"><%= comment.body %></p>
+                        <p class="text-muted small"><i class="fa fa-clock"></i> <%= time_ago_in_words(comment.created_at) %> ago</p>
+                        <!-- Delete button (visible only to admins) -->
+                        <% if current_user&.admin? %>
+                          <%= button_to "Delete", contest_contestant_comment_path(@contest, @contestant, comment), 
+                        method: :delete, 
+                        data: { confirm: "Are you sure you want to delete this comment?" }, 
+                        class: "btn btn-sm btn-danger" %>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+                  <!-- Comment Form -->
+                  <% if user_signed_in? %>
+                    <div class="mt-3 text-white">
+                      <%= form_with(model: [@contestant, Comment.new], url: contest_contestant_comments_path(@contest, @contestant), local: true) do |f| %>
+                        <div class="mb-3">
+                          <%= f.text_area :body, class: "form-control", placeholder: "Write a comment...", rows: 3 %>
+                          <%= f.hidden_field :comment_type, value: 'reader_comment' %>
+                        </div>
+                        <div>
+                          <%= f.submit "Post Comment", class: "btn btn-primary" %>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% else %>
+                    <p class="mt-2 text-white">You must be <a href="<%= new_user_session_path %>">logged in</a> to comment.</p>
+                  <% end %>
+                </div>
               </div>
             </div>
-            <!-- Right Column (3) - Voting & Share Buttons -->
             <div class="col-lg-3">
-              <div class="card shadow-lg border-0 p-4 bg-light text-center">
+              <div class="card shadow-lg border-0 p-4 text-center text-dark bg-white">
                 <%= turbo_frame_tag "vote-button-#{@contestant.id}" do %>
                   <% if !user_signed_in? %>
-                    <%= link_to new_user_session_path, class: "btn btn-info border px-4 py-2 mt-2 w-100", data: { turbo: false } do %>
+                    <%= link_to new_user_session_path, class: "btn btn-info px-4 py-2 mt-2 w-100 text-white", data: { turbo: false } do %>
                       <i class="fas fa-thumbs-up"></i> Login to Vote
                     <% end %>
                   <% elsif current_user.voted?(@contest) && current_user.id != @contestant.user.id %>
                     <%= button_tag class: "btn btn-success disabled px-4 py-2 mt-2 w-100" do %>
-                      <div><i class="fas fa-thumbs-up"></i></div>
-                      <div>You have voted</div>
+                      <i class="fas fa-thumbs-up"></i> You have voted
                     <% end %>
                   <% elsif current_user.id != @contestant.user.id %>
                     <%= button_to contest_contestant_votes_path(@contest, @contestant), 
-                method: :post, 
-                remote: true, 
-                class: "btn btn-success px-4 py-2 mt-2 w-100", 
-                data: { turbo_method: :post, turbo_frame: "vote-button-#{@contestant.id}" } do %>
+                      method: :post, remote: true, 
+                      class: "btn btn-success px-4 py-2 mt-2 w-100 fw-bold", 
+                      data: { turbo_method: :post, turbo_frame: "vote-button-#{@contestant.id}" } do %>
                       <i class="fas fa-thumbs-up"></i> Vote
                     <% end %>
                   <% end %>
-                  <!-- Vote Count -->
                   <div class="mt-4">
                     <div class="card shadow-sm border-0 p-3 bg-white">
                       <h5 class="text-uppercase text-muted mb-1">Total Votes</h5>
-                      <div class="display-6 fw-bold text-primary">
-                        <%= @contestant.votes.count %>
-                      </div>
+                      <div class="display-6 fw-bold text-primary"><%= @contestant.votes.count %></div>
                     </div>
                   </div>
                 <% end %>
-                <!-- Share Buttons -->
                 <div class="mt-4">
+                  <h5 class="text-muted fw-bold">Share this Contestant</h5>
                   <div class="row g-2">
                     <div class="col-12">
-                      <div class="display-6 me-3 mb-3"><i class="fas fa-share-alt fa-lg"></i></div>
                       <%= link_to "https://www.facebook.com/sharer/sharer.php?u=#{CGI.escape(contest_contestant_url(@contest, @contestant))}", 
-                class: "btn w-100", 
-                style: "background-color: #3b5998; color: white;", 
-                target: "_blank" do %>
-                        <i class="fab fa-facebook-f me-2"></i> Share on Facebook
+                        class: "btn w-100 text-white", 
+                        style: "background-color: #3b5998;", 
+                        target: "_blank" do %>
+                        <i class="fab fa-facebook-f me-2"></i> Facebook
                       <% end %>
                     </div>
                     <div class="col-12">
                       <%= link_to "https://twitter.com/intent/tweet?url=#{contest_contestant_url(@contest, @contestant)}&text=Check out #{@contestant.stage_name} in this contest!", 
-                class: "btn w-100", 
-                style: "background-color: #000000; color: white;", 
-                target: "_blank" do %>
-                        <i class="fab fa-x-twitter me-2"></i> Share on X
+                        class: "btn w-100 text-white", 
+                        style: "background-color: #000000;", 
+                        target: "_blank" do %>
+                        <i class="fab fa-x-twitter me-2"></i> Twitter/X
                       <% end %>
                     </div>
                     <div class="col-12">
                       <%= link_to "https://wa.me/?text=#{URI.encode_www_form_component("Check out #{@contestant.stage_name} in this contest! #{contest_contestant_url(@contest, @contestant)}")}", 
-                class: "btn btn-success text-white w-100", 
-                target: "_blank" do %>
-                        <i class="fab fa-whatsapp me-2"></i> Share on WhatsApp
+                        class: "btn btn-success text-white w-100", 
+                        target: "_blank" do %>
+                        <i class="fab fa-whatsapp me-2"></i> WhatsApp
                       <% end %>
                     </div>
                     <div class="col-12">
@@ -92,14 +119,15 @@
                     </div>
                   </div>
                 </div>
+                <div class="my-4 text-center">
+                  <%= link_to "View the Leaderboard", contest_leaderboards_path(@contest), class: "btn btn-lg text-white btn-primary fw-bold" %>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- Right Empty Column -->
-    <div class="col-md-0"></div>
   </div>
 </div>
 <script>
