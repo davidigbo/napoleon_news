@@ -1,7 +1,7 @@
 class ContestantsController < ApplicationController
   before_action :set_contest, only: %i[index new edit show update create]
   before_action :set_contestant, only: %i[edit show update destroy]
-  before_action :authenticate_user!, only: %i[new edit update destroy]
+  before_action :authenticate_user!, only: %i[edit update destroy]
   before_action :authorize_admin, only: %i[edit update destroy]
 
   def index

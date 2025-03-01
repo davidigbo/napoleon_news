@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   # allow_browser versions: :modern
   before_action :configure_permitted_parameters, :force_html_format, if: :devise_controller?
   before_action :set_nav_link_variables,:set_active_contest, :set_others_category
+  before_action :store_location_for_devise, if: :storable_location?
+
 
   around_action :set_time_zone
 
@@ -50,5 +52,20 @@ class ApplicationController < ActionController::Base
 
   def force_html_format
     request.format = :html if request.format.symbol.nil?
+  end
+
+   # Override Devise's after_sign_in_path_for
+   def after_sign_in_path_for(resource)
+    stored_location_for(resource) || root_path # Redirect to stored location or fallback
+  end
+
+  # Store the fullpath before authentication is triggered
+  def store_location_for_devise
+    store_location_for(:user, request.fullpath)
+  end
+
+  # Only store location if it's a GET request and not for Devise controllers
+  def storable_location?
+    request.get? && !devise_controller? && !request.xhr? # Don't store AJAX requests
   end
 end

@@ -99,9 +99,11 @@
       </div>
     </div>
   </div>
-  <div id="signup" class="py-5 text-dark bg-light w-100">
-    <div class="container text-center">
-      <h2 class="display-5 fw-bold">Enter the Contest</h2>
+ <div id="signup" class="py-5 text-dark bg-light w-100">
+  <div class="container text-center">
+    <h2 class="display-5 fw-bold">Enter the Contest</h2>
+    
+    <% if current_user.present? %>
       <div class="mt-4 mx-auto" style="max-width: 600px;">
         <%= form_with(model: @contestant, url: contest_contestants_path, html: { class: "needs-validation", enctype: "multipart/form-data" }) do |f| %>
           <div class="mb-3 text-start">
@@ -114,13 +116,19 @@
           </div>
           <div class="mb-3 text-start">
             <%= f.label :image, "Upload Picture", class: "form-label fw-bold" %>
-            <%= f.file_field :image, class: "form-control form-control-lg", required: true, accept: "image/*"%>
+            <%= f.file_field :image, class: "form-control form-control-lg", required: true, accept: "image/*" %>
           </div>
           <div class="text-center">
             <%= f.submit "Submit", class: "btn btn-primary btn-lg fw-bold px-4" %>
           </div>
         <% end %>
       </div>
-    </div>
+    <% else %>
+      <p class="mt-4 text-danger fw-bold">You must be logged in to enter the contest.</p>
+      <%= link_to "Log in", new_session_path(:user), class: "btn btn-outline-primary btn-lg mt-3" %>
+    <% end %>
+
   </div>
+</div>
+
 </div>
