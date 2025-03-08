@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_21_230504) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_07_200915) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -159,6 +159,35 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_21_230504) do
     t.index ["user_id"], name: "index_page_views_on_user_id"
   end
 
+  create_table "questions", force: :cascade do |t|
+    t.text "question_text"
+    t.string "correct_answer"
+    t.string "api_question_id"
+    t.text "incorrect_answers"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["api_question_id"], name: "index_questions_on_api_question_id"
+  end
+
+  create_table "quiz_questions", force: :cascade do |t|
+    t.bigint "quiz_id", null: false
+    t.bigint "question_id", null: false
+    t.string "user_answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_quiz_questions_on_question_id"
+    t.index ["quiz_id"], name: "index_quiz_questions_on_quiz_id"
+  end
+
+  create_table "quizzes", force: :cascade do |t|
+    t.boolean "completed"
+    t.integer "score"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_quizzes_on_user_id"
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
@@ -225,6 +254,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_21_230504) do
   add_foreign_key "contestants", "users"
   add_foreign_key "contestants", "users", column: "approved_by_id"
   add_foreign_key "page_views", "users"
+  add_foreign_key "quiz_questions", "questions"
+  add_foreign_key "quiz_questions", "quizzes"
+  add_foreign_key "quizzes", "users"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
   add_foreign_key "votes", "contestants"

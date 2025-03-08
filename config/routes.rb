@@ -54,4 +54,7 @@ Rails.application.routes.draw do
   end
 
   post "/contact_us", to: "contacts#create"
+
+  resources :quizzes, only: [:show, :create, :update]
+  post '/quizzes/check_time', to: 'quizzes#check_time'
 end
