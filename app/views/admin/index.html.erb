@@ -1,7 +1,6 @@
 <div class="container after-nav py-3">
   <h1 class="text-center mb-4"> <%= current_user.role.capitalize %> Dashboard</h1>
   <div class="row justify-content-center">
-
     <!-- Manage Articles Card -->
     <div class="col-md-3 mb-4">
       <div class="card text-center shadow-sm">
@@ -13,7 +12,6 @@
         </div>
       </div>
     </div>
-
     <!-- Manage Articles Card -->
     <div class="col-md-3 mb-4">
       <div class="card text-center shadow-sm">
@@ -29,7 +27,6 @@
         </div>
       </div>
     </div>
-
     <!-- Manage Users Card -->
     <% if current_user.admin? %>
       <div class="col-md-3 mb-4">
@@ -43,7 +40,6 @@
         </div>
       </div>
     <% end %>
-
     <!-- Manage Contests Card -->
     <% if current_user.admin? %>
       <div class="col-md-3 mb-4">
@@ -57,7 +53,6 @@
         </div>
       </div>
     <% end %>
-
     <% if current_user.admin? %>
       <div class="col-md-3 mb-4">
         <div class="card text-center shadow-sm">
@@ -66,6 +61,19 @@
             <h5 class="card-title">Analytics</h5>
             <p class="card-text">View website analytics.</p>
             <%= link_to 'View Analytics', user_analytics_path, class: 'btn btn-secondary' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    
+    <% if current_user.admin? %>
+      <div class="col-md-3 mb-4">
+        <div class="card text-center shadow-sm">
+          <div class="card-body">
+            <i class="fas fa-images fa-3x text-danger mb-3"></i>
+            <h5 class="card-title">Carousel</h5>
+            <p class="card-text">Pin or Remove articles from Carousel</p>
+            <%= link_to 'Manage Carousel', user_carousel_index_path, class: 'btn btn-danger' %>
           </div>
         </div>
       </div>

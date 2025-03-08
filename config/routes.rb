@@ -46,6 +46,11 @@ Rails.application.routes.draw do
           end
         end
         resources :analytics, only: :index
+        resources :carousel, only: [:index] do
+          collection do
+            patch :update
+          end
+        end
       end
     end
     member do
