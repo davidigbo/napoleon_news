@@ -85,6 +85,7 @@ const QuizPopup = {
     })
       .then(response => response.json())
       .then(data => {
+        console.log(data)
         this.allQuestions = data.questions;
         this.quizId = data.quiz.id;
         this.userAnswers = {};
@@ -102,6 +103,8 @@ const QuizPopup = {
     const totalQuestions = this.allQuestions.length;
 
     // Combine correct and incorrect answers and shuffle them
+    console.log(`Question: ${question}`)
+    console.log(question.correct_answer)
     const allAnswers = [question.correct_answer, ...question.incorrect_answers];
     this.shuffleArray(allAnswers);
 
@@ -287,7 +290,7 @@ const QuizPopup = {
 
     if (!data.all_correct) {
       document.getElementById('retry-quiz').addEventListener('click', () => {
-        this.retryQuiz();
+        this.startQuiz();
       });
     }
 

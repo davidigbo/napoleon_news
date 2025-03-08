@@ -182,6 +182,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_07_200915) do
   create_table "quizzes", force: :cascade do |t|
     t.boolean "completed"
     t.integer "score"
+    t.datetime "started_at"
+    t.datetime "submitted_at"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

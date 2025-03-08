@@ -21,12 +21,12 @@ class QuizzesController < ApplicationController
   
   def create
     # Check if user already has an active quiz
-    existing_quiz = current_user.quizzes.where(completed: false).first
+    # existing_quiz = current_user.quizzes.where(completed: false).first
     
-    if existing_quiz
-      redirect_to quiz_path(existing_quiz)
-      return
-    end
+    # if existing_quiz
+    #   redirect_to quiz_path(existing_quiz)
+    #   return
+    # end
     
     # Create a new quiz with questions
     @quiz = QuizService.create_quiz_with_questions(current_user)
@@ -63,7 +63,8 @@ class QuizzesController < ApplicationController
   
     @quiz.update(
       completed: true,
-      score: correct_count
+      score: correct_count,
+      submitted_at: Time.current,
     )
       
     render json: { 
