@@ -3,7 +3,58 @@ const QuizPopup = {
   init() {
     this.startTimeTracker();
     this.setupEventListeners();
+    this.setupDirectTriggers();
     console.log("Quiz Countdown Started")
+  },
+
+  setupDirectTriggers() {
+    const quizTriggerLinks = document.querySelectorAll('.quiz-trigger');
+    quizTriggerLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.showStartConfirmation();
+      });
+    });
+
+    // Check URL parameters on page load
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('show_quiz') === 'true') {
+      this.showStartConfirmation();
+    }
+  },
+
+  showStartConfirmation() {
+    const promptHTML = `
+      <div class="quiz-prompt-overlay">
+        <div class="quiz-prompt-container">
+          <div class="quiz-content">
+            <h3>Start Quiz</h3>
+            <p>Are you ready to take a quick knowledge quiz?</p>
+          </div>
+          <div class="quiz-prompt-buttons">
+            <button id="quiz-start-now">Start Quiz Now</button>
+            <button id="quiz-cancel">Cancel</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', promptHTML);
+
+    document.getElementById('quiz-start-now').addEventListener('click', () => {
+      const promptElement = document.querySelector('.quiz-prompt-overlay');
+      if (promptElement) {
+        promptElement.remove();
+      }
+      this.startQuiz();
+    });
+
+    document.getElementById('quiz-cancel').addEventListener('click', () => {
+      const promptElement = document.querySelector('.quiz-prompt-overlay');
+      if (promptElement) {
+        promptElement.remove();
+      }
+    });
   },
 
   startTimeTracker() {
@@ -362,11 +413,6 @@ const QuizPopup = {
       timeLeft--;
     }, 1000);
   },
-
-  // autoSubmitQuiz() {
-  //   alert("⏳ Time's Up! Your quiz has been submitted.");
-  //   this.submitQuiz(); // Submit the quiz automatically
-  // },
 }
 
 // Initialize quiz popup when DOM is loaded
