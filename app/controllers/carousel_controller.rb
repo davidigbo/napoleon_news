@@ -4,7 +4,7 @@ class CarouselController < ApplicationController
   
   def index
     @articles = Article.published.includes(:categories).order(created_at: :desc)
-    @carousel_articles = @carousel_category.articles.published
+    @carousel_articles = @carousel_category.articles.published.order(created_at: :desc)
     # @carousel_articles = @carousel_articles.size != 7 ? @articles.published.order(published_at: :desc).first(7) : @carousel_articles
   end
   
@@ -12,7 +12,7 @@ class CarouselController < ApplicationController
     article_ids = params[:article_ids] || []
     
     if article_ids.count != 7
-      flash[:alert] = "You must pin exactly 7 articles to the carousel or carousel will show 7 latest articles"
+      flash[:alert] = "You must pin exactly 7 articles to the carousel."
       redirect_to user_carousel_index_path
       return
     end

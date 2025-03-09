@@ -27,6 +27,11 @@
           <i class="fas fa-trophy"></i> Contests
         <% end %>
       </li>
+            <li class="nav-item">
+        <%= link_to user_carousel_index_path(current_user), class: "nav-link #{'bg-primary text-white' if current_page?(user_carousel_index_path(current_user))}" do %>
+          <i class="fas fa-trophy"></i> Carousel
+        <% end %>
+      </li>
     </ul>
   </div>
 </nav>
