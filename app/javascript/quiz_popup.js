@@ -17,7 +17,7 @@ const QuizPopup = {
   },
 
   checkTimeSpent() {
-    if (this.quizShown) return;
+    if (this.quizShown || sessionStorage.getItem('quizPromptShown')) return;
 
     const currentTime = new Date();
     const timeSpentMs = currentTime - this.startTime;
@@ -25,8 +25,9 @@ const QuizPopup = {
 
     // Show quiz after 5 minutes of activity
     if (timeSpentMinutes >= 0.5) {
-      console.log(".5 minutes spent")
+      console.log(".2 minutes spent")
       this.showQuizPrompt();
+      sessionStorage.setItem('quizPromptShown', 'true'); // Mark prompt as shown
     }
   },
 
