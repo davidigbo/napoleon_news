@@ -54,4 +54,15 @@ Rails.application.routes.draw do
   end
 
   post "/contact_us", to: "contacts#create"
+
+  get '/sitemap.xml.gz', to: proc { |env| 
+    [
+      200, 
+      { 
+        'Content-Type' => 'application/gzip',
+        'Content-Disposition' => 'inline; filename="sitemap.xml.gz"' 
+      },
+      [File.read(Rails.root.join('public', 'sitemap.xml.gz'))]
+    ] 
+  }
 end
