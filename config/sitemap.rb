@@ -10,7 +10,7 @@ SitemapGenerator::Sitemap.adapter = SitemapGenerator::AwsSdkAdapter.new(
   aws_access_key_id: ENV['BUCKETEER_AWS_ACCESS_KEY_ID'],
   aws_secret_access_key: ENV['BUCKETEER_AWS_SECRET_ACCESS_KEY'],
   aws_region: ENV['BUCKETEER_AWS_REGION'],
-  acl: "public-read" # Allow public access
+  acl: nil  # Disable ACL to avoid the error
 )
 
 SitemapGenerator::Sitemap.create do
