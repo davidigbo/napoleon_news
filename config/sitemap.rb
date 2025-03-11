@@ -1,6 +1,14 @@
 # Set the host name for URL creation
 SitemapGenerator::Sitemap.default_host = "http://www.napoleonnews.com"
 
+SitemapGenerator::Sitemap.sitemaps_host = "https://#{ENV['AWS_S3_BUCKET']}.s3.amazonaws.com/"
+SitemapGenerator::Sitemap.adapter = SitemapGenerator::AwsSdkAdapter.new(
+  ENV['AWS_S3_BUCKET'],
+  aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+  aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+  aws_region: ENV['AWS_REGION']
+)
+
 SitemapGenerator::Sitemap.create do
   # Put links creation logic here.
   #
