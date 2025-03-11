@@ -8,7 +8,7 @@ class SitemapsController < ApplicationController
       region: ENV['BUCKETEER_AWS_REGION']
     )
 
-    bucket_name = ENV['BUCKETEER_BUCKET_name']
+    bucket_name = ENV['BUCKETEER_BUCKET_NAME']
     file_key = 'sitemap.xml.gz'
 
     begin
