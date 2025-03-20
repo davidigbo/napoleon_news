@@ -8,4 +8,4 @@ import Rails from "@rails/ujs";
 Rails.start();
 import "timestamp_formatter";
 // import "./channels"
-import "./quiz_popup";
+import "quiz_popup";
