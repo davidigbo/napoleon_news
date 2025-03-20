@@ -56,5 +56,5 @@ Rails.application.routes.draw do
   post "/contact_us", to: "contacts#create"
 
   resources :quizzes, only: [:show, :create, :update]
-  post '/quizzes/check_time', to: 'quizzes#check_time'
+  get '/sitemap.xml.gz', to: 'sitemaps#show'
 end

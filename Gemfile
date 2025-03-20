@@ -40,6 +40,7 @@ gem "ancestry"
 gem "aws-sdk-s3", require: false
 gem "http"
 
+gem 'sitemap_generator'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
