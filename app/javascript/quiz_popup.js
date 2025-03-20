@@ -1,29 +1,79 @@
 // app/javascript/quiz_popup.js
 const QuizPopup = {
+  initialized: false,
+  
   init() {
+    // Prevent multiple initializations
+    if (this.initialized) {
+      return;
+    }
+    
+    this.initialized = true;
     this.startTimeTracker();
     this.setupEventListeners();
     this.setupDirectTriggers();
-    console.log("Quiz Countdown Started")
+    console.log("Quiz Countdown Started");
+  },
+
+  startTimeTracker() {
+    this.startTime = new Date();
+    this.quizShown = false;
+
+    // Check every 60 seconds if enough time has passed
+    this.timeInterval = setInterval(() => {
+      this.checkTimeSpent();
+    }, 60000);
+  },
+
+  setupEventListeners() {
+    // Reset timer on user activity
+    const resetTimer = () => {
+      if (!this.quizShown) {
+        this.startTime = new Date();
+      }
+    };
+
+    // Events that indicate user activity
+    document.addEventListener('click', resetTimer);
+    document.addEventListener('scroll', resetTimer);
+    document.addEventListener('keypress', resetTimer);
   },
 
   setupDirectTriggers() {
-    const quizTriggerLinks = document.querySelectorAll('.quiz-trigger');
-    quizTriggerLinks.forEach(link => {
+    // Remove any existing event listeners first
+    document.querySelectorAll('.quiz-trigger').forEach(link => {
+      // Create a new clone of the element to remove all event listeners
+      const newLink = link.cloneNode(true);
+      link.parentNode.replaceChild(newLink, link);
+    });
+    
+    // Add new event listeners
+    document.querySelectorAll('.quiz-trigger').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
-        this.showStartConfirmation();
+        this.handleQuizTriggerClick();
       });
     });
-
-    // Check URL parameters on page load
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('show_quiz') === 'true') {
+  },
+  
+  handleQuizTriggerClick() {
+    if (!this.isUserSignedIn()) {
+      // Store flag to start quiz after sign in
+      sessionStorage.setItem('launch_quiz_after_signin', 'true');
+      window.location.href = "/users/sign_in"; // Redirect to sign-in page
+    } else {
       this.showStartConfirmation();
     }
   },
 
+  isUserSignedIn() {
+    return document.body.dataset.signedIn === "true";
+  },  
+
   showStartConfirmation() {
+    // Remove any existing prompt first
+    this.removeExistingPrompts();
+    
     const promptHTML = `
       <div class="quiz-prompt-overlay">
         <div class="quiz-prompt-container">
@@ -42,29 +92,20 @@ const QuizPopup = {
     document.body.insertAdjacentHTML('beforeend', promptHTML);
 
     document.getElementById('quiz-start-now').addEventListener('click', () => {
-      const promptElement = document.querySelector('.quiz-prompt-overlay');
-      if (promptElement) {
-        promptElement.remove();
-      }
+      this.removeExistingPrompts();
       this.startQuiz();
     });
 
     document.getElementById('quiz-cancel').addEventListener('click', () => {
-      const promptElement = document.querySelector('.quiz-prompt-overlay');
-      if (promptElement) {
-        promptElement.remove();
-      }
+      this.removeExistingPrompts();
     });
   },
 
-  startTimeTracker() {
-    this.startTime = new Date();
-    this.quizShown = false;
-
-    // Check every 30 seconds if enough time has passed
-    this.timeInterval = setInterval(() => {
-      this.checkTimeSpent();
-    }, 30000);
+  removeExistingPrompts() {
+    const promptElement = document.querySelector('.quiz-prompt-overlay');
+    if (promptElement) {
+      promptElement.remove();
+    }
   },
 
   checkTimeSpent() {
@@ -74,15 +115,16 @@ const QuizPopup = {
     const timeSpentMs = currentTime - this.startTime;
     const timeSpentMinutes = timeSpentMs / (1000 * 60);
 
-    // Show quiz after 5 minutes of activity
-    if (timeSpentMinutes >= 0.5) {
-      console.log(".2 minutes spent")
+    // Show quiz after 1 minute of activity
+    if (timeSpentMinutes >= 1) {
       this.showQuizPrompt();
       sessionStorage.setItem('quizPromptShown', 'true'); // Mark prompt as shown
     }
   },
 
   showQuizPrompt() {
+    this.removeExistingPrompts();
+    
     const promptHTML = `
       <div class="quiz-prompt-overlay">
         <div class="quiz-prompt-container">
@@ -102,42 +144,60 @@ const QuizPopup = {
     this.quizShown = true;
 
     document.getElementById('quiz-accept').addEventListener('click', () => {
-      this.startQuiz();
+      if (!this.isUserSignedIn()) {
+        sessionStorage.setItem('launch_quiz_after_signin', 'true');
+        window.location.href = "/users/sign_in"; // Redirect to sign-in page
+      } else {
+        this.startQuiz();
+      }
     });
 
     document.getElementById('quiz-decline').addEventListener('click', () => {
-      this.hideQuizPrompt();
+      this.removeExistingPrompts();
       // Reset the timer to prompt again later
       this.startTime = new Date();
       this.quizShown = false;
     });
   },
 
-  hideQuizPrompt() {
-    const promptElement = document.querySelector('.quiz-prompt-overlay');
-    if (promptElement) {
-      promptElement.remove();
-    }
-  },
-
   startQuiz() {
-    this.hideQuizPrompt();
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-    console.log("CSRF Token:", csrfToken);
-
-
+    this.removeExistingPrompts();
+    const csrfToken = this.getCSRFToken();
+    if (!csrfToken) {
+      console.error("CSRF token not found. Cannot start quiz.");
+      return;
+    }
+    
+    // Show a loader
+    const loaderHTML = `
+      <div class="quiz-overlay">
+        <div class="quiz-container">
+          <div class="quiz-loading">
+            <h3>Loading Quiz...</h3>
+            <div class="loader-spinner"></div>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', loaderHTML);
+    
     // Make API call to create a new quiz
     fetch('/quizzes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // 'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
         'X-CSRF-Token': csrfToken
       }
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data)
+        // Remove the loader
+        const loaderElement = document.querySelector('.quiz-overlay');
+        if (loaderElement) {
+          loaderElement.remove();
+        }
+        
         this.allQuestions = data.questions;
         this.quizId = data.quiz.id;
         this.userAnswers = {};
@@ -147,6 +207,23 @@ const QuizPopup = {
       })
       .catch(error => {
         console.error('Error starting quiz:', error);
+        // Remove the loader and show error message
+        const loaderElement = document.querySelector('.quiz-overlay');
+        if (loaderElement) {
+          loaderElement.innerHTML = `
+            <div class="quiz-container">
+              <div class="quiz-error">
+                <h3>Error Loading Quiz</h3>
+                <p>There was a problem loading the quiz. Please try again.</p>
+                <button id="close-quiz-error">Close</button>
+              </div>
+            </div>
+          `;
+          
+          document.getElementById('close-quiz-error').addEventListener('click', () => {
+            loaderElement.remove();
+          });
+        }
       });
   },
 
@@ -155,8 +232,6 @@ const QuizPopup = {
     const totalQuestions = this.allQuestions.length;
 
     // Combine correct and incorrect answers and shuffle them
-    console.log(`Question: ${question}`)
-    console.log(question.correct_answer)
     const allAnswers = [question.correct_answer, ...question.incorrect_answers];
     this.shuffleArray(allAnswers);
 
@@ -175,7 +250,7 @@ const QuizPopup = {
       <div class="quiz-overlay">
         <div class="quiz-container">
           <div class="quiz-header">
-            <h2>News Quiz</h2>
+            <h2>Napoleon News Quiz</h2>
             <div class="quiz-progress">Question ${this.currentQuestionIndex + 1} of ${totalQuestions}</div>
           </div>
           <div class="quiz-content">
@@ -296,14 +371,17 @@ const QuizPopup = {
       }
     }
 
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-    console.log("CSRF Token:", csrfToken);
+    const csrfToken = this.getCSRFToken();
+    if (!csrfToken) {
+      console.error("CSRF token not found. Cannot submit quiz.");
+      return;
+    }
+
     // Submit all answers
     fetch(`/quizzes/${this.quizId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        // 'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
         'X-CSRF-Token': csrfToken
       },
       body: JSON.stringify({ answers: this.userAnswers })
@@ -338,24 +416,26 @@ const QuizPopup = {
         this.quizShown = false;
         this.startTime = new Date(); // Reset timer
       });
+      
+      if (!data.all_correct) {
+        document.getElementById('retry-quiz').addEventListener('click', () => {
+          this.startQuiz();
+        });
+      }
     }
-
-    if (!data.all_correct) {
-      document.getElementById('retry-quiz').addEventListener('click', () => {
-        this.startQuiz();
-      });
-    }
-
   },
 
   retryQuiz() {
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-    console.log("CSRF Token:", csrfToken);
+    const csrfToken = this.getCSRFToken();
+    if (!csrfToken) {
+      console.error("CSRF token not found. Cannot retry quiz.");
+      return;
+    }
+
     fetch('/quizzes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // 'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
         'X-CSRF-Token': csrfToken
       }
     })  // Create a new quiz
@@ -368,23 +448,8 @@ const QuizPopup = {
       .catch(error => console.error("Error starting new quiz:", error));
   },
 
-  setupEventListeners() {
-    // Reset timer on user activity
-    const resetTimer = () => {
-      if (!this.quizShown) {
-        this.startTime = new Date();
-      }
-    };
-
-    // Events that indicate user activity
-    document.addEventListener('click', resetTimer);
-    document.addEventListener('scroll', resetTimer);
-    document.addEventListener('keypress', resetTimer);
-  },
-
   startTimer() {
-    console.log('timer started')
-    let timeLeft = 10; // 3 minutes in seconds
+    let timeLeft = 180; // 10 seconds for testing - change to 180 for 3 minutes
     const timerElement = document.createElement("div");
     timerElement.id = "quiz-timer";
     timerElement.className = "alert alert-warning text-center";
@@ -400,7 +465,6 @@ const QuizPopup = {
 
       if (timeLeft === 0) {
         clearInterval(this.timerInterval);
-        // this.autoSubmitQuiz(); // Auto-submit when time runs out
         // Show Time's Up Message
         timerElement.innerHTML = `<strong>⏳ Time's Up! Auto-submitting...</strong>`;
 
@@ -413,9 +477,56 @@ const QuizPopup = {
       timeLeft--;
     }, 1000);
   },
-}
 
-// Initialize quiz popup when DOM is loaded
+  getCSRFToken() {
+    const metaTag = document.querySelector('meta[name="csrf-token"]');
+    if (!metaTag) {
+      console.error("CSRF meta tag not found in document!");
+      return null;
+    }
+    return metaTag.content;
+  },
+  
+  // Method to clean up when navigating away
+  cleanup() {
+    clearInterval(this.timeInterval);
+    clearInterval(this.timerInterval);
+    this.initialized = false;
+  }
+};
+
+// Function to handle post-signin quiz launch
+const checkForQuizAfterSignin = () => {
+  if (sessionStorage.getItem('launch_quiz_after_signin') === 'true') {
+    // Only trigger if we're not on the sign-in page
+    if (!window.location.pathname.includes('/users/sign_in')) {
+      sessionStorage.removeItem('launch_quiz_after_signin');
+      setTimeout(() => {
+        QuizPopup.showStartConfirmation();
+      }, 500); // Short delay to ensure DOM is ready
+    }
+  }
+};
+
+// Clean up before unloading the page
+window.addEventListener('beforeunload', () => {
+  QuizPopup.cleanup();
+});
+
+// For initial page load
 document.addEventListener('DOMContentLoaded', () => {
   QuizPopup.init();
+  checkForQuizAfterSignin();
+});
+
+// For Turbo/Turbolinks navigation
+document.addEventListener('turbo:load', () => {
+  QuizPopup.cleanup(); // Clean up previous instance
+  QuizPopup.init();
+  checkForQuizAfterSignin();
+});
+
+// For Turbo/Turbolinks before-cache (cleanup)
+document.addEventListener('turbo:before-cache', () => {
+  QuizPopup.cleanup();
 });

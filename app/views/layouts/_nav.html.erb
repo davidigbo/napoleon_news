@@ -79,7 +79,7 @@
             <% if @active_contest %>
               <li><%= link_to 'MBGN Contest', new_contest_contestant_path(@active_contest), class: 'dropdown-item'%></li>
             <% end %>
-            <li><%= link_to 'Instant Quiz', '#', class: 'quiz-trigger dropdown-item'%></li>
+            <li><%= link_to 'Instant Quiz', '', class: 'quiz-trigger dropdown-item'%></li>
             <li><hr class="dropdown-divider"></li>
             <% if @others_category %>
               <li><%= link_to 'Others', category_path(@others_category), class: 'dropdown-item' %></li>

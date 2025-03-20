@@ -1,7 +1,7 @@
 class QuizService
   require "http"
 
-  def self.fetch_questions(num_questions = 5)
+  def self.fetch_questions(num_questions = 30)
     # Using the Open Trivia Database API as an example
     url = "https://opentdb.com/api.php?amount=#{num_questions}&type=multiple"
     response = HTTP.get(url)
@@ -25,7 +25,7 @@ class QuizService
     []
   end
   
-  def self.create_quiz_with_questions(user, num_questions = 5)
+  def self.create_quiz_with_questions(user, num_questions = 30)
     quiz = user.quizzes.create(completed: false)
     api_questions = fetch_questions(num_questions)
     
