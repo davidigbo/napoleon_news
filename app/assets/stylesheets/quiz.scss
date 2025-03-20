@@ -1,0 +1,114 @@
+.quiz-prompt-overlay,
+.quiz-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.quiz-prompt-container,
+.quiz-container {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  text-align: center;
+}
+
+.quiz-prompt-buttons,
+.quiz-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.quiz-prompt-buttons button,
+.quiz-buttons button,
+#close-quiz {
+  padding: 10px 16px;
+  border-radius: 4px;
+  border: none;
+  background-color: #3490dc;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.quiz-prompt-buttons button:hover,
+.quiz-buttons button:hover,
+#close-quiz:hover {
+  background-color: #2779bd;
+}
+
+.quiz-question {
+  margin-bottom: 20px;
+}
+
+.quiz-answers {
+  margin-top: 15px;
+  text-align: left;
+}
+
+.quiz-container.results {
+  text-align: center;
+}
+
+/* Ensure buttons have some spacing */
+.quiz-buttons button {
+  flex-grow: 1;
+  margin: 0 5px;
+}
+
+/* Close button in the top-right corner */
+.quiz-container .close-button {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #888;
+}
+
+.quiz-container .close-button:hover {
+  color: #555;
+}
+
+
+// ---------
+
+.quiz-loading {
+  text-align: center;
+  padding: 2rem;
+}
+
+.loader-spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.quiz-error {
+  text-align: center;
+  padding: 2rem;
+  color: #d9534f;
+}

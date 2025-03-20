@@ -8,4 +8,5 @@ import Rails from "@rails/ujs";
 Rails.start();
 import "timestamp_formatter";
 // import "./channels"
-import "controllers/carousel_limit"
+import "controllers/carousel_limit";
+import "./quiz_popup";

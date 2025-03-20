@@ -28,3 +28,29 @@ end
 # %[admin editor author writer].each do |role|
 #   create roles  
 # end
+
+sample_questions = [
+  {
+    question_text: "What is the capital of France?",
+    correct_answer: "Paris",
+    incorrect_answers: ["London", "Berlin", "Madrid"],
+    api_question_id: "q1"
+  },
+  {
+    question_text: "Who wrote 'Romeo and Juliet'?",
+    correct_answer: "William Shakespeare",
+    incorrect_answers: ["Charles Dickens", "Jane Austen", "Mark Twain"],
+    api_question_id: "q2"
+  },
+  # Add more sample questions as needed
+]
+
+sample_questions.each do |q|
+  Question.find_or_create_by(api_question_id: q[:api_question_id]) do |question|
+    question.question_text = q[:question_text]
+    question.correct_answer = q[:correct_answer]
+    question.incorrect_answers = q[:incorrect_answers]
+  end
+end
+
+puts "Seeded #{Question.count} questions"

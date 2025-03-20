@@ -19,7 +19,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6566968778600168"
      crossorigin="anonymous"></script>
   </head>
-  <body class="d-flex flex-column min-vh-100 pt-4" data-controller="flash-notifications">
+  <body class="d-flex flex-column min-vh-100 pt-4" data-controller="flash-notifications" data-signed-in="<%= user_signed_in? %>">
     <div class="container-fluid p-0 mb-5 contest-container">
       <%= render 'layouts/nav' %>
       <% flash.each do |type, message| %>
