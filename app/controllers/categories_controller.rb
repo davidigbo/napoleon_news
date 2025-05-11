@@ -14,6 +14,11 @@ class CategoriesController < ApplicationController
     @top_articles = @category.articles.where(status: 'published').order(created_at: :desc).limit(5)
     @other_articles = @category.articles.where(status: 'published').order(created_at: :desc)[5..-1]
 
+    set_meta_tags title: @category.name,
+                  description: "Read the latest news and updates from the #{@category.name} category, featuring top stories and in-depth analysis.",
+                  canonical: category_url(@category)
+
+
     track_page_view(
       page_type: "category",
       page_id: @category.id,

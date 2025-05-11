@@ -9,6 +9,9 @@ class HomeController < ApplicationController
     # Category.all.each { |category| @categories[category.name] = category_url(category) }
     @categories = Category.roots.where.not(name: ['Carousel', 'Others'])
     @carousel_articles = Category.find_by(name: 'Carousel').articles.where(status: 'published').includes(:author).order(published_at: :desc).limit(7)
+
+    set_meta_tags title: 'Home',
+                  description: 'Latest headlines and breaking news from around the world.'
     
     track_page_view(
       page_type: "home",
