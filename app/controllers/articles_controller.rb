@@ -55,6 +55,7 @@ class ArticlesController < ApplicationController
     set_meta_tags title: @article.title,
                   description: @article.description,
                   keywords: @article.tags.map(&:name).join(', '),
+                  canonical: article_url(@article),
                   og: {
                     title: @article.title,
                     description: @article.description,
