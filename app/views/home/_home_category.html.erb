@@ -34,8 +34,12 @@
       <div class="col-md-4 border-left left-col <%= idx.odd? ? 'order-md-1' : '' %> d-flex flex-column justify-content-between">
         <% if [nil, articles[1]].flatten.compact.present? %>
           <% [nil, articles[1]].each_with_index do |article, index| %>
-            <% if index == 0 %>
+            <% if idx == 0 && index == 0 %>
               <!-- Placeholder card for advertisement -->
+              <%= render 'layouts/advert_cube_1' %>
+            <% elsif idx == 1 && index == 0 %>
+              <%= render 'layouts/advert_cube_2' %>
+            <% elsif index == 0 %>
               <%= render 'layouts/advert_cube' %>
             <% else %>
               <!-- Regular article card -->
