@@ -39,6 +39,8 @@
               <%= render 'layouts/advert_cube_1' %>
             <% elsif idx == 1 && index == 0 %>
               <%= render 'layouts/advert_cube_2' %>
+            <% elsif idx.in?([2, 3]) && index == 0 %>
+              <%= render 'layouts/advert_cube_3' %>
             <% elsif index == 0 %>
               <%= render 'layouts/advert_cube' %>
             <% else %>
