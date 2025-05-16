@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  resources :categories, only: [:index, :show] do
+  resources :categories, only: [:index, :show], param: :slug do
     member do
       get :articles
     end
