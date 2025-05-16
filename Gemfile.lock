@@ -100,6 +100,9 @@ GEM
     bindex (0.8.1)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
+    bootstrap5-kaminari-views (0.0.1)
+      kaminari (>= 0.13)
+      rails (>= 3.1)
     brakeman (6.2.2)
       racc
     builder (3.3.0)
@@ -393,6 +396,7 @@ DEPENDENCIES
   ancestry
   aws-sdk-s3
   bootsnap
+  bootstrap5-kaminari-views
   brakeman
   capybara
   debug
