@@ -68,7 +68,7 @@ end
 gem "devise", "~> 4.8"
 
 gem "kaminari"
-
+gem 'bootstrap5-kaminari-views'
 gem "friendly_id", "~> 5.4"
 gem "discard", "~> 1.4"
 gem "meta-tags"
