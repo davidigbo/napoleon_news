@@ -8,7 +8,7 @@ class HomeController < ApplicationController
     # @categories = {}
     # Category.all.each { |category| @categories[category.name] = category_url(category) }
     @categories = Category.roots.where.not(name: ['Carousel', 'Others'])
-    @carousel_articles = Category.find_by(name: 'Carousel').articles.where(status: 'published').includes(:author).limit(7)
+    @carousel_articles = Category.find_by(name: 'Carousel').articles.where(status: 'published').order(published_at: :desc).includes(:author).limit(7)
 
     if @carousel_articles.size != 7
       @carousel_articles = Article.where(status: 'published').includes(:author).order(published_at: :desc).limit(7)
