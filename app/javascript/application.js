@@ -9,4 +9,4 @@ Rails.start();
 import "timestamp_formatter";
 // import "./channels"
 import "controllers/carousel_limit";
-import "./quiz_popup";
+import "quiz_popup";

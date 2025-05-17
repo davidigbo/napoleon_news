@@ -13,7 +13,7 @@ categories = [
   { title: 'Features', children: %w[Interview Stories CSR] },
   { title: 'Leadership', children: %w[Transformational Leaders Governance Legal] },
   { title: 'Business', children: %w[Finance SMEs Innovation Listings] },
-  { title: 'Society', children: %w[Men Youth]},
+  { title: 'Society', children: %w[Men Women Youth Societies]},
   { title: 'News', children: %w[Trending Entertainment Tech Sports Culture]},
   { title: 'Carousel', children: []},
   { title: 'Others', children: []}

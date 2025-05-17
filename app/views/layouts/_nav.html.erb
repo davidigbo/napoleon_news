@@ -54,7 +54,9 @@
           </a>
           <ul class="dropdown-menu">
             <li><%= link_to 'Men', category_path(@all_categories.find_by(name: 'Men')), class: 'dropdown-item' %></li>
+            <li><%= link_to 'Women', category_path(@all_categories.find_by(name: 'Women')), class: 'dropdown-item' %></li>
             <li><%= link_to 'Youth', category_path(@all_categories.find_by(name: 'Youth')), class: 'dropdown-item' %></li>
+            <li><%= link_to 'Societies', category_path(@all_categories.find_by(name: 'Societies')), class: 'dropdown-item' %></li>
           </ul>
         </li>
         <!-- News Dropdown -->

@@ -16,6 +16,8 @@ pin "trix"
 pin "@rails/actiontext", to: "actiontext.esm.js"
 pin "@rails/ujs", to: "https://ga.jspm.io/npm:@rails/ujs@7.0.5/lib/assets/compiled/rails-ujs.js"
 pin "timestamp_formatter", to: "timestamp_formatter.js"
+pin "quiz_popup", to: "quiz_popup.js", preload: true
+
 
 pin "@rails/actioncable", to: "actioncable.esm.js"
 pin_all_from "app/javascript/channels", under: "channels"

@@ -11,3 +11,5 @@ Disallow: /users/
 
 # Block all crawlers from the update_status patch route
 Disallow: /articles/*/update_status
+
+Sitemap: https://napoleonnews.com/sitemap.xml.gz

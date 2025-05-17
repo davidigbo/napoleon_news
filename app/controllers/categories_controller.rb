@@ -12,7 +12,16 @@ class CategoriesController < ApplicationController
 
   def show
     @top_articles = @category.articles.where(status: 'published').order(created_at: :desc).limit(5)
-    @other_articles = @category.articles.where(status: 'published').order(created_at: :desc)[5..-1]
+    @other_articles = @category.articles
+                            .where(status: 'published')
+                            .order(created_at: :desc)
+                            .offset(5)
+                            .page(params[:page]).per(5)
+
+    set_meta_tags title: @category.name,
+                  description: "Read the latest news and updates from the #{@category.name} category, featuring top stories and in-depth analysis.",
+                  canonical: category_url(@category)
+
 
     track_page_view(
       page_type: "category",
@@ -36,6 +45,6 @@ class CategoriesController < ApplicationController
   private
 
   def set_category
-      @category = Category.find(params[:id])
+      @category = Category.friendly.find(params[:slug])
   end
 end

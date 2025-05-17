@@ -129,8 +129,9 @@ const QuizPopup = {
       <div class="quiz-prompt-overlay">
         <div class="quiz-prompt-container">
           <div class="quiz-content">
-            <h3>Quick Quiz Time!</h3>
-            <p>You've been reading for a while. Take a quick quiz to test your knowledge?</p>
+            <h3>YOU THINK YOU CAN WIN $50?</h3>
+            <p>Take our quiz, get all the answers right, and win $50 cash.
+               It’s that easy. No tricks. Just brains.</p>
           </div>
           <div class="quiz-prompt-buttons">
             <button id="quiz-accept">Take Quiz</button>
@@ -398,7 +399,36 @@ const QuizPopup = {
   showResults(data) {
     const quizOverlay = document.querySelector('.quiz-overlay');
 
+    
     if (quizOverlay) {
+      const prizeFormHTML = `
+        <div class="quiz-container results">
+          <div class="quiz-content">
+            <h2>🎉 Congratulations!</h2>
+            <p>You got all the answers right and won $50!</p>
+            <p>Please fill in your details to claim your prize.</p>
+            <form id="prize-form">
+              <input type="text" name="name" placeholder="Full Name" required>
+              <input type="email" name="email" placeholder="Email Address" required>
+              <input type="text" name="phone" placeholder="Phone Number" required>
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      `;
+
+      const defaultResultHTML = `
+        <div class="quiz-container results">
+          <div class="quiz-content">
+            <h2>Quiz Results</h2>
+            <p>Your score: ${data.score}</p>
+            <p>Percentage: ${data.percentage}%</p>
+          </div>
+          <button id="close-quiz">Close</button>
+          ${!data.all_correct ? '<button id="retry-quiz">Try Again</button>' : ''}
+        </div>
+      `;
+
       quizOverlay.innerHTML = `
         <div class="quiz-container results">
           <div class="quiz-content">
@@ -411,15 +441,53 @@ const QuizPopup = {
         </div>
       `;
 
-      document.getElementById('close-quiz').addEventListener('click', () => {
-        quizOverlay.remove();
-        this.quizShown = false;
-        this.startTime = new Date(); // Reset timer
-      });
+      quizOverlay.innerHTML = data.all_correct ? prizeFormHTML : defaultResultHTML;
+
+      // document.getElementById('close-quiz').addEventListener('click', () => {
+      //   quizOverlay.remove();
+      //   this.quizShown = false;
+      //   this.startTime = new Date(); // Reset timer
+      // });
       
       if (!data.all_correct) {
         document.getElementById('retry-quiz').addEventListener('click', () => {
           this.startQuiz();
+        });
+      }
+
+      const closeBtn = document.getElementById('close-quiz');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          quizOverlay.remove();
+          this.quizShown = false;
+          this.startTime = new Date();
+        });
+      }
+
+      const prizeForm = document.getElementById('prize-form');
+
+      if (prizeForm) {
+        prizeForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const formData = new FormData(prizeForm);
+          const details = Object.fromEntries(formData.entries());
+  
+          fetch(`/quizzes/${this.quizId}/prize_claims`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': this.getCSRFToken()
+            },
+            body: JSON.stringify({ claim: details })
+          })
+          .then(response => response.json())
+          .then(result => {
+            prizeForm.innerHTML = `<p>Thanks! We’ll contact you soon to deliver your prize.</p>`;
+          })
+          .catch(error => {
+            console.error("Error submitting prize claim:", error);
+            prizeForm.innerHTML += `<p class="error">Something went wrong. Please try again.</p>`;
+          });
         });
       }
     }
