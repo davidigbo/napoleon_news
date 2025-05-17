@@ -3,7 +3,7 @@ class CarouselController < ApplicationController
   before_action :set_carousel_category
   
   def index
-    @articles = Article.published.includes(:categories).order(created_at: :desc)
+    @articles = Article.published.includes(:categories).order(created_at: :desc).limit(300)
     @carousel_articles = @carousel_category.articles.published.order(created_at: :desc)
     # @carousel_articles = @carousel_articles.size != 7 ? @articles.published.order(published_at: :desc).first(7) : @carousel_articles
   end

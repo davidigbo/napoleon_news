@@ -105,6 +105,16 @@ class ArticlesController < ApplicationController
   def update
     head :unauthorized unless @article.author == current_user || current_user&.admin? || current_user&.editor?
 
+    preserved_category_id = Category.find_by(name: 'Carousel').id
+
+    if article_params[:category_ids].present?
+      submitted_category_ids = article_params[:category_ids].reject(&:blank?).map(&:to_i)
+      if @article.category_ids.include?(preserved_category_id) && !submitted_category_ids.include?(preserved_category_id)
+        submitted_category_ids << preserved_category_id
+        params[:article][:category_ids] = submitted_category_ids
+      end
+    end
+    
     modified_params = if article_params[:status] == 'published' && article_params[:published_at] == 'now' # Direct publishing from under_review
                         article_params.merge(published_at: Time.current, approved_at: Time.current, approved_by: current_user)
                       elsif article_params[:status] == 'approved' && article_params[:published_at].present? # Approve and schedule
