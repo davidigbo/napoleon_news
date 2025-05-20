@@ -15,6 +15,10 @@
       <%= f.text_area :bio, rows: 4, cols: 23, autofocus: true, autocomplete: "bio" %>
     </div>
     <div class="field">
+      <%= f.label :headshot, "Profile Picture" %><br />
+      <%= f.file_field :headshot, accept: 'image/*' %>
+    </div>
+    <div class="field">
       <%= f.label :email %><br />
       <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
     </div>
@@ -29,7 +33,7 @@
       <%= f.label :password_confirmation %><br />
       <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
     </div>
-    <div class="actions">
+    <div class="actions mt-3">
       <%= f.submit "Sign up" %>
     </div>
   <% end %>

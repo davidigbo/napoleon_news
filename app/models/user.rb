@@ -13,6 +13,8 @@ class User < ApplicationRecord
 
   validates :email, presence: true
   scope :authors, -> { where(role: ['author', 'admin', 'editor']) }
+  has_one_attached :headshot
+
 
 
   enum :role, [:visitor, :author, :editor, :admin]
