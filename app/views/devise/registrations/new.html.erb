@@ -11,6 +11,10 @@
       <%= f.text_field :last_name, autofocus: true, autocomplete: "last-name" %>
     </div>
     <div class="field">
+      <%= f.label :bio %><br />
+      <%= f.text_area :bio, rows: 4, cols: 23, autofocus: true, autocomplete: "bio" %>
+    </div>
+    <div class="field">
       <%= f.label :email %><br />
       <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
     </div>

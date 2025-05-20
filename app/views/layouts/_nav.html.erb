@@ -106,51 +106,56 @@
           </div>
         <% end %>
         <% if user_signed_in? %>
+          <div class="dropdown me-2">
+            <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-user me-1"></i> <%= current_user.first_name %>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+              <li>
+                <%= link_to "Edit Profile", edit_user_registration_path, class: "dropdown-item" %>
+              </li>
+              <li>
+                <%= link_to "Logout", destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "dropdown-item" %>
+              </li>
+            </ul>
+          </div>
+        <% else %>
           <div class="d-flex me-2">
-            <%= link_to destroy_user_session_path, data: { "turbo-method": :delete, turbo_method: 'delete', turbo_method: :delete }, method: :delete, class: "btn btn-outline-secondary btn-sm me-2" do %>
-              <%# <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-outline-secondary btn-sm me-2" do %>
-                <i class="fas fa-sign-out-alt me-1"></i> Logout, <%= current_user.first_name %>
-              <% end %>
-            </div>
-          <% else %>
-            <div class="d-flex me-2">
-              <%= link_to new_user_session_path, class: "btn btn-outline-secondary btn-sm me-2" do %>
-                <i class="fas fa-sign-in-alt me-1"></i> Login
-              <% end %>
-            </div>
-          <% end %>
-        </div>
+            <%= link_to new_user_session_path, class: "btn btn-outline-secondary btn-sm me-2" do %>
+              <i class="fas fa-sign-in-alt me-1"></i> Login
+            <% end %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
+</div>
 </nav>
 <% if current_page?(root_path) %>
-<div class="container-fluid mt-3">
-  <div class="row d-flex align-items-center justify-content-between flex-nowrap">
-    <!-- Search Box -->
-    <div class="col-7 col-md-5">
-      
+  <div class="container-fluid mt-3">
+    <div class="row d-flex align-items-center justify-content-between flex-nowrap">
+      <!-- Search Box -->
+      <div class="col-7 col-md-5">
         <%= render "shared/search" %>
-      
-    </div>
-    <!-- Social Media Icons -->
-    <div class="col-5 col-md-7 d-flex justify-content-end flex-nowrap">
-      <%= link_to "https://web.facebook.com/napoleonnewsblog/", target: "_blank", class: "btn btn-outline-primary btn-sm me-1 square p-1" do %>
-        <i class="fab fa-facebook-f fa-xs"></i>
-      <% end %>
-      <%= link_to "https://x.com/napoleonnews_tv", target: "_blank", class: "btn btn-outline-dark btn-sm me-1 square p-1" do %>
-        <i class="fab fa-x-twitter fa-xs"></i>
-      <% end %>
-      <%= link_to "https://www.instagram.com/napoleonnewstv/", target: "_blank", class: "btn btn-outline-danger btn-sm me-1 square p-1" do %>
-        <i class="fab fa-instagram fa-xs"></i>
-      <% end %>
-      <%= link_to "https://www.youtube.com/@Napoleonnewstv", target: "_blank", class: "btn btn-outline-secondary btn-sm me-1 square p-1" do %>
-        <i class="fab fa-youtube fa-xs"></i>
-      <% end %>
-      <%= link_to "https://www.linkedin.com/company/napoleon-news-agency", target: "_blank", class: "btn btn-outline-dark btn-sm square p-1" do %>
-        <i class="fab fa-linkedin fa-xs"></i>
-      <% end %>
+      </div>
+      <!-- Social Media Icons -->
+      <div class="col-5 col-md-7 d-flex justify-content-end flex-nowrap">
+        <%= link_to "https://web.facebook.com/napoleonnewsblog/", target: "_blank", class: "btn btn-outline-primary btn-sm me-1 square p-1" do %>
+          <i class="fab fa-facebook-f fa-xs"></i>
+        <% end %>
+        <%= link_to "https://x.com/napoleonnews_tv", target: "_blank", class: "btn btn-outline-dark btn-sm me-1 square p-1" do %>
+          <i class="fab fa-x-twitter fa-xs"></i>
+        <% end %>
+        <%= link_to "https://www.instagram.com/napoleonnewstv/", target: "_blank", class: "btn btn-outline-danger btn-sm me-1 square p-1" do %>
+          <i class="fab fa-instagram fa-xs"></i>
+        <% end %>
+        <%= link_to "https://www.youtube.com/@Napoleonnewstv", target: "_blank", class: "btn btn-outline-secondary btn-sm me-1 square p-1" do %>
+          <i class="fab fa-youtube fa-xs"></i>
+        <% end %>
+        <%= link_to "https://www.linkedin.com/company/napoleon-news-agency", target: "_blank", class: "btn btn-outline-dark btn-sm square p-1" do %>
+          <i class="fab fa-linkedin fa-xs"></i>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
 <% end  %>
