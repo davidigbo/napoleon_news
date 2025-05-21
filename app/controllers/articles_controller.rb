@@ -144,6 +144,8 @@ class ArticlesController < ApplicationController
               'Article is now marked as draft!'
              when 'under_review'
               'Article has been submitted for review!'
+              when 'rejected'
+              'Article has been rejected!'
              when 'approved'
               'Article has been approved for publishing!'
              when 'published'

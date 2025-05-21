@@ -21,9 +21,10 @@ class Article < ApplicationRecord
   # validates :body, presence: true
   validates :status, inclusion: { in: %w[draft under_review approved published] }
 
-  enum :status, { draft: 0, under_review: 1, approved: 2, published: 3 }
+  enum :status, { draft: 0, under_review: 1, reject: 2, approved: 3, published: 4 }
 
   scope :published, -> { where(status: "published") }
+  scope :rejected, -> { where(status: "reject") }
   scope :approved, -> { where(status: "approved") }
   scope :under_review, -> { where(status: "under_review") }
   scope :draft, -> { where(status: "draft") }
