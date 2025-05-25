@@ -27,6 +27,19 @@
 
       gtag('config', 'G-3RHGBKPX9P');
     </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Napoleon News",
+        "url": "<%= root_url %>",
+        "logo": "<%= image_url('/icon.png') %>",
+        "sameAs": [
+          "https://www.facebook.com/napoleonnewsblog",
+          "https://x.com/napoleonnews_tv"
+        ]
+      }
+    </script>
   </head>
   <body class="d-flex flex-column min-vh-100 pt-4" data-controller="flash-notifications" data-signed-in="<%= user_signed_in? %>">
     <div class="container-fluid p-0 mb-5 contest-container">

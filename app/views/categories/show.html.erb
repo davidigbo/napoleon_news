@@ -132,3 +132,25 @@
     <% end %>
   <% end %>
 <% end %>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "<%= j @category.name %>",
+  "url": "<%= request.original_url %>",
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": [
+      <% (@top_articles + @other_articles).each_with_index do |article, index| %>
+        {
+          "@type": "ListItem",
+          "position": <%= index + 1 %>,
+          "url": "<%= article_url(article) %>",
+          "name": "<%= j article.title %>"
+        }<%= "," unless index == (@top_articles + @other_articles).size - 1 %>
+      <% end %>
+    ]
+  }
+}
+</script>
