@@ -17,6 +17,10 @@ class ManageArticlesController < ApplicationController
     @published_articles = Article.published.order(updated_at: :desc).page(params[:published_page]).per(12)
   end
 
+  def rejected
+    @rejected_articles = Article.rejected.order(updated_at: :desc).page(params[:rejected_page]).per(12)
+  end
+  
   def approved
     @approved_articles = Article.approved.order(updated_at: :desc).page(params[:approved_page]).per(12)
   end
