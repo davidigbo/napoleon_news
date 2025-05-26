@@ -80,6 +80,15 @@
                     class: "btn btn-success w-100" %>
     </div>
 
+    <!-- Reject button -->
+    <div class="col-12 col-md-4 mb-3">
+      <%= button_to "Reject", 
+                    article_path(@article), 
+                    method: :patch, 
+                    params: { article: { status: 'rejected' } },
+                    class: "btn btn-danger w-100" %>
+    </div>
+
     <!-- Approve and Publish Now button -->
     <div class="col-12 col-md-4 mb-3">
       <%= button_to "Approve & Publish Now", 
