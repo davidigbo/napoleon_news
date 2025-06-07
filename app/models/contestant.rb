@@ -11,7 +11,7 @@ class Contestant < ApplicationRecord
   has_many :comments, as: :commentable
 
   validates :description, presence: true
-  validates :user, uniqueness: { scope: :contest }
+  validates :user, uniqueness: { scope: :contest, message: "has already entered this contest."}
   # validates :image, content_type: [:png, :jpg, :jpeg]
   # validates :image, content_type: ['image/png', 'image/jpg', 'image/jpeg']
 

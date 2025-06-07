@@ -1,5 +1,5 @@
 <div class="container-fluid after-nav p-0">
-<div class="card text-white" style="background: linear-gradient(135deg, #001f3f, #003366);">
+<div class="card text-white" style="background: linear-gradient(135deg, #000000, #2b0011, #5a001a, #b8860b);">
   <div class="row g-0 d-flex flex-column-reverse flex-md-row">
     <div class="col-md-8 d-flex align-items-center">
       <div class="card-body text-center text-md-start">
@@ -8,8 +8,8 @@
         <div class="d-grid gap-3 d-md-flex">
           <%= link_to "See More Info", "#info", class: "btn btn-light btn-lg" %>
           <%= link_to "Rules & Guidelines", "#rules", class: "btn btn-light btn-lg" %>
-          <%= link_to "Sign Up Now", "#signup", class: "btn btn-primary btn-lg" %>
-          <%= link_to "Leaderboard", mbgn_leaderboard_path, class: "btn btn-primary btn-lg" %>
+          <%= link_to "Sign Up Now", "#signup", class: "btn btn-warning btn-lg"  %>
+          <%= link_to "Leaderboard", mbgn_leaderboard_path, class: "btn btn-warning btn-lg" %>
         </div>
       </div>
     </div>
@@ -31,35 +31,37 @@
         <div class="card-body text-center">
           <h2 class="display-6 fw-bold">What's This Contest All About?</h2>
           <p class="fs-5">
-            Join us at Napoleon News for an unforgettable journey where beauty meets confidence. 
-            This contest celebrates individuality, creativity, and charisma. Whether you're a seasoned 
-            model or taking your first step into the limelight, this is your chance to shine.
+            Join Napoleon News for a stunning showcase where beauty speaks through pictures.
+            This photo-only contest celebrates individuality, creativity, and presence in front of the camera.
+            Whether you're a seasoned model or just stepping into the spotlight, your photo could be your ticket to recognition.
           </p>
           <!-- Timeline Section -->
           <div class="container py-4">
             <div class="row g-4 justify-content-center">
-              <!-- Submission Phase -->
-              <div class="col-12 col-md-6 d-flex justify-content-center">
-                <div class="p-4 shadow bg-white rounded d-flex flex-column align-items-center text-center h-100 w-100">
-                  <i class="fas fa-medal fa-3x text-primary"></i>
-                  <h5 class="mt-3 fw-bold">Submission and Promotion Phase</h5>
-                  <p class="fs-6">Ends January 31, 2025</p>
-                </div>
-              </div>
               <!-- Competition Kickoff -->
               <div class="col-12 col-md-6 d-flex justify-content-center">
                 <div class="p-4 shadow bg-white rounded d-flex flex-column align-items-center text-center h-100 w-100">
                   <i class="fas fa-running fa-3x text-success"></i>
                   <h5 class="mt-3 fw-bold">Competition Kickoff</h5>
-                  <p class="fs-6">Starts February 1, 2025</p>
+                  <p class="fs-6">Starts June 18th, 2025</p>
                 </div>
               </div>
+
+              <!-- Competition Ends -->
+              <div class="col-12 col-md-6 d-flex justify-content-center">
+                <div class="p-4 shadow bg-white rounded d-flex flex-column align-items-center text-center h-100 w-100">
+                  <i class="fas fa-medal fa-3x text-primary"></i>
+                  <h5 class="mt-3 fw-bold">Competition Ends</h5>
+                  <p class="fs-6">Ends August 31st, 2025</p>
+                </div>
+              </div>
+
               <!-- Grand Finale -->
               <div class="col-12 d-flex justify-content-center">
                 <div class="p-4 shadow bg-white rounded d-flex flex-column align-items-center text-center h-100 w-100">
                   <i class="fas fa-calendar-alt fa-3x text-danger"></i>
-                  <h5 class="mt-3 fw-bold">End Date and Grand Finale</h5>
-                  <p class="fs-6">Takes place on April 19, 2025</p>
+                  <h5 class="mt-3 fw-bold">Grand Finale</h5>
+                  <p class="fs-6">To Be Announced</p>
                 </div>
               </div>
             </div>
@@ -69,22 +71,22 @@
     </div>
   </div>
   <!-- Rules and Guidelines Section -->
-  <div id="rules" class="py-5 text-white w-100" style="background: linear-gradient(135deg, #001f3f, #003366);">
+  <div id="rules" class="py-5 text-white w-100" style="background: linear-gradient(135deg, #000000, #2b0011, #5a001a, #b8860b);">
     <div class="container text-center">
       <h2 class="display-5 fw-bold">Rules and Guidelines</h2>
       <h4 class="mb-4">Eligibility Requirements</h4>
       <!-- Rules List -->
       <div class="row g-4 justify-content-center">
         <% [
-        ["1", "Be a Current Female Student", "Contestants must be female students at any Nigerian tertiary institution."],
+        ["1", "Current Female Student or Serving Corps Member", "Contestants must be female students at any Nigerian tertiary institution or a serving corps member."],
         ["2", "Register on Napoleon News", "All participants must register on the Napoleon News website to upload their contest picture."],
-        ["3", "Share and Promote Your Entry", "Contestants must share their contest picture link available on napoleonnews website on their social media handles to gather likes and comments."],
-        ["4", "Winning Criteria", "The first contestant to reach <strong>100,000 likes and comments</strong> on their contest picture at <strong>napoleonnews</strong> will be declared the winner."],
+        ["3", "Share and Promote Your Entry", "Contestants must share their contest picture link available on napoleonnews website on their social media handles to gather likes and comments, tagging @napoleonnewsagency."],
+        ["4", "Winning Criteria", "The first contestant to reach <strong>100,000 votes</strong> on their contest picture at <strong>napoleonnews.com</strong> will be declared the winner."],
         ["5", "Important Note", "Only likes and comments from real humans will be counted. Any malpractice, such as the use of bots or fake engagements, will lead to immediate disqualification."]
       ].each do |num, title, description| %>
           <div class="col-12 col-md-4 d-flex justify-content-center">
             <div class="p-4 shadow bg-white text-dark rounded d-flex flex-column align-items-center text-center h-100 w-100">
-              <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; font-size: 1.5rem;">
+              <div class="rounded-circle bg-warning text-dark d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; font-size: 1.5rem;">
                 <%= num %>
               </div>
               <h5 class="mt-3 fw-bold"><%= title %></h5>
@@ -119,7 +121,9 @@
             <%= f.file_field :image, class: "form-control form-control-lg", required: true, accept: "image/*" %>
           </div>
           <div class="text-center">
-            <%= f.submit "Submit", class: "btn btn-primary btn-lg fw-bold px-4" %>
+            <%#= f.submit "Submit", class: "btn btn-primary btn-lg fw-bold px-4" %>
+            <%= f.submit "Submit", class: "btn btn-warning btn-lg fw-bold px-4 text-dark" %>
+            <%#= f.submit "Submit", class: "btn btn-lg fw-bold px-4", style: "background-color: #b8860b; color: #000; border: none;" %>
           </div>
         <% end %>
       </div>

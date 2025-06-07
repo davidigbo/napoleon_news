@@ -1,7 +1,7 @@
 <!-- Countdown Section -->
 <div class="container my-5">
   <div class="countdown-timer p-1 text-white text-center rounded-3 shadow-lg" style="background: linear-gradient(135deg, #ff416c, #ff4b2b);">
-    <h2 class="display-7 fw-bold"> Grand Finale</h2>
+    <h2 class="display-7 fw-bold"> Competition Ends</h2>
     <div class="d-flex justify-content-center gap-4 mt-3">
       <div class="time-box">
         <span id="days" class="display-5 fw-bold">00</span>
@@ -25,7 +25,7 @@
 
 <script>
   function updateCountdown() {
-    const contestEndDate = new Date("April 19, 2025 23:59:59").getTime();
+    const contestEndDate = new Date("August 31, 2025 00:00:00").getTime();
     const now = new Date().getTime();
     const timeLeft = contestEndDate - now;
 

@@ -1,5 +1,5 @@
-<div class="container-fluid after-nav py-4" style="background: linear-gradient(135deg, #001f3f, #003366);">
-  <div class="card shadow-lg border-0 p-4 text-center text-light" style="background: linear-gradient(135deg, #001f3f, #003366);">
+<div class="container-fluid after-nav py-4" style="background: linear-gradient(135deg, #000000, #2b0011, #5a001a, #b8860b);">
+  <div class="card shadow-lg border-0 p-4 text-center text-light" style="background: linear-gradient(135deg, #000000, #2b0011, #5a001a, #b8860b);">
     <div class="text-center mb-3">
       <i class="fas fa-trophy text-white display-4"></i> <!-- Trophy Icon -->
     </div>
@@ -7,7 +7,7 @@
 
     <!-- Enter Contest Button -->
     <div class="my-4 text-center">
-      <%= link_to "Enter the Contest", new_mbgn_contestant_path, class: "btn btn-primary btn-lg fw-bold px-4" %>
+      <%= link_to "Enter the Contest", mbgn_path, class: "btn btn-warning btn-lg fw-bold px-4" %>
     </div>
     
     <!-- Leaderboard Stats -->
@@ -37,7 +37,7 @@
             <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
               
               <!-- Rank -->
-              <div class="text-primary fw-bold text-center fs-4 w-100 w-md-10">#<%= index + 1 %></div>
+              <div class="text-dark fw-bold text-center fs-4 w-100 w-md-10">#<%= index + 1 %></div>
 
               <!-- Contestant: Image + Name -->
               <div class="d-flex flex-column flex-md-row align-items-center w-100 w-md-35 text-center text-md-start">
@@ -80,7 +80,7 @@
 <style>
   /* Contestant link hover effect */
   .contestant-link:hover {
-    color: #ffc107 !important;
+    color: #b8860b !important;
     text-decoration: underline !important;
   }
 
