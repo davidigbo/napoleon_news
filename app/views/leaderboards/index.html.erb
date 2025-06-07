@@ -7,7 +7,7 @@
 
     <!-- Enter Contest Button -->
     <div class="my-4 text-center">
-      <%= link_to "Enter the Contest", new_contest_contestant_path(@contest), class: "btn btn-primary btn-lg fw-bold px-4" %>
+      <%= link_to "Enter the Contest", new_mbgn_contestant_path, class: "btn btn-primary btn-lg fw-bold px-4" %>
     </div>
     
     <!-- Leaderboard Stats -->
@@ -42,7 +42,7 @@
               <!-- Contestant: Image + Name -->
               <div class="d-flex flex-column flex-md-row align-items-center w-100 w-md-35 text-center text-md-start">
                 <div class="me-md-3 mx-auto mx-md-0" style="width: 60px; height: 60px;">
-                  <%= link_to contest_contestant_path(@contest, contestant) do %>
+                  <%= link_to mbgn_contestant_path(contestant) do %>
                     <% if contestant.image.attached? %>
                       <%= image_tag contestant.image.variant(resize_to_limit: [60, 60]), 
                             class: "img-fluid rounded-circle border border-2 border-primary shadow-sm contestant-img", 
@@ -55,7 +55,7 @@
                   <% end %>
                 </div>
                 <div>
-                  <%= link_to contestant.stage_name, contest_contestant_path(@contest, contestant), class: "contestant-link fw-bold text-dark text-decoration-none" %>
+                  <%= link_to contestant.stage_name, mbgn_contestant_path(contestant), class: "contestant-link fw-bold text-dark text-decoration-none" %>
                 </div>
               </div>
 

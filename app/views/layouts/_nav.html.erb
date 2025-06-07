@@ -79,7 +79,7 @@
           </a>
           <ul class="dropdown-menu">
             <% if @active_contest %>
-              <li><%= link_to 'MBGN Contest', new_contest_contestant_path(@active_contest), class: 'dropdown-item'%></li>
+              <li><%= link_to 'MBGN Contest', mbgn_path, class: 'dropdown-item'%></li>
             <% end %>
             <li><%= link_to 'Instant Quiz', '', class: 'quiz-trigger dropdown-item'%></li>
             <li><hr class="dropdown-divider"></li>

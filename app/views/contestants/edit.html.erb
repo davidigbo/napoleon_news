@@ -1,7 +1,7 @@
 <div class="container after-nav py-3">
   <%= render 'layouts/contest_header' %>
   <div class="mt-4 text-center">
-    <%= link_to "View the Leaderboard", contest_leaderboards_path(@contest), class: "btn btn-outline-warning" %>
+    <%= link_to "View the Leaderboard", mbgn_leaderboard_path, class: "btn btn-outline-warning" %>
   </div>
   <h2 class="text-white">Edit Contestant</h2>
   <%= form_with(model: @contestant, url: contest_contestant_path(@contest, @contestant), local: true, class: 'text-white') do |f| %>

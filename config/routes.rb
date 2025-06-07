@@ -29,7 +29,16 @@ Rails.application.routes.draw do
 
   resources :search, only: [:index]
 
-  
+  # Routes created to provide mbgn naming
+  get "/mbgn", to: "contestants#new", defaults: { contest_id: 1 }, as: :mbgn
+  get "/mbgn/leaderboard", to: "leaderboards#index", defaults: { contest_id: 1 }, as: :mbgn_leaderboard
+  scope "/mbgn", as: 'mbgn', defaults: { contest_id: 1 } do
+    resources :contestants, only: [:index, :show, :new, :create, :edit, :update, :destroy], param: :slug do
+      resources :votes, only: [:create]
+      resources :comments, only: [:create, :destroy]
+    end
+  end
+  # End
   
   root to: "home#index"
 
