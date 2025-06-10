@@ -24,12 +24,12 @@ class ContestantsController < ApplicationController
 
     if @contestant.save
       respond_to do |format|
-        format.html { redirect_to contest_contestant_path(@contest, @contestant), notice: "Welcome to the #{@contest.name} contest! Your submission has been submitted for review" }
+        format.html { redirect_to mbgn_contestant_path(@contestant), notice: "Welcome to the #{@contest.name} contest! Your submission has been submitted for review" }
         format.json { render json: @contestant, status: :created }
       end
     else
       respond_to do |format|
-        format.html { redirect_to new_contest_contestant_path(@contest), alert: @contestant.errors.full_messages.to_sentence }
+        format.html { redirect_to new_mbgn_contestant_path, alert: @contestant.errors.full_messages.to_sentence }
         format.json { render json: @contestant.errors, status: :unprocessable_entity }
       end
     end

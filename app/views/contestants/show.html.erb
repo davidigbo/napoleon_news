@@ -1,4 +1,12 @@
 <div class="container-fluid after-nav py-3" style="background: linear-gradient(135deg, #000000, #2b0011, #5a001a, #b8860b);">
+  <div class="text-center mb-4">
+    <h1 class="display-4 fw-bold text-uppercase" style="color: #b8860b;">
+      Face of Napoleon News 2025
+    </h1>
+    <p class="lead text-light mt-2">
+      A Picture-Only Contest Celebrating Timeless Beauty and Charisma
+    </p>
+  </div>
   <%= render 'contest_timer' %>
   <div class="row">
     <div class="col-md-12">
@@ -66,6 +74,10 @@
                   <% if !user_signed_in? %>
                     <%= link_to new_user_session_path, class: "btn btn-info px-4 py-2 mt-2 w-100 text-white", data: { turbo: false } do %>
                       <i class="fas fa-thumbs-up"></i> Login to Vote
+                    <% end %>
+                  <% elsif !@contestant.approved? %>
+                    <%= button_tag class: "btn btn-tertiary disabled px-4 py-2 mt-2 w-100" do %>
+                      <i class="fas fa-spinner fa-spin"></i> Contestant is <strong>under review</strong>. You can't vote for them yet.
                     <% end %>
                   <% elsif current_user.voted?(@contest) && current_user.id != @contestant.user.id %>
                     <%= button_tag class: "btn btn-success disabled px-4 py-2 mt-2 w-100" do %>
