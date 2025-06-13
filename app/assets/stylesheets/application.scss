@@ -60,3 +60,159 @@
   opacity: 1;
 }
 
+
+// START OF CONTEST FRAME CSS
+
+/* Frame styling */
+.contestant-frame {
+  position: relative;
+  padding: 15px;
+  background: linear-gradient(135deg, #b8860b, #daa520, #b8860b);
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(184, 134, 11, 0.5);
+}
+
+.framed-image {
+  border: 8px solid #fff;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+/* Decorative frame corners */
+.frame-corner {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  z-index: 2;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.frame-corner-top-left {
+  top: 0;
+  left: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23b8860b" d="M100,100H0V0C55.2,0,100,44.8,100,100z"/></svg>');
+}
+
+.frame-corner-top-right {
+  top: 0;
+  right: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23b8860b" d="M0,100h100V0C44.8,0,0,44.8,0,100z"/></svg>');
+}
+
+.frame-corner-bottom-left {
+  bottom: 0;
+  left: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23b8860b" d="M100,0H0v100C55.2,100,100,55.2,100,0z"/></svg>');
+}
+
+.frame-corner-bottom-right {
+  bottom: 0;
+  right: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23b8860b" d="M0,0h100v100C44.8,100,0,55.2,0,0z"/></svg>');
+}
+
+/* Contest ribbon */
+.contest-ribbon {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #b8860b;
+  color: white;
+  padding: 5px 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 12px;
+  z-index: 3;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transform: rotate(15deg);
+}
+
+.contest-ribbon:after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  right: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid #8a6700;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}/* Frame styling */
+.contestant-frame {
+  position: relative;
+  padding: 15px;
+  background: linear-gradient(135deg, #b8860b, #daa520, #b8860b);
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(184, 134, 11, 0.5);
+}
+
+.framed-image {
+  border: 8px solid #fff;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+/* Decorative frame corners */
+.frame-corner {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  z-index: 2;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.frame-corner-top-left {
+  top: 0;
+  left: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23b8860b" d="M100,100H0V0C55.2,0,100,44.8,100,100z"/></svg>');
+}
+
+.frame-corner-top-right {
+  top: 0;
+  right: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23b8860b" d="M0,100h100V0C44.8,0,0,44.8,0,100z"/></svg>');
+}
+
+.frame-corner-bottom-left {
+  bottom: 0;
+  left: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23b8860b" d="M100,0H0v100C55.2,100,100,55.2,100,0z"/></svg>');
+}
+
+.frame-corner-bottom-right {
+  bottom: 0;
+  right: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23b8860b" d="M0,0h100v100C44.8,100,0,55.2,0,0z"/></svg>');
+}
+
+/* Contest ribbon */
+.contest-ribbon {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #b8860b;
+  color: white;
+  padding: 5px 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 12px;
+  z-index: 3;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transform: rotate(15deg);
+}
+
+.contest-ribbon:after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  right: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid #8a6700;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}
+
+// END OF CONTESTANT FRAME CSS

@@ -1,4 +1,6 @@
 class ContestantsController < ApplicationController
+  include ContestantHelper
+
   before_action :set_contest, only: %i[index new edit show update create]
   before_action :set_contestant, only: %i[edit show update destroy]
   before_action :authenticate_user!, only: %i[edit update destroy]
@@ -10,6 +12,26 @@ class ContestantsController < ApplicationController
 
   def show
     @comments = @contestant.comments
+    set_meta_tags title: "Vote for #{@contestant.stage_name} - Face of Napoleon News 2025",
+                  description: "Support #{@contestant.stage_name} in the Face of Napoleon News 2025 contest. Click to vote and share!",
+                  canonical: mbgn_contestant_url(@contestant),
+                  image: full_image_url_for(@contestant),
+
+                  og: {
+                        title: "Vote for #{@contestant.stage_name} - Face of Napoleon News 2025",
+                        description: "Support #{@contestant.stage_name} in the Face of Napoleon News 2025 contest. Click to vote and share!",
+                        image: full_image_url_for(@contestant),
+                        url: mbgn_contestant_url(@contestant),
+                        type: 'profile'
+                  },
+                  twitter: {
+                    card: 'summary_large_image',
+                    # site: '@napoleonnewstv',
+                    title: "Vote for #{@contestant.stage_name} - Face of Napoleon News 2025",
+                    description: "Support #{@contestant.stage_name} in the Face of Napoleon News 2025 contest. Click to vote and share!",
+                    image: full_image_url_for(@contestant),
+                    url: mbgn_contestant_url(@contestant),
+                  }
   end
 
   def edit
