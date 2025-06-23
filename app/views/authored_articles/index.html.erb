@@ -16,7 +16,7 @@
         <tr>
           <td><%= index + 1 %></td>
           <td>
-            <%= link_to article.title, article_path(article), class: '' %>
+            <%= link_to article.title, article.under_review? ? review_article_path(article) : article_path(article), class: '' %>
           </td>
           <td>
             <span class="badge 
