@@ -21,7 +21,7 @@
             <li><%= link_to 'Stories', category_path(@all_categories.find_by(name: 'Stories')), class: 'dropdown-item' %></li>
             <li><%= link_to 'CSR', category_path(@all_categories.find_by(name: 'CSR')), class: 'dropdown-item' %></li>
             <li><hr class="dropdown-divider"></li>
-            <li><%= link_to 'Contact Us', '#', class: 'dropdown-item' %></li>
+            <li><%= link_to 'Contact Us', contact_us_path, class: 'dropdown-item' %></li>
           </ul>
         </li>
         <!-- Leadership Dropdown -->
@@ -93,7 +93,9 @@
           <a class="nav-link active" aria-current="page" href="#">Events</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#footer">Contact Us</a>
+          <%# <a class="nav-link active" aria-current="page" href="#footer">Contact Us</a> %>
+          <%= link_to "Contact Us", contact_us_path, class: "nav-link active", "aria-current": "page" %>
+
         </li>
       </ul>
       <!-- User Controls - Move this outside of the collapsible navbar content -->

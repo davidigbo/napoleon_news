@@ -71,4 +71,6 @@ Rails.application.routes.draw do
 
   resources :quizzes, only: [:show, :create, :update]
   get '/sitemap.xml.gz', to: 'sitemaps#show'
+
+  resources :contact_us, only: :index
 end
